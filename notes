@@ -1,2 +1,4 @@
 createdb bibdhek
 
+configure database at app/config/database.php
+
