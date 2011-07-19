@@ -28,6 +28,7 @@ CREATE TABLE materials
 CREATE TABLE users
 (
 	id			bigserial unique primary_key,
+	username	varchar(32) unique,
 	firtst_name	text not null,
 	last_name	text not null,
 	email		text,
@@ -66,3 +67,12 @@ CREATE TABLE rules
 	note	text
 );
 
+INSERT INTO groups (name)
+	VALUES ('admin');
+
+INSERT INTO users (username, first_name, last_name, email, password)
+	VALUES ('saartje', 'Saartje', 'Renaers', 'saartje@renaers.be', 'topsecret');
+
+INSERT INTO user_group (user, group)
+	VALUES ((SELECT id FROM groups WHERE name=='admin'),
+			(SELECT id FROM users WHERE username='saartje'));
