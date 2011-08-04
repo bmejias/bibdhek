@@ -1,11 +1,9 @@
-CREATE USER 'bd_admin' PASSWORD 'bd_admin' createuser;
-
 CREATE TABLE books
 (
-	id		bigserial unique primary_key,
-	title	text	not null,
-	author	text	not null,
-	cd		bool	false,
+	id		serial		PRIMARY KEY,
+	title	text		NOT NULL,
+	author	text		NOT NULL,
+	cd		boolean		DEFAULT FALSE,
 	level	varchar(20),
 	lang	char(2),
 	date	date,
@@ -17,62 +15,53 @@ CREATE TABLE books
 
 CREATE TABLE materials
 (
-	id			bigserial unique primary_key,
-	book		bigserial not null,
-	status		varchar(16) not null,
-	code		varchar(16),
+	id			serial		PRIMARY KEY,
+	book_id		serial		REFERENCES books(id),
+	status		varchar(16)	NOT NULL,
+	code		varchar(16) UNIQUE,
 	position	varchar(16),
 	type		varchar(16)
 );
 
 CREATE TABLE users
 (
-	id			bigserial unique primary_key,
-	username	varchar(32) unique,
-	firtst_name	text not null,
-	last_name	text not null,
+	id			serial		PRIMARY KEY,
+	username	varchar(32)	UNIQUE,
+	first_name	text		NOT NULL,
+	last_name	text		NOT NULL,
 	email		text,
 	password 	varchar(64)
 );
 
 CREATE TABLE groups
 (
-	id		serial	unique primary_key,
-	name	varchar(32)
+	id		serial		PRIMARY KEY,
+	name	varchar(32)	UNIQUE
 );
 
 CREATE TABLE user_group
 (
-	id		bigserial unique primary_key,
-	user	bigserial references users(id),
-	group	serial references groups(id)
+	user_id		serial	REFERENCES users(id),
+	group_id	serial	REFERENCES groups(id),
+	PRIMARY KEY (user_id, group_id)
 );
 
 CREATE TABLE loans
 (
-	id			bigserial unique primary_key,
-	material	bigserial references materials(id),
-	user		bigserial references users(id),
-	date_out	date not null,
+	material_id	serial		REFERENCES materials(id),
+	user_id		serial		REFERENCES users(id),
+	date_out	date		NOT NULL,
 	date_in		date,
-	status		varchar(16) not null,
-	money		int
+	status		varchar(16)	NOT NULL,
+	money		int,
+	PRIMARY KEY (material_id, user_id) 
 );
 
 CREATE TABLE rules
 (
-	id		serial unique primary_key,
-	rule	varchar(32) not null,
+	id		serial		PRIMARY KEY,
+	rule	varchar(32)	NOT NULL,
 	amount	int,
 	note	text
 );
 
-INSERT INTO groups (name)
-	VALUES ('admin');
-
-INSERT INTO users (username, first_name, last_name, email, password)
-	VALUES ('saartje', 'Saartje', 'Renaers', 'saartje@renaers.be', 'topsecret');
-
-INSERT INTO user_group (user, group)
-	VALUES ((SELECT id FROM groups WHERE name=='admin'),
-			(SELECT id FROM users WHERE username='saartje'));
