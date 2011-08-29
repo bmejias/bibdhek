@@ -1,4 +1,11 @@
+# Create a postgresql database with the following command 
 createdb bibdhek
 
-configure database at app/config/database.php
+# create user, schema, and insert data with commands
+psql bibdhek < pgsql_create_users.sql
+psql bibdhek < pgsql_create_schema.sql
+psql bibdhek < pgsql_insert_values.sql
 
+# Configure cakephp to identify the database and the login information. Use
+# the file: app/config/database.php (remember that git ignores the app/config
+# directory)
