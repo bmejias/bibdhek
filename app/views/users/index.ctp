@@ -3,14 +3,17 @@
 <h1> Users </h1>
 
 <table>
-	<tr>
-		<td>id</td>
-		<td>username</td>
-		<td>first_name</td>
-		<td>last_name</td>
-		<td>email</td>
-		<td>password</td>
-	</tr>
+	<thead>
+		<tr>
+			<th>id</th>
+			<th>username</th>
+			<th>first_name</th>
+			<th>last_name</th>
+			<th>email</th>
+			<th>password</th>
+		</tr>
+	</thead>
+	<tbody>
 		<?php foreach ($users as $user) : ?>
 		<tr>
 			<td><?php echo $user['User']['id']; ?></td>
@@ -21,4 +24,5 @@
 			<td><?php echo $user['User']['password']; ?></td>
 		</tr>
 		<?php endforeach; ?>
+	</tbody>
 </table>
