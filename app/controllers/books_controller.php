@@ -16,8 +16,9 @@ class BooksController extends AppController
 			if ($this->Book->save($this->data))
 			{
 				$book_id = $this->Book->id;
-				$copies = $this->data['Book']['copies'];
-				$copies = isset($copies) ? $copies : 1;
+				$copies = 1;
+				if ($this->data['Book']['copies'] > 1)
+					$copies = $this->data['Book']['copies'];
 				Controller::loadModel('Material');
 				for ($i = 1; $i <= $copies; $i++)
 				{
