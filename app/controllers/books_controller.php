@@ -15,9 +15,25 @@ class BooksController extends AppController
 		{
 			if ($this->Book->save($this->data))
 			{
+				$book_id = $this->Book->id;
+				$copies = $this->data['Book']['copies'];
+				$copies = isset($copies) ? $copies : 1;
+				Controller::loadModel('Material');
+				for ($i = 1; $i <= $copies; $i++)
+				{
+					$new_material = array('Material'=>
+										  array('book_id'=>$book_id,
+												'status'=>'available',
+												'code'=>$i));
+					$this->Material->create();
+					$result = $this->Material->save($new_material);
+					$this->log("Saving material returned ".print_r($result,
+																   true));
+				}
 				$this->Session->setFlash('The book has been saved.');
 				$this->redirect(array('action' => 'index'));
 			}
+			$this->redirect(array('action' => 'index'));
 		}
 	}
 }
