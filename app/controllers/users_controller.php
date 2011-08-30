@@ -32,6 +32,23 @@ class UsersController extends AppController
 								urlencode('Error: Please try again'));
 		}
 	}
+
+	function add()
+	{
+		if (!empty($this->data))
+		{
+			if ($this->data['User']['password'] == $this->data['User']['confirm'])
+			{
+				if ($this->User->save($this->data))
+				{
+					$this->Session->setFlash('The user has been created.');
+					$this->redirect(array('action' => 'index'));
+				}
+			}
+			else
+				$this->Session->setFlash('Passwords do not match - Try again');
+		}
+	}
 }
 
 ?>
