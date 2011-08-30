@@ -18,7 +18,7 @@ CREATE TABLE materials
 	id			serial		PRIMARY KEY,
 	book_id		serial		REFERENCES books(id),
 	status		varchar(16)	NOT NULL,
-	code		varchar(16) UNIQUE,
+	code		varchar(16),
 	position	varchar(16),
 	type		varchar(16)
 );
