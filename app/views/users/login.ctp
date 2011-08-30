@@ -3,6 +3,8 @@
 <?php
 	echo $this->Form->create('login', array('action'=>'../users/check_login'));
 ?>
+<p> <?php echo $msg; ?> </p>
+
 <table>
 	<tr>
 		<td><?php echo $this->Form->input('username',

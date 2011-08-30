@@ -11,6 +11,10 @@ class UsersController extends AppController
 
 	function login()
 	{
+		$msg = "Gelieve in te loggen";
+		if (isset($_GET['error']))
+			$msg = $_GET['error'];
+		$this->set('msg', $msg);
 		;
 	}
 
@@ -22,7 +26,10 @@ class UsersController extends AppController
 			$data = $this->data['login'];
 			$user = $this->User->findByUsername($data['username']);
 			if ($user != null && $user['User']['password'] == $data['password'])
-				$this->set('result', 'logon');
+				$this->redirect('../books');
+			else
+				$this->redirect('login?error='.
+								urlencode('Error: Please try again'));
 		}
 	}
 }
