@@ -42,11 +42,11 @@
 					$action = 'return';
 					$submit_label = 'return';
 				}
-				echo $this->Form->create('copy'.$copy['id'],
+				echo $this->Form->create('Book',
 										 array('type'=>'post',
 											   'action'=>$action));
 				echo $this->Form->hidden('book', array('value'=>$book['id']));
-				echo $this->Form->hidden('id', array('value'=>$copy['id']));
+				echo $this->Form->hidden('copy', array('value'=>$copy['id']));
 				echo $this->Form->end($submit_label);
 				?>
 			</td>

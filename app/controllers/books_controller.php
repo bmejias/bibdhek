@@ -75,6 +75,51 @@ class BooksController extends AppController
 		$this->log("These are the rich copies ".print_r($rich_copies, true));
 		$this->set('copies', $rich_copies);
 	}
+
+	function lend()
+	{
+		Controller::loadModel('Material');
+		Controller::loadModel('User');
+		Controller::loadModel('Loan');
+
+		$book_id 	= $this->data['Book']['book'];
+		$copy_id 	= $this->data['Book']['copy'];
+		$book		= $this->Book->findById($book_id);
+		$copy		= $this->Material->findById($copy_id);
+		$this->set('book', $book['Book']);
+		$this->set('copy', $copy['Material']);
+
+		if (empty($this->data['Book']['user']))
+		{
+			/* need to select the user */
+			$all_users = $this->User->find('all');
+			$users = array();
+			foreach ($all_users as $user)
+				$users[$user['User']['id']] = $user['User']['first_name']." ".
+											  $user['User']['last_name'];
+			$this->set('users', $users);
+		}
+		else
+		{
+			/* perform the loan */
+			$user_id = $this->data['Book']['user'];
+			$loan = array('Loan'=>
+							array('material_id'=>$copy_id,
+								  'user_id'=>$user_id,
+								  'date_out'=>date('Y-m-d'),
+								  'status'=>'lent',
+								  'money'=>10));
+			$this->Loan->create();
+			if ($this->Loan->save($loan))
+			{
+				$this->Material->id = $copy_id;
+				$this->Material->saveField('status', 'lent');
+				$this->Session->setFlash('The book has been lent.');
+				$this->redirect('view?book_id='.$book_id);
+			}
+		}
+	}
+
 }
 
 ?>
