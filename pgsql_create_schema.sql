@@ -41,6 +41,7 @@ CREATE TABLE groups
 
 CREATE TABLE user_group
 (
+	id			serial,
 	user_id		serial	REFERENCES users(id),
 	group_id	serial	REFERENCES groups(id),
 	PRIMARY KEY (user_id, group_id)
@@ -48,6 +49,7 @@ CREATE TABLE user_group
 
 CREATE TABLE loans
 (
+	id			serial,
 	material_id	serial		REFERENCES materials(id),
 	user_id		serial		REFERENCES users(id),
 	date_out	date		NOT NULL,
