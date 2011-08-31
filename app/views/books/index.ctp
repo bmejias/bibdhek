@@ -1,4 +1,4 @@
-<!-- File: /app/views/users/index.ctp -->
+<!-- File: /app/views/books/index.ctp -->
 
 <h1> Books </h1>
 
@@ -18,7 +18,11 @@
 		<?php foreach ($books as $book) : ?>
 		<tr>
 			<td><?php echo $book['Book']['id']; ?></td>
-			<td><?php echo $book['Book']['title']; ?></td>
+			<td><?php
+				echo $this->Html->link($book['Book']['title'],
+									   'view?book_id='.$book['Book']['id']);
+				?>
+			</td>
 			<td><?php echo $book['Book']['author']; ?></td>
 			<td><?php echo $book['Book']['cd']; ?></td>
 			<td><?php echo $book['Book']['level']; ?></td>
