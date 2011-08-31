@@ -1,6 +1,6 @@
 <!-- File: /app/views/users/add.ctp -->
 
-<h1>Add User</h1>
+<h2>Add User</h2>
 
 <?php
 	echo $this->Form->create('User');
@@ -12,3 +12,6 @@
 	echo $this->Form->input('confirm', array('type'=>'password', 'size'=>'30'));
 	echo $this->Form->end('Create User');
 ?>
+
+<br />
+<p> <?php echo $this->Html->link('Back to actions', '../pages/admin'); ?> </p>

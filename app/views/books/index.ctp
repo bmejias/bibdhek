@@ -1,6 +1,6 @@
 <!-- File: /app/views/books/index.ctp -->
 
-<h1> Books </h1>
+<h2> Books </h2>
 
 <table>
 	<thead>
@@ -32,3 +32,5 @@
 		<?php endforeach; ?>
 	</tbody>
 </table>
+<br />
+<p> <?php echo $this->Html->link('Back to actions', '../pages/admin'); ?> </p>
