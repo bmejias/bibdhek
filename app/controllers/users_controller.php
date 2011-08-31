@@ -6,6 +6,7 @@ class UsersController extends AppController
 
 	function index()
 	{
+		$this->set('mode', isset($_GET['mode']) ? $_GET['mode'] : 'simple');
 		$this->set('users', $this->User->find('all'));
 	}
 
