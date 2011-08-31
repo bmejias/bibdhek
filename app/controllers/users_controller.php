@@ -36,8 +36,17 @@ class UsersController extends AppController
 
 	function add()
 	{
+		$this->set('mode', isset($_GET['mode']) ? $_GET['mode'] : 'simple');
 		if (!empty($this->data))
 		{
+			if ($this->data['User']['mode'] == 'simple')
+			{
+				/* complete data in case of simple mode */
+				$this->User->create();
+				$this->data['User']['username'] = uniqid(); 
+				$this->data['User']['password'] = "nopassword";
+				$this->data['User']['confirm'] = "nopassword";
+			}
 			if ($this->data['User']['password'] == $this->data['User']['confirm'])
 			{
 				if ($this->User->save($this->data))
