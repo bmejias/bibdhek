@@ -55,3 +55,5 @@
 	</tbody>
 </table>
 
+<br />
+<p> <?php echo $this->Html->link('Back to actions', '../pages/admin'); ?> </p>

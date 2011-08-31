@@ -23,6 +23,7 @@
 			<?php
 				echo $this->Form->hidden('book', array('value'=>$book['id']));
 				echo $this->Form->hidden('copy', array('value'=>$copy['id']));
+				echo $this->Form->hidden('do', array('value'=>'lend'));
 				echo $this->Form->select('user', $users);
 			?>
 		</td>
@@ -32,4 +33,12 @@
 	echo $this->Form->end('Lend book');
 ?>
 
+<?php
+	echo $this->Form->create('Book', array('type'=>'post', 'action'=>'lend'));
+	echo $this->Form->hidden('book', array('value'=>$book['id']));
+	echo $this->Form->hidden('copy', array('value'=>$copy['id']));
+	echo $this->Form->hidden('user', array('value'=>'foo'));
+	echo $this->Form->hidden('do', array('value'=>'cancel'));
+	echo $this->Form->end('Cancel');
+?>
 

@@ -99,7 +99,7 @@ class BooksController extends AppController
 											  $user['User']['last_name'];
 			$this->set('users', $users);
 		}
-		else
+		elseif ($this->data['Book']['do'] == 'lend')
 		{
 			/* perform the loan */
 			$user_id = $this->data['Book']['user'];
@@ -118,8 +118,11 @@ class BooksController extends AppController
 				$this->redirect('view?book_id='.$book_id);
 			}
 		}
+		elseif ($this->data['Book']['do'] == 'cancel')
+		{
+			$this->redirect('view?book_id='.$book_id);
+		}
 	}
-
 }
 
 ?>
