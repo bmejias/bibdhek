@@ -82,6 +82,9 @@ class BooksController extends AppController
 		Controller::loadModel('User');
 		Controller::loadModel('Loan');
 
+//		$this->log("This is the from data:\n".print_r($this->data, true));
+//		$this->redirect('../books');
+
 		$book_id 	= $this->data['Book']['book'];
 		$copy_id 	= $this->data['Book']['copy'];
 		$book		= $this->Book->findById($book_id);
@@ -122,6 +125,19 @@ class BooksController extends AppController
 		{
 			$this->redirect('view?book_id='.$book_id);
 		}
+	}
+
+	function return_book()
+	{
+		Controller::loadModel('Material');
+		Controller::loadModel('User');
+
+		$book_id 	= $this->data['Book']['book'];
+		$copy_id 	= $this->data['Book']['copy'];
+		$book		= $this->Book->findById($book_id);
+		$copy		= $this->Material->findById($copy_id);
+
+		$this->redirect('view?book_id='.$book_id);	
 	}
 }
 

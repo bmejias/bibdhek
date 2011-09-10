@@ -30,15 +30,9 @@
 	</tr>
 </table>
 <?php
-	echo $this->Form->end('Lend book');
-?>
-
-<?php
-	echo $this->Form->create('Book', array('type'=>'post', 'action'=>'lend'));
-	echo $this->Form->hidden('book', array('value'=>$book['id']));
-	echo $this->Form->hidden('copy', array('value'=>$copy['id']));
-	echo $this->Form->hidden('user', array('value'=>'foo'));
-	echo $this->Form->hidden('do', array('value'=>'cancel'));
-	echo $this->Form->end('Cancel');
+	echo $this->Form->submit('Lend book', array('name'=>'lend'));
+	echo $this->Form->submit('Cancel', array('name'=>'cancel'););
+	echo $this->Form->end();
+	//echo $this->Form->end('Cancel');
 ?>
 
