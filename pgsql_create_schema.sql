@@ -39,7 +39,7 @@ CREATE TABLE groups
 	name	varchar(32)	UNIQUE
 );
 
-CREATE TABLE user_group
+CREATE TABLE group_users
 (
 	id			serial,
 	user_id		serial	REFERENCES users(id),
