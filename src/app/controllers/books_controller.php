@@ -56,7 +56,10 @@ class BooksController extends AppController
 			{
 				Controller::loadModel('Loan');
 				Controller::loadModel('User');
-				$loan = $this->Loan->findByMaterial_id($copy['id']);
+				$query = array('Loan.material_id' => $copy['id'],
+							   'Loan.status' => 'lent');
+				$loan = $this->Loan->find('first',
+										  array('conditions' => $query));
 				$user = $this->User->findById($loan['Loan']['user_id']);
 				$copy['student'] = $user['User']['first_name']." ".
 								   $user['User']['last_name'];
