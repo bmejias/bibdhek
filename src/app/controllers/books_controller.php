@@ -28,8 +28,8 @@ class BooksController extends AppController
 												'code'=>$i));
 					$this->Material->create();
 					$result = $this->Material->save($new_material);
-					$this->log("Saving material returned ".print_r($result,
-																   true));
+					$this->debug("Saving material returned ".print_r($result,
+																	 true));
 				}
 				$this->Session->setFlash('The book has been saved.');
 				$this->redirect(array('action' => 'index'));
@@ -42,11 +42,11 @@ class BooksController extends AppController
 	{
 		$book_id = $_GET['book_id'];
 		$book = $this->Book->findById($book_id); 
-		$this->log("Searching book $book_id got ".print_r($book, true));
+		$this->debug("Searching book $book_id got ".print_r($book, true));
 		$this->set('book', $book['Book']);
 		Controller::loadModel('Material');
 		$copies = $this->Material->findAllByBook_id($book_id);
-		$this->log("Searching copies for book $book_id got ".print_r($copies, true));
+		$this->debug("Searching copies for book $book_id got ".print_r($copies, true));
 		$rich_copies = array();
 		$i = 0;
 		foreach ($copies as $material)
@@ -68,11 +68,11 @@ class BooksController extends AppController
 				$copy['student'] = '-';
 				$copy['fine'] = '0.00';
 			}
-			$this->log("Adding the following copy ".print_r($copy, true));
+			$this->debug("Adding the following copy ".print_r($copy, true));
 			$rich_copies[$i] = $copy;
 			$i++;
 		}
-		$this->log("These are the rich copies ".print_r($rich_copies, true));
+		$this->debug("These are the rich copies ".print_r($rich_copies, true));
 		$this->set('copies', $rich_copies);
 	}
 
@@ -105,11 +105,11 @@ class BooksController extends AppController
 			$copy_id 	= $this->data['Book']['copy'];
 			$user_id	= $this->data['Book']['user'];
 			$loan = array('Loan'=>
-							array('material_id'=>$copy_id,
-								  'user_id'=>$user_id,
-								  'date_out'=>date('Y-m-d'),
-								  'status'=>'lent',
-								  'money'=>10));
+							array('material_id'	=> $copy_id,
+								  'user_id'		=> $user_id,
+								  'date_out'	=> date('Y-m-d'),
+								  'status'		=> 'lent',
+								  'money'		=> 10));
 			$this->Loan->create();
 			if ($this->Loan->save($loan))
 			{
@@ -130,12 +130,18 @@ class BooksController extends AppController
 		Controller::loadModel('User');
 		Controller::loadModel('Loan');
 
-		$book_id 	= $this->data['Book']['book'];
-		$copy_id 	= $this->data['Book']['copy'];
-		$book		= $this->Book->findById($book_id);
-		$copy		= $this->Material->findById($copy_id);
+		$copy_id = $this->data['Book']['copy'];
+		$this->Material->id = $copy_id;
+		$this->Material->saveField('status', 'available');
 
-		$this->redirect('view?book_id='.$book_id);	
+		$loan = $this->Loan->findByMaterial_id($copy_id); 
+		$this->Loan->id = $loan['Loan']['id'];
+		$this->Loan->set(array('date_in'	=> date('Y-m-d'),
+							   'status'		=> 'returned',
+							   'money'		=> 0));
+		$this->Loan->save();
+
+		$this->redirect('view?book_id='.$this->data['Book']['book']);	
 	}
 }
 
