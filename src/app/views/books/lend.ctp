@@ -14,7 +14,7 @@
 </table>
 
 <?php
-	echo $this->Form->create('Book', array('type'=>'post', 'action'=>'perform_lend'));
+	echo $this->Form->create('Book', array('type'=>'post', 'action'=>'do_lend'));
 ?>
 <table>
 	<tr>

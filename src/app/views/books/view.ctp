@@ -39,7 +39,7 @@
 				}
 				elseif ($copy['status'] == 'lent')
 				{
-					$action = 'perform_return';
+					$action = 'do_return';
 					$submit_label = 'return';
 				}
 				echo $this->Form->create('Book',

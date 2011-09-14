@@ -11,31 +11,31 @@ class BooksController extends AppController
 
 	function add()
 	{
-		if (!empty($this->data))
+	}
+
+	function do_add()
+	{
+		if ($this->Book->save($this->data))
 		{
-			if ($this->Book->save($this->data))
+			$book_id = $this->Book->id;
+			$copies = 1;
+			if ($this->data['Book']['copies'] > 1)
+				$copies = $this->data['Book']['copies'];
+			Controller::loadModel('Material');
+			for ($i = 1; $i <= $copies; $i++)
 			{
-				$book_id = $this->Book->id;
-				$copies = 1;
-				if ($this->data['Book']['copies'] > 1)
-					$copies = $this->data['Book']['copies'];
-				Controller::loadModel('Material');
-				for ($i = 1; $i <= $copies; $i++)
-				{
-					$new_material = array('Material'=>
-										  array('book_id'=>$book_id,
-												'status'=>'available',
-												'code'=>$i));
-					$this->Material->create();
-					$result = $this->Material->save($new_material);
-					$this->debug("Saving material returned ".print_r($result,
-																	 true));
-				}
-				$this->Session->setFlash('The book has been saved.');
-				$this->redirect(array('action' => 'index'));
+				$new_material = array('Material' =>
+									  array('book_id'	=> $book_id,
+											'status'	=> 'available',
+											'code'		=> $i));
+				$this->Material->create();
+				$result = $this->Material->save($new_material);
+				$this->debug("Saving material returned ".print_r($result, true));
 			}
+			$this->Session->setFlash('The book has been saved.');
 			$this->redirect(array('action' => 'index'));
 		}
+		$this->redirect(array('action' => 'index'));
 	}
 
 	function view()
@@ -94,7 +94,7 @@ class BooksController extends AppController
 		$this->set('users', $users);
 	}
 
-	function perform_lend()
+	function do_lend()
 	{
 		if ($this->data['Book']['do'] == 'lend')
 		{
@@ -124,7 +124,7 @@ class BooksController extends AppController
 		$this->redirect('view?book_id='.$this->data['Book']['book']);
 	}
 
-	function perform_return()
+	function do_return()
 	{
 		Controller::loadModel('Material');
 		Controller::loadModel('User');
@@ -134,7 +134,8 @@ class BooksController extends AppController
 		$this->Material->id = $copy_id;
 		$this->Material->saveField('status', 'available');
 
-		$loan = $this->Loan->findByMaterial_id($copy_id); 
+		$query = array('Loan.material_id' => $copy_id, 'Loan.status' => 'lent');
+		$loan = $this->Loan->find('first', array('conditions' => $query)); 
 		$this->Loan->id = $loan['Loan']['id'];
 		$this->Loan->set(array('date_in'	=> date('Y-m-d'),
 							   'status'		=> 'returned',
