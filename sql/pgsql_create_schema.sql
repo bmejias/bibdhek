@@ -49,14 +49,13 @@ CREATE TABLE group_users
 
 CREATE TABLE loans
 (
-	id			serial,
+	id			serial		PRIMARY KEY,
 	material_id	serial		REFERENCES materials(id),
 	user_id		serial		REFERENCES users(id),
 	date_out	date		NOT NULL,
 	date_in		date,
 	status		varchar(16)	NOT NULL,
-	money		int,
-	PRIMARY KEY (material_id, user_id) 
+	money		int
 );
 
 CREATE TABLE rules
