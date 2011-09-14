@@ -80,32 +80,30 @@ class BooksController extends AppController
 	{
 		Controller::loadModel('Material');
 		Controller::loadModel('User');
-		Controller::loadModel('Loan');
 
-//		$this->log("This is the from data:\n".print_r($this->data, true));
-//		$this->redirect('../books');
-
-		$book_id 	= $this->data['Book']['book'];
-		$copy_id 	= $this->data['Book']['copy'];
-		$book		= $this->Book->findById($book_id);
-		$copy		= $this->Material->findById($copy_id);
+		$book	= $this->Book->findById($this->data['Book']['book']);
+		$copy	= $this->Material->findById($this->data['Book']['copy']);
 		$this->set('book', $book['Book']);
 		$this->set('copy', $copy['Material']);
 
-		if (empty($this->data['Book']['user']))
-		{
-			/* need to select the user */
-			$all_users = $this->User->find('all');
-			$users = array();
-			foreach ($all_users as $user)
-				$users[$user['User']['id']] = $user['User']['first_name']." ".
-											  $user['User']['last_name'];
-			$this->set('users', $users);
-		}
-		elseif ($this->data['Book']['do'] == 'lend')
+		$all_users	= $this->User->find('all');
+		$users		= array();
+		foreach ($all_users as $user)
+			$users[$user['User']['id']] = $user['User']['first_name']." ".
+										  $user['User']['last_name'];
+		$this->set('users', $users);
+	}
+
+	function perform_lend()
+	{
+		if ($this->data['Book']['do'] == 'lend')
 		{
 			/* perform the loan */
-			$user_id = $this->data['Book']['user'];
+			Controller::loadModel('Loan');
+			Controller::loadModel('Material');
+
+			$copy_id 	= $this->data['Book']['copy'];
+			$user_id	= $this->data['Book']['user'];
 			$loan = array('Loan'=>
 							array('material_id'=>$copy_id,
 								  'user_id'=>$user_id,
@@ -118,19 +116,19 @@ class BooksController extends AppController
 				$this->Material->id = $copy_id;
 				$this->Material->saveField('status', 'lent');
 				$this->Session->setFlash('The book has been lent.');
-				$this->redirect('view?book_id='.$book_id);
 			}
 		}
-		elseif ($this->data['Book']['do'] == 'cancel')
-		{
-			$this->redirect('view?book_id='.$book_id);
-		}
+		/* if the action is to cancel the loan, do nothing */
+		/* elseif ($this->data['Book']['do'] == 'cancel') */
+		/* redirect to book's view in any case */
+		$this->redirect('view?book_id='.$this->data['Book']['book']);
 	}
 
-	function return_book()
+	function perform_return()
 	{
 		Controller::loadModel('Material');
 		Controller::loadModel('User');
+		Controller::loadModel('Loan');
 
 		$book_id 	= $this->data['Book']['book'];
 		$copy_id 	= $this->data['Book']['copy'];

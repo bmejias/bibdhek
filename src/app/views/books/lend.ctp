@@ -14,7 +14,7 @@
 </table>
 
 <?php
-	echo $this->Form->create('Book', array('type'=>'post', 'action'=>'lend'));
+	echo $this->Form->create('Book', array('type'=>'post', 'action'=>'perform_lend'));
 ?>
 <table>
 	<tr>
@@ -31,7 +31,7 @@
 </table>
 <?php
 	echo $this->Form->submit('Lend book', array('name'=>'lend'));
-	echo $this->Form->submit('Cancel', array('name'=>'cancel'););
+	echo $this->Form->submit('Cancel', array('name'=>'cancel'));
 	echo $this->Form->end();
 	//echo $this->Form->end('Cancel');
 ?>
