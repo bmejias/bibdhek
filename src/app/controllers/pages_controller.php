@@ -1,8 +1,5 @@
 <?php
 /**
- * Static content controller.
- *
- * This file will render views from views/pages/
  *
  * PHP versions 4 and 5
  *
@@ -21,13 +18,9 @@
  */
 
 /**
- * Static content controller
+ * This controller is based on the original page_controller.php distributed 
+ * with CakePHP 1.3
  *
- * Override this controller by placing a copy in controllers directory of an application
- *
- * @package       cake
- * @subpackage    cake.cake.libs.controller
- * @link http://book.cakephp.org/view/958/The-Pages-Controller
  */
 class PagesController extends AppController {
 
@@ -86,6 +79,10 @@ class PagesController extends AppController {
 	function admin()
 	{
 		/* should verify that the user has rights to administrate */
-		;
+	}
+
+	function search()
+	{
+		/* should verify that the user has rights to administrate */
 	}
 }
