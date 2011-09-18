@@ -2,7 +2,7 @@
 
 <?php
 
-echo $this->Form->create('search', array('action' => '../pages/do_search'));
+echo $this->Form->create('search', array('action' => '../search/do_search'));
 echo $this->Form->input('query', array('text' => 'Search'));
 echo $this->Form->submit('Search', array('name'=>'search'));
 

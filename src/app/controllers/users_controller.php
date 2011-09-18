@@ -59,6 +59,10 @@ class UsersController extends AppController
 				$this->Session->setFlash('Passwords do not match - Try again');
 		}
 	}
+
+	function status()
+	{
+	}
 }
 
 ?>
