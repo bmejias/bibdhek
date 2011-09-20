@@ -6,6 +6,10 @@ class SearchController extends AppController
 	var $uses		= array();
 	var $useTable	= false;
 
+	function index()
+	{
+	}
+
 	function do_search()
 	{
 		
@@ -24,10 +28,6 @@ class SearchController extends AppController
 		$this->set('books', $books);
 		$this->set('users', $users);
 		$this->render('../search/results');
-	}
-
-	function index()
-	{
 	}
 
 	function results()
