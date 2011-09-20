@@ -41,10 +41,9 @@ CREATE TABLE groups
 
 CREATE TABLE group_users
 (
-	id			serial,
+	id			serial	PRIMARY KEY,
 	user_id		serial	REFERENCES users(id),
-	group_id	serial	REFERENCES groups(id),
-	PRIMARY KEY (user_id, group_id)
+	group_id	serial	REFERENCES groups(id)
 );
 
 CREATE TABLE loans
@@ -55,7 +54,7 @@ CREATE TABLE loans
 	date_out	date		NOT NULL,
 	date_in		date,
 	status		varchar(16)	NOT NULL,
-	money		int
+	money		money
 );
 
 CREATE TABLE rules
