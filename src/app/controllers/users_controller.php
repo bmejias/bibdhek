@@ -63,6 +63,10 @@ class UsersController extends AppController
 	function status()
 	{
 	}
+
+	function view()
+	{
+	}
 }
 
 ?>

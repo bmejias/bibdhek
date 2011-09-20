@@ -23,7 +23,7 @@ class SearchController extends AppController
 		$users	= $this->search_in($this->User, $user_fields, $the_query);
 		$this->set('books', $books);
 		$this->set('users', $users);
-		$this->redirect('../search/results');
+		$this->render('../search/results');
 	}
 
 	function index()
@@ -32,6 +32,7 @@ class SearchController extends AppController
 
 	function results()
 	{
+		$this->log("The controller of the results has been called!");
 	}
 
 	/*-----------------------------------------------------------------------

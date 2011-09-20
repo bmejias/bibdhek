@@ -5,13 +5,13 @@
 <table>
 	<thead>
 		<tr>
-			<th>id</th>
-			<th>title</th>
-			<th>author</th>
-			<th>cd</th>
-			<th>level</th>
-			<th>lang</th>
-			<th>isbn</th>
+			<th>Id</th>
+			<th>Title</th>
+			<th>Author</th>
+			<th>Level</th>
+			<th>Lang</th>
+			<th>CD</th>
+			<th>ISBN</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -24,9 +24,9 @@
 				?>
 			</td>
 			<td><?php echo $book['Book']['author']; ?></td>
-			<td><?php echo $book['Book']['cd']; ?></td>
 			<td><?php echo $book['Book']['level']; ?></td>
 			<td><?php echo $book['Book']['lang']; ?></td>
+			<td><?php echo $book['Book']['cd']; ?></td>
 			<td><?php echo $book['Book']['isbn']; ?></td>
 		</tr>
 		<?php endforeach; ?>
