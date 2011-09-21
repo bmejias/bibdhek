@@ -53,7 +53,7 @@ class BooksController extends AppController
 								  'user_id'		=> $user_id,
 								  'date_out'	=> date('Y-m-d'),
 								  'status'		=> 'lent',
-								  'money'		=> 10));
+								  'fine'		=> 0.5));
 			$this->Loan->create();
 			if ($this->Loan->save($loan))
 			{
@@ -83,7 +83,7 @@ class BooksController extends AppController
 		$this->Loan->id = $loan['Loan']['id'];
 		$this->Loan->set(array('date_in'	=> date('Y-m-d'),
 							   'status'		=> 'returned',
-							   'money'		=> 0));
+							   'fine'		=> 0.0));
 		$this->Loan->save();
 
 		$this->redirect('view?book_id='.$this->data['Book']['book']);	
@@ -132,13 +132,13 @@ class BooksController extends AppController
 				$user = $this->User->findById($loan['Loan']['user_id']);
 				$copy['student'] = $user['User']['first_name']." ".
 								   $user['User']['last_name'];
-				$copy['fine'] = $loan['Loan']['money'];
+				$copy['fine'] = $loan['Loan']['fine'];
 			}
 			else
 			{
 				/* status is available or not_to_lend */
 				$copy['student'] = '-';
-				$copy['fine'] = '0.00';
+				$copy['fine'] = '-';
 			}
 			$this->debug("Adding the following copy ".print_r($copy, true));
 			$rich_copies[$i] = $copy;
