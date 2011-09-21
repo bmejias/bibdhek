@@ -16,7 +16,7 @@ class SearchController extends AppController
 		Controller::loadModel('Book');
 		Controller::loadModel('User');
 		$this->debug("Getting the form ".print_r($this->data, true));
-		$the_query		= strtolower($this->data['search']['query']);
+		$the_query		= $this->data['search']['query'];
 		$book_fields	= array('Book.title',
 								'Book.author',
 								'Book.level');
@@ -48,7 +48,8 @@ class SearchController extends AppController
 		$or_conditions	= array();
 		$final_conditions = array();
 
-		$queries = explode(" ", $full_query);
+		$full_query	= strtolower($full_query);
+		$queries	= explode(" ", $full_query);
 		foreach ($fields as $f)
 		{
 			array_push($conditions, array("LOWER($f) Like" => "%$full_query%"));
