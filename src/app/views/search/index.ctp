@@ -10,7 +10,8 @@ $options = array('all'		=> 'all',
 				 'title'	=> 'title',
 				 'author'	=> 'author',
 				 'user'		=> 'user');
-echo $this->Form->radio('options', $options);
+$attribs = array('value'	=> 'all',
+				 'legend'	=> false);
+echo $this->Form->radio('options', $options, $attribs);
 echo $this->Form->end();
 ?>
-

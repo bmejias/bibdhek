@@ -17,14 +17,26 @@ class SearchController extends AppController
 		Controller::loadModel('User');
 		$this->debug("Getting the form ".print_r($this->data, true));
 		$the_query		= $this->data['search']['query'];
-		$book_fields	= array('Book.title',
-								'Book.author',
-								'Book.level');
+		$option			= $this->data['search']['options'];
+		/* define search fields for books depending on optinos. Using record 
+		 * instead of if statements.
+		 */
+		$book_fields_by_option = array('title'	=> array('Book.title'),
+									   'author'	=> array('Book.author'),
+									   'all'	=> array('Book.title',
+														 'Book.author',
+														 'Book.level'));
+		$book_fields	= $book_fields_by_option[$option];
 		$user_fields	= array('User.username',
 								'User.first_name',
 								'User.last_name');
-		$books	= $this->search_in($this->Book, $book_fields, $the_query);
-		$users	= $this->search_in($this->User, $user_fields, $the_query);
+		/* perform search depending on options */
+		$books = array();
+		$users = array();
+		if ($option == 'all' || $option == 'title' || $option == 'author')
+			$books	= $this->search_in($this->Book, $book_fields, $the_query);
+		if ($option == 'all' || $option == 'user')
+			$users	= $this->search_in($this->User, $user_fields, $the_query);
 		$this->set('books', $books);
 		$this->set('users', $users);
 		$this->render('../search/results');
@@ -32,7 +44,7 @@ class SearchController extends AppController
 
 	function results()
 	{
-		$this->log("The controller of the results has been called!");
+		$this->debug("The controller of the results has been called!");
 	}
 
 	/*-----------------------------------------------------------------------
