@@ -40,7 +40,11 @@ class BooksController extends AppController
 
 	function do_lend()
 	{
-		if ($this->data['Book']['do'] == 'lend')
+		$this->debug("THE DATA----------------------");
+		$this->debug(print_r($this->data, true));
+		$this->debug("THE BOOK----------------------");
+		$this->debug(print_r($this->data['Book'], true));
+		if (isset($this->data['Book']['lend']))
 		{
 			/* perform the loan */
 			Controller::loadModel('Loan');
@@ -93,6 +97,7 @@ class BooksController extends AppController
 	{
 		Controller::loadModel('Material');
 		Controller::loadModel('User');
+		Controller::loadModel('Rule');
 
 		$book	= $this->Book->findById($this->data['Book']['book']);
 		$copy	= $this->Material->findById($this->data['Book']['copy']);
@@ -104,8 +109,10 @@ class BooksController extends AppController
 		foreach ($all_users as $user)
 			$users[$user['User']['id']] = $user['User']['first_name']." ".
 										  $user['User']['last_name'];
-		$this->set('date_out', date("d-m-Y"));
-		$this->set('date_in', date("d-m-Y"));
+		$now 		= time();
+		$date_in	= $this->Rule->get_date_in($now);
+		$this->set('date_out', date("d-m-Y", $now));
+		$this->set('date_in', date("d-m-Y", $date_in));
 		$this->set('users', $users);
 	}
 

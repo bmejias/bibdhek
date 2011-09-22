@@ -64,7 +64,6 @@ echo $this->Form->create('Book', array('type'=>'post', 'action'=>'do_lend'));
 			<?php
 				echo $this->Form->hidden('book', array('value'=>$book['id']));
 				echo $this->Form->hidden('copy', array('value'=>$copy['id']));
-				echo $this->Form->hidden('do', array('value'=>'lend'));
 				echo $this->Form->select('user', $users);
 			?>
 		</td>
@@ -72,9 +71,8 @@ echo $this->Form->create('Book', array('type'=>'post', 'action'=>'do_lend'));
 </table>
 
 <?php
-echo $this->Form->submit('Lend book', array('name'=>'lend'));
-echo $this->Form->submit('Cancel', array('name'=>'cancel'));
+echo $this->Form->submit('Lend book', array('name'=>'data[Book][lend]'));
+echo $this->Form->submit('Cancel', array('name'=>'data[Book][cancel]'));
 echo $this->Form->end();
-//echo $this->Form->end('Cancel');
 ?>
 

@@ -21,12 +21,12 @@ class SearchController extends AppController
 		/* define search fields for books depending on optinos. Using record 
 		 * instead of if statements.
 		 */
-		$book_fields_by_option = array('title'	=> array('Book.title'),
-									   'author'	=> array('Book.author'),
-									   'all'	=> array('Book.title',
-														 'Book.author',
-														 'Book.level'));
-		$book_fields	= $book_fields_by_option[$option];
+		$book_option_fields = array('title'	=> array('Book.title'),
+									'author'=> array('Book.author'),
+									'all'	=> array('Book.title',
+													 'Book.author',
+													 'Book.level'));
+		$book_fields	= $book_option_fields[$option];
 		$user_fields	= array('User.username',
 								'User.first_name',
 								'User.last_name');
