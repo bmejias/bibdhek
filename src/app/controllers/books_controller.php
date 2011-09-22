@@ -104,6 +104,8 @@ class BooksController extends AppController
 		foreach ($all_users as $user)
 			$users[$user['User']['id']] = $user['User']['first_name']." ".
 										  $user['User']['last_name'];
+		$this->set('date_out', date("d-m-Y"));
+		$this->set('date_in', date("d-m-Y"));
 		$this->set('users', $users);
 	}
 

@@ -2,6 +2,9 @@
 
 <h2><?php echo $book['title']; ?></h2>
 
+<?php
+echo $this->Form->create('Book', array('type'=>'post', 'action'=>'do_lend'));
+?>
 <table>
 	<tr>
 		<td>Author</td>
@@ -11,12 +14,50 @@
 		<td>Taal</td>
 		<td><?php echo $book['lang']; ?></td>
 	</tr>
-</table>
-
-<?php
-	echo $this->Form->create('Book', array('type'=>'post', 'action'=>'do_lend'));
-?>
-<table>
+	<tr>
+		<td>Niveau</td>
+		<td><?php echo ($book['level'] == '') ? '-' : $book['level']; ?></td>
+	</tr>
+	<tr>
+		<td>Code</td>
+		<td><?php echo $copy['code']; ?></td>
+	</tr>
+	<?php if ($book['cd']) : ?>
+		<tr>
+			<td>
+				<?php
+					echo $this->Form->input('cd', array('type'  => 'checkbox',
+														'label' => 'CD',
+														'value' => 'true'));
+				?>
+			</td>
+			<td>
+				<?php
+					echo $this->Form->input('deposit', array('type'  => 'text',
+															 'label' => 'Deposit',
+															 'size'  => 5));
+				?>
+			</td>
+		</tr>
+	<?php endif; ?>
+	<tr>
+		<td>
+			<?php
+				echo $this->Form->input('date_out', array('type'  => 'text',
+														  'label' => 'Date out',
+														  'size'  => 10,
+														  'value' => $date_out));
+			?>
+		</td>
+		<td>
+			<?php
+				echo $this->Form->input('date_in', array('type'  => 'text',
+														 'label' => 'Date in',
+														 'size'  => 10,
+														 'value' => $date_in));
+			?>
+		</td>
+	</tr>
 	<tr>
 		<td>User</td>
 		<td>
@@ -29,10 +70,11 @@
 		</td>
 	</tr>
 </table>
+
 <?php
-	echo $this->Form->submit('Lend book', array('name'=>'lend'));
-	echo $this->Form->submit('Cancel', array('name'=>'cancel'));
-	echo $this->Form->end();
-	//echo $this->Form->end('Cancel');
+echo $this->Form->submit('Lend book', array('name'=>'lend'));
+echo $this->Form->submit('Cancel', array('name'=>'cancel'));
+echo $this->Form->end();
+//echo $this->Form->end('Cancel');
 ?>
 
