@@ -52,6 +52,7 @@ CREATE TABLE loans
 	material_id	serial		REFERENCES materials(id),
 	user_id		serial		REFERENCES users(id),
 	date_out	date		NOT NULL,
+	date_return	date,
 	date_in		date,
 	status		varchar(16)	NOT NULL,
 	deposit		numeric(4, 2),
