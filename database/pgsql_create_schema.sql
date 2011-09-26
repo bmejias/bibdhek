@@ -51,10 +51,11 @@ CREATE TABLE loans
 	id			serial		PRIMARY KEY,
 	material_id	serial		REFERENCES materials(id),
 	user_id		serial		REFERENCES users(id),
+	status		varchar(16)	NOT NULL,
 	date_out	date		NOT NULL,
 	date_return	date,
 	date_in		date,
-	status		varchar(16)	NOT NULL,
+	cd			boolean		DEFAULT FALSE,
 	deposit		numeric(4, 2)	DEFAULT 0,
 	fine		numeric(4, 2)	DEFAULT 0,
 	paid		numeric(4, 2)	DEFAULT 0
