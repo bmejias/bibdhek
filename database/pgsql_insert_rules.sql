@@ -1,6 +1,6 @@
 /* default amount of days a book is lent */
 INSERT INTO rules (rule, amount, note)
-	VALUES ('lend', 14, 'days');
+	VALUES ('lend', 21, 'days');
 
 /* amount of delayed days to apply a fine */
 INSERT INTO rules (rule, amount, note)
@@ -12,5 +12,9 @@ INSERT INTO rules (rule, amount, note)
 
 /* deposit in case of taken media material */
 INSERT INTO rules (rule, amount, note)
-	VALUES ('deposit', 50, 'cents');
+	VALUES ('deposit', 100, 'cents');
+
+/* maximum amount of books that a user can lend */
+INSERT INTO rules (rule, amount, note)
+	VALUES ('max_books', 3, 'books');
 
