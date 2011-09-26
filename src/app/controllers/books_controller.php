@@ -109,10 +109,12 @@ class BooksController extends AppController
 		foreach ($all_users as $user)
 			$users[$user['User']['id']] = $user['User']['first_name']." ".
 										  $user['User']['last_name'];
-		$now 		= time();
-		$date_in	= $this->Rule->get_date_in($now);
+		$now = time();
+		$date_return = $this->Rule->get_date_return($now);
+		$deposit = $this->Rule->get_deposit();
 		$this->set('date_out', date("d-m-Y", $now));
-		$this->set('date_in', date("d-m-Y", $date_in));
+		$this->set('date_return', date("d-m-Y", $date_return));
+		$this->set('deposit', $deposit);
 		$this->set('users', $users);
 	}
 

@@ -1,5 +1,20 @@
 <!-- File: /app/views/books/lend.ctp -->
 
+<?php
+/* Move the following function to a standard place for reusable code */
+function toCurrency($amount)
+{
+	$no_cents = $amount * 100;
+	if ($no_cents % 100 == 0)
+		return $amount.".00";
+	elseif ($no_cents % 10 == 0)
+		return $amount."0";
+	else
+		return "".$amount;
+}
+
+?>
+
 <h2><?php echo $book['title']; ?></h2>
 
 <?php
@@ -28,14 +43,18 @@ echo $this->Form->create('Book', array('type'=>'post', 'action'=>'do_lend'));
 				<?php
 					echo $this->Form->input('cd', array('type'  => 'checkbox',
 														'label' => 'CD',
-														'value' => 'true'));
+														'checked'=> true));
+//														'checked'=> true,
+//														'value' => 'cd'));
 				?>
 			</td>
 			<td>
 				<?php
-					echo $this->Form->input('deposit', array('type'  => 'text',
-															 'label' => 'Deposit',
-															 'size'  => 5));
+					echo $this->Form->input('deposit',
+											array('type'  => 'text',
+												  'label' => 'Deposit',
+												  'value' => toCurrency($deposit),
+												  'size'  => 5));
 				?>
 			</td>
 		</tr>
@@ -51,10 +70,11 @@ echo $this->Form->create('Book', array('type'=>'post', 'action'=>'do_lend'));
 		</td>
 		<td>
 			<?php
-				echo $this->Form->input('date_in', array('type'  => 'text',
-														 'label' => 'Date in',
-														 'size'  => 10,
-														 'value' => $date_in));
+				echo $this->Form->input('date_return',
+										array('type'  => 'text',
+											  'label' => 'Return on',
+											  'size'  => 10,
+											  'value' => $date_return));
 			?>
 		</td>
 	</tr>
