@@ -38,26 +38,37 @@ class BooksController extends AppController
 		$this->redirect(array('action' => 'index'));
 	}
 
+	/* pre: $this->data['Book']['user'] should be a valid user */
+	/* pre: $this->data['Book']['copy'] should be a valid material */
 	function do_lend()
 	{
+		$this->helpers[] = 'Time';
 		$this->debug("THE DATA----------------------");
 		$this->debug(print_r($this->data, true));
 		$this->debug("THE BOOK----------------------");
 		$this->debug(print_r($this->data['Book'], true));
-		if (isset($this->data['Book']['lend']))
+		$input = $this->data['Book'];
+		if (isset($input['lend']))
 		{
 			/* perform the loan */
 			Controller::loadModel('Loan');
 			Controller::loadModel('Material');
 
-			$copy_id 	= $this->data['Book']['copy'];
-			$user_id	= $this->data['Book']['user'];
+			$copy_id	= $input['copy'];
+			$user_id	= $input['user'];
+
 			$loan = array('Loan'=>
 							array('material_id'	=> $copy_id,
 								  'user_id'		=> $user_id,
-								  'date_out'	=> date('Y-m-d'),
-								  'status'		=> 'lent',
-								  'fine'		=> 0.5));
+								  'date_out'	=> $input['date_out'],
+								  'date_return'	=> $input['date_return'],
+								  'status'		=> 'lent'));
+			if ($input['cd'])
+			{
+				$loan['Loan']['cd']	= true;
+				$loan['Loan']['deposit'] = $input['deposit'];
+			}
+
 			$this->Loan->create();
 			if ($this->Loan->save($loan))
 			{
@@ -67,9 +78,9 @@ class BooksController extends AppController
 			}
 		}
 		/* if the action is to cancel the loan, do nothing */
-		/* elseif ($this->data['Book']['do'] == 'cancel') */
+		/* elseif ($input['do'] == 'cancel') */
 		/* redirect to book's view in any case */
-		$this->redirect('view?book_id='.$this->data['Book']['book']);
+		$this->redirect('view?book_id='.$input['book']);
 	}
 
 	function do_return()
@@ -112,8 +123,8 @@ class BooksController extends AppController
 		$now = time();
 		$date_return = $this->Rule->get_date_return($now);
 		$deposit = $this->Rule->get_deposit();
-		$this->set('date_out', date("d-m-Y", $now));
-		$this->set('date_return', date("d-m-Y", $date_return));
+		$this->set('date_out', date('Y-m-d', $now));
+		$this->set('date_return', date('Y-m-d', $date_return));
 		$this->set('deposit', $deposit);
 		$this->set('users', $users);
 	}
