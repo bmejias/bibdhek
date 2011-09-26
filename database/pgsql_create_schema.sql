@@ -55,9 +55,9 @@ CREATE TABLE loans
 	date_return	date,
 	date_in		date,
 	status		varchar(16)	NOT NULL,
-	deposit		numeric(4, 2),
-	fine		numeric(4, 2),
-	paid		numeric(4, 2)
+	deposit		numeric(4, 2)	DEFAULT 0,
+	fine		numeric(4, 2)	DEFAULT 0,
+	paid		numeric(4, 2)	DEFAULT 0
 );
 
 CREATE TABLE rules
