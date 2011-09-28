@@ -26,7 +26,31 @@ echo $this->Form->create('Book', array('type'=>'post', 'action'=>'do_lend'));
 		<td>Code</td>
 		<td><?php echo $copy['code']; ?></td>
 	</tr>
-	<?php if ($book['cd']) : ?>
+	<tr>
+		<td>User</td>
+		<td><?php echo $student; ?></td>
+	</tr>
+	<tr>
+		<td>Date out</td>
+		<td><?php echo $loan['date_out']; ?></td>
+	</tr>
+	<tr>
+		<td>To return on</td>
+		<td><?php echo $loan['date_return']; ?></td>
+	</tr>
+	<tr>
+		<td>Date of return</td>
+		<td>
+			<?php
+				echo $this->Form->input('date_in',
+										array('type'  => 'text',
+											  'label' => '',
+											  'size'  => 10,
+											  'value' => $today));
+			?>
+		</td>
+	</tr>
+	<?php if ($loan['cd']) : ?>
 		<tr>
 			<td>
 				<?php
@@ -37,48 +61,25 @@ echo $this->Form->create('Book', array('type'=>'post', 'action'=>'do_lend'));
 			</td>
 			<td>
 				<?php
+					$deposit = toCurrency($loan['deposit']);
 					echo $this->Form->input('deposit',
 											array('type'  => 'text',
 												  'label' => 'Deposit',
-												  'value' => toCurrency($deposit),
+												  'value' => $deposit,
 												  'size'  => 5));
 				?>
 			</td>
 		</tr>
 	<?php endif; ?>
-	<tr>
-		<td>
-			<?php
-				echo $this->Form->input('date_out', array('type'  => 'text',
-														  'label' => 'Date out',
-														  'size'  => 10,
-														  'value' => $date_out));
-			?>
-		</td>
-		<td>
-			<?php
-				echo $this->Form->input('date_return',
-										array('type'  => 'text',
-											  'label' => 'Return on',
-											  'size'  => 10,
-											  'value' => $date_return));
-			?>
-		</td>
-	</tr>
-	<tr>
-		<td>User</td>
-		<td>
-			<?php
-				echo $this->Form->hidden('book', array('value'=>$book['id']));
-				echo $this->Form->hidden('copy', array('value'=>$copy['id']));
-				echo $this->Form->select('user', $users);
-			?>
-		</td>
-	</tr>
+	<?php
+		echo $this->Form->hidden('book', array('value'=>$book['id']));
+		echo $this->Form->hidden('copy', array('value'=>$copy['id']));
+		echo $this->Form->hidden('loan', array('value'=>$loan['id']));
+	?>
 </table>
 
 <?php
-echo $this->Form->submit('Lend book', array('name'=>'data[Book][lend]'));
+echo $this->Form->submit('Return book', array('name'=>'data[Book][return]'));
 echo $this->Form->submit('Cancel', array('name'=>'data[Book][cancel]'));
 echo $this->Form->end();
 ?>

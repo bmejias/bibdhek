@@ -106,14 +106,8 @@ class BooksController extends AppController
 
 	function lend()
 	{
-		Controller::loadModel('Material');
 		Controller::loadModel('User');
 		Controller::loadModel('Rule');
-
-		$book	= $this->Book->findById($this->data['Book']['book']);
-		$copy	= $this->Material->findById($this->data['Book']['copy']);
-		$this->set('book', $book['Book']);
-		$this->set('copy', $copy['Material']);
 
 		$all_users	= $this->User->find('all');
 		$users		= array();
@@ -123,10 +117,36 @@ class BooksController extends AppController
 		$now = time();
 		$date_return = $this->Rule->get_date_return($now);
 		$deposit = $this->Rule->get_deposit();
+
 		$this->set('date_out', date('Y-m-d', $now));
 		$this->set('date_return', date('Y-m-d', $date_return));
 		$this->set('deposit', $deposit);
 		$this->set('users', $users);
+		$this->setBookAndCopy($this->data['Book']);
+	}
+
+	function return_it()
+	{
+		Controller::loadModel('User');
+		Controller::loadModel('Loan');
+
+		$this->debug("The data is ".print_r($this->data, true));
+		$user = $this->User->findById($this->data['Book']['user_id']);
+		$student = $user['User']['first_name']." ".$user['User']['last_name'];
+
+		/* it is assumed that loan contains already the right deposit, fine,
+		 * and already paid money.
+		 */
+		$loan		= $this->Loan->findById($this->data['Book']['loan_id']);
+		$fine		= $loan['Loan']['fine'] - $loan['Loan']['paid'];
+
+		$this->set('student', $student);
+		$this->set('fine', $fine);
+		$this->set('loan', $loan['Loan']);
+		$this->set('today', date('Y-m-d', time()));
+		$this->set('user_id', $this->data['Book']['user_id']);
+		$this->set('loan_id', $this->data['Book']['loan_id']);
+		$this->setBookAndCopy($this->data['Book']);
 	}
 
 	function view()
@@ -152,6 +172,8 @@ class BooksController extends AppController
 				$loan = $this->Loan->find('first',
 										  array('conditions' => $query));
 				$user = $this->User->findById($loan['Loan']['user_id']);
+				$copy['loan_id'] = $loan['Loan']['id'];
+				$copy['user_id'] = $loan['Loan']['user_id'];
 				$copy['student'] = $user['User']['first_name']." ".
 								   $user['User']['last_name'];
 				$copy['fine'] = $loan['Loan']['fine'];
@@ -159,8 +181,10 @@ class BooksController extends AppController
 			else
 			{
 				/* status is available or not_to_lend */
-				$copy['student'] = '-';
-				$copy['fine'] = '-';
+				$copy['loan_id']	= '-';
+				$copy['user_id']	= '-';
+				$copy['student']	= '-';
+				$copy['fine']		= '-';
 			}
 			$this->debug("Adding the following copy ".print_r($copy, true));
 			$rich_copies[$i] = $copy;
@@ -168,6 +192,20 @@ class BooksController extends AppController
 		}
 		$this->debug("These are the rich copies ".print_r($rich_copies, true));
 		$this->set('copies', $rich_copies);
+	}
+
+	/*-----------------------------------------------------------------------
+	 * Functions to help the controllers
+	 *-----------------------------------------------------------------------
+	 */
+	private function setBookAndCopy($data)
+	{
+		Controller::loadModel('Material');
+		$book	= $this->Book->findById($data['book']);
+		$copy	= $this->Material->findById($data['copy']);
+		$this->set('book', $book['Book']);
+		$this->set('copy', $copy['Material']);
+
 	}
 
 }

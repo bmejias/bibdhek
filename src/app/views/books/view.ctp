@@ -39,14 +39,18 @@
 				}
 				elseif ($copy['status'] == 'lent')
 				{
-					$action = 'do_return';
+					$action = 'return_it';
 					$submit_label = 'return';
 				}
 				echo $this->Form->create('Book',
-										 array('type'=>'post',
-											   'action'=>$action));
-				echo $this->Form->hidden('book', array('value'=>$book['id']));
-				echo $this->Form->hidden('copy', array('value'=>$copy['id']));
+										 array('type' => 'post',
+											   'action' => $action));
+				echo $this->Form->hidden('book', array('value' => $book['id']));
+				echo $this->Form->hidden('copy', array('value' => $copy['id']));
+				echo $this->Form->hidden('user_id',
+										 array('value' => $copy['user_id']));
+				echo $this->Form->hidden('loan_id',
+										 array('value' => $copy['loan_id']));
 				echo $this->Form->end($submit_label);
 				?>
 			</td>

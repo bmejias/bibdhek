@@ -34,9 +34,9 @@ class SearchController extends AppController
 		$books = array();
 		$users = array();
 		if ($option == 'all' || $option == 'title' || $option == 'author')
-			$books	= $this->search_in($this->Book, $book_fields, $the_query);
+			$books	= $this->searchIn($this->Book, $book_fields, $the_query);
 		if ($option == 'all' || $option == 'user')
-			$users	= $this->search_in($this->User, $user_fields, $the_query);
+			$users	= $this->searchIn($this->User, $user_fields, $the_query);
 		$this->set('books', $books);
 		$this->set('users', $users);
 		$this->render('../search/results');
@@ -51,7 +51,7 @@ class SearchController extends AppController
 	 * Functions to help the controllers
 	 *-----------------------------------------------------------------------
 	 */
-	private function search_in($model, $fields, $full_query)
+	private function searchIn($model, $fields, $full_query)
 	{
 		/* Implementation based on "Simple search in CakePHP using find 
 		 * conditions", posted by saravana at CakePHP's bakery.
