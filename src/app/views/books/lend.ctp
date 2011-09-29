@@ -7,7 +7,7 @@ include('../views/helpers/lib.php');
 <h2><?php echo $book['title']; ?></h2>
 
 <?php
-echo $this->Form->create('Book', array('type'=>'post', 'action'=>'do_lend'));
+echo $this->Form->create('Loan', array('type'=>'post', 'action'=>'../loans/lend'));
 ?>
 <table>
 	<tr>
@@ -78,8 +78,8 @@ echo $this->Form->create('Book', array('type'=>'post', 'action'=>'do_lend'));
 </table>
 
 <?php
-echo $this->Form->submit('Lend book', array('name'=>'data[Book][lend]'));
-echo $this->Form->submit('Cancel', array('name'=>'data[Book][cancel]'));
+echo $this->Form->submit('Lend book', array('name'=>'data[Loan][lend]'));
+echo $this->Form->submit('Cancel', array('name'=>'data[Loan][cancel]'));
 echo $this->Form->end();
 ?>
 

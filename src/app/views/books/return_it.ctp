@@ -7,7 +7,7 @@ include('../views/helpers/lib.php');
 <h2><?php echo $book['title']; ?></h2>
 
 <?php
-echo $this->Form->create('Book', array('type'=>'post', 'action'=>'do_lend'));
+echo $this->Form->create('Loan', array('type'=>'post', 'action'=>'../loans/return_book'));
 ?>
 <table>
 	<tr>
@@ -88,17 +88,17 @@ echo $this->Form->create('Book', array('type'=>'post', 'action'=>'do_lend'));
 		</td>	
 	</tr>
 	<?php
-		echo $this->Form->hidden('book', array('value'=>$book['id']));
-		echo $this->Form->hidden('copy', array('value'=>$copy['id']));
-		echo $this->Form->hidden('loan', array('value'=>$loan['id']));
+		echo $this->Form->hidden('book_id', array('value'=>$book['id']));
+		echo $this->Form->hidden('copy_id', array('value'=>$copy['id']));
+		echo $this->Form->hidden('loan_id', array('value'=>$loan['id']));
 	?>
 </table>
 
 <?php
-echo $this->Form->submit('Full Return', array('name'=>'data[Book][full]'));
-echo $this->Form->submit('Only pay fine', array('name'=>'data[Book][pay]'));
-echo $this->Form->submit('Only return book', array('name'=>'data[Book][return]'));
-echo $this->Form->submit('Cancel', array('name'=>'data[Book][cancel]'));
+echo $this->Form->submit('Full Return', array('name'=>'data[Loan][full]'));
+echo $this->Form->submit('Only pay fine', array('name'=>'data[Loan][pay]'));
+echo $this->Form->submit('Only return book', array('name'=>'data[Loan][return]'));
+echo $this->Form->submit('Cancel', array('name'=>'data[Loan][cancel]'));
 echo $this->Form->end();
 ?>
 
