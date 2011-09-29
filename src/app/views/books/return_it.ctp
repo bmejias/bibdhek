@@ -71,6 +71,22 @@ echo $this->Form->create('Book', array('type'=>'post', 'action'=>'do_lend'));
 			</td>
 		</tr>
 	<?php endif; ?>
+	<tr>
+		<td>Fine</td>
+		<td><?php echo toCurrency($fine); ?></td>
+	</tr>
+	<tr>
+		<td>Pay</td>
+		<td>
+			<?php
+				echo $this->Form->input('to_pay',
+										array('type'	=> 'text',
+											  'label'	=> '',
+											  'value'	=> toCurrency($fine),
+											  'size'	=> 5));
+			?>
+		</td>	
+	</tr>
 	<?php
 		echo $this->Form->hidden('book', array('value'=>$book['id']));
 		echo $this->Form->hidden('copy', array('value'=>$copy['id']));
@@ -79,7 +95,9 @@ echo $this->Form->create('Book', array('type'=>'post', 'action'=>'do_lend'));
 </table>
 
 <?php
-echo $this->Form->submit('Return book', array('name'=>'data[Book][return]'));
+echo $this->Form->submit('Full Return', array('name'=>'data[Book][full]'));
+echo $this->Form->submit('Only pay fine', array('name'=>'data[Book][pay]'));
+echo $this->Form->submit('Only return book', array('name'=>'data[Book][return]'));
 echo $this->Form->submit('Cancel', array('name'=>'data[Book][cancel]'));
 echo $this->Form->end();
 ?>
