@@ -111,6 +111,7 @@ class BooksController extends AppController
 				$copy['student'] = $user['User']['first_name']." ".
 								   $user['User']['last_name'];
 				$copy['fine'] = $loan['Loan']['fine'];
+				$copy['date_return'] = $loan['Loan']['date_return'];
 			}
 			else
 			{
@@ -119,6 +120,7 @@ class BooksController extends AppController
 				$copy['user_id']	= '-';
 				$copy['student']	= '-';
 				$copy['fine']		= '-';
+				$copy['date_return'] = '-';
 			}
 			$this->debug("Adding the following copy ".print_r($copy, true));
 			$rich_copies[$i] = $copy;

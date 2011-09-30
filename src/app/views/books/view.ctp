@@ -20,7 +20,7 @@
 			<th>code</th>
 			<th>status</th>
 			<th>student</th>
-			<th>boete</th>
+			<th>return date</th>
 			<th></th>
 		<tr>
 	</thead>
@@ -30,7 +30,7 @@
 			<td><?php echo $copy['code']; ?></td>
 			<td><?php echo $copy['status']; ?></td>
 			<td><?php echo $copy['student']; ?></td>
-			<td><?php echo $copy['fine']; ?></td>
+			<td><?php echo $copy['date_return']; ?></td>
 			<td><?php
 				if ($copy['status'] == 'available')
 				{
