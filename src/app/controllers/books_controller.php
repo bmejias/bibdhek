@@ -63,6 +63,7 @@ class BooksController extends AppController
 	{
 		Controller::loadModel('User');
 		Controller::loadModel('Loan');
+		Controller::loadModel('Rule');
 
 		$this->debug("The data is ".print_r($this->data, true));
 		$user = $this->User->findById($this->data['Book']['user_id']);
@@ -73,7 +74,7 @@ class BooksController extends AppController
 		 */
 		$today	= date('Y-m-d', time());
 		$loan	= $this->Loan->findById($this->data['Book']['loan_id']);
-		$fine	= $this->Loan->get_fine($loan['Loan']['id'], $today);
+		$fine	= $this->Rule->get_fine($loan['Loan']['date_return'], $today);
 		
 		$this->set('student', $student);
 		$this->set('fine', $fine);
