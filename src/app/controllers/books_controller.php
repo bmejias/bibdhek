@@ -71,13 +71,14 @@ class BooksController extends AppController
 		/* it is assumed that loan contains already the right deposit, fine,
 		 * and already paid money.
 		 */
-		$loan		= $this->Loan->findById($this->data['Book']['loan_id']);
-		$fine		= $loan['Loan']['fine'] - $loan['Loan']['paid'];
-
+		$today	= date('Y-m-d', time());
+		$loan	= $this->Loan->findById($this->data['Book']['loan_id']);
+		$fine	= $this->Loan->get_fine($loan['Loan']['id'], $today);
+		
 		$this->set('student', $student);
 		$this->set('fine', $fine);
 		$this->set('loan', $loan['Loan']);
-		$this->set('today', date('Y-m-d', time()));
+		$this->set('today', $today);
 		$this->set('user_id', $this->data['Book']['user_id']);
 		$this->set('loan_id', $this->data['Book']['loan_id']);
 		$this->setBookAndCopy($this->data['Book']);

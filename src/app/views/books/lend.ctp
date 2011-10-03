@@ -1,7 +1,7 @@
 <!-- File: /app/views/books/lend.ctp -->
 
 <?php
-include('../libs/lib.php');
+include_once('../libs/lib.php');
 ?>
 
 <h2><?php echo $book['title']; ?></h2>

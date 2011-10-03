@@ -1,7 +1,7 @@
 <!-- File: /app/views/search/results.ctp -->
 
 <?php
-include('../views/search/index.ctp');
+include_once('../views/search/index.ctp');
 ?>
 
 <?php
