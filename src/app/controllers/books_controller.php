@@ -69,15 +69,12 @@ class BooksController extends AppController
 		$user = $this->User->findById($this->data['Book']['user_id']);
 		$student = $user['User']['first_name']." ".$user['User']['last_name'];
 
-		/* it is assumed that loan contains already the right deposit, fine,
-		 * and already paid money.
-		 */
 		$today	= date('Y-m-d', time());
 		$loan	= $this->Loan->findById($this->data['Book']['loan_id']);
-		$fine	= $this->Rule->get_fine($loan['Loan']['date_return'], $today);
-		
+		$raw_fine = $this->Rule->get_fine($loan['Loan']['date_return'], $today);
+
 		$this->set('student', $student);
-		$this->set('fine', $fine);
+		$this->set('fine', $raw_fine - $loan['Loan']['paid']);
 		$this->set('loan', $loan['Loan']);
 		$this->set('today', $today);
 		$this->set('user_id', $this->data['Book']['user_id']);

@@ -2,6 +2,8 @@
 
 <?php
 include_once('../libs/lib.php');
+
+$fine_str = toCurrency($fine);
 ?>
 
 <h2><?php echo $book['title']; ?></h2>
@@ -73,7 +75,7 @@ echo $this->Form->create('Loan', array('type'=>'post', 'action'=>'../loans/retur
 	<?php endif; ?>
 	<tr>
 		<td>Fine</td>
-		<td><?php echo toCurrency($fine); ?></td>
+		<td><?php echo $fine_str; ?></td>
 	</tr>
 	<tr>
 		<td>Pay</td>
@@ -82,23 +84,24 @@ echo $this->Form->create('Loan', array('type'=>'post', 'action'=>'../loans/retur
 				echo $this->Form->input('to_pay',
 										array('type'	=> 'text',
 											  'label'	=> '',
-											  'value'	=> toCurrency($fine),
+											  'value'	=> $fine_str,
 											  'size'	=> 5));
 			?>
 		</td>	
 	</tr>
 	<?php
-		echo $this->Form->hidden('book_id', array('value'=>$book['id']));
-		echo $this->Form->hidden('copy_id', array('value'=>$copy['id']));
-		echo $this->Form->hidden('loan_id', array('value'=>$loan['id']));
+		echo $this->Form->hidden('fine', array('value' => $fine));
+		echo $this->Form->hidden('book_id', array('value' => $book['id']));
+		echo $this->Form->hidden('copy_id', array('value' => $copy['id']));
+		echo $this->Form->hidden('loan_id', array('value' => $loan['id']));
 	?>
 </table>
 
 <?php
-echo $this->Form->submit('Full Return', array('name'=>'data[Loan][full]'));
-echo $this->Form->submit('Only pay fine', array('name'=>'data[Loan][pay]'));
-echo $this->Form->submit('Only return book', array('name'=>'data[Loan][return]'));
-echo $this->Form->submit('Cancel', array('name'=>'data[Loan][cancel]'));
+echo $this->Form->submit('Full Return', array('name' => 'data[Loan][full]'));
+echo $this->Form->submit('Only pay fine', array('name' => 'data[Loan][pay]'));
+echo $this->Form->submit('Only return book', array('name' => 'data[Loan][return]'));
+echo $this->Form->submit('Cancel', array('name' => 'data[Loan][cancel]'));
 echo $this->Form->end();
 ?>
 

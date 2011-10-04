@@ -1,4 +1,5 @@
 <?php
+include_once('../libs/lib.php');
 
 class LoansController extends AppController
 {
@@ -50,9 +51,34 @@ class LoansController extends AppController
 
 	function return_book()
 	{
-		$input = $this->data['Loan'];
+		$input	= $this->data['Loan'];
+		$to_pay	= toNumber($input['to_pay']);
 		if (isset($input['pay']))
-			$this->pay_fine($input['loan_id'], $input['to_pay']);
+		{
+			$payment = $this->pay_fine($input['loan_id'], $to_pay);
+			$msg = "";
+			if ($payment)
+			{
+				$msg	= "The user has paid ".toCurrency($to_pay)." euro.";
+				$diff	= $input['fine'] - $to_pay;
+				if ($diff > 0)
+					$msg .= "<br/>He/she still needs to pay "
+							.toCurrency($diff)." euro";
+			}
+			else
+			{
+				$this->log("ERROR: saving the payment of ".$to_pay);
+				$this->log("error message is ".print_r($result, true));
+				$msg = 'There was a problem with the payment.';
+			}
+			$this->Session->setFlash($msg);
+		}
+		/*
+		elseif (isset($input['return']))
+		{
+
+		}
+		 */
 		$this->redirect('../books/view?book_id='.$input['book_id']);
 	}
 
@@ -74,19 +100,27 @@ class LoansController extends AppController
 							   'fine'		=> 0.0));
 		$this->Loan->save();
 
-		$this->redirect('view?book_id='.$this->data['Book']['book']);	
+		$this->redirect('view?book_id='.$this->data['Book']['book']);
 	}
 
 	/*-----------------------------------------------------------------------
 	 * Functions to help the controllers
 	 *-----------------------------------------------------------------------
 	 */
+
+	/**
+	 * Modifies the loan with the paid amount of money
+	 *
+	 * @param id $loan_id	identifier of the loan
+	 * @param number(4, 2) $money	amount to pay
+	 * @return	result of the saving operation
+	 */ 
 	private function pay_fine($loan_id, $money)
 	{
 		$loan = $this->Loan->findById($loan_id);
 		$this->Loan->id = $loan_id;
 		$this->Loan->set(array('paid' => $loan['Loan']['paid'] + $money));
-		$this->Loan->save();
+		return $this->Loan->save();
 	}
 }
 
