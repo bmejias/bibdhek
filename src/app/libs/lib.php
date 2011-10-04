@@ -1,35 +1,45 @@
 <?php
 
-/* number(N,2) to string with two decimals */
+/**
+ * float to string with two decimals
+ * @param float $amount
+ * @return number(4, 2)
+ */
 function toCurrency($amount)
 {
-	$no_cents = $amount * 100;
-	if ($no_cents % 100 == 0)
-		return ($no_cents / 100).".00";
-	elseif ($no_cents % 10 == 0)
-		return ($no_cents / 100)."0";
-	else
-		return "".$amount;
+	return number_format($amount, 2, ",", ".");
 }
 
 /* testing the functionality
-
 echo "Tests<br/>";
-echo "3 becomes ".toCurrency(3)."<br/>";
-echo "3.5 becomes ".toCurrency(3.5)."<br/>";
-echo "3.66 becomes ".toCurrency(3.66)."<br/>";
-echo "3.10 becomes ".toCurrency(3.10)."<br/>";
-echo "3.00 becomes ".toCurrency(3.00)."<br/>";
-echo ".0 becomes ".toCurrency(.0)."<br/>";
-echo ".00 becomes ".toCurrency(.00)."<br/>";
-echo ".5 becomes ".toCurrency(.5)."<br/>";
-echo ".66 becomes ".toCurrency(.66)."<br/>";
+$tests = array(3, 3.5, 3.66, 3.10, 3.00, .0, .00, .5, .66, 
+	.0000000000000000006666, .066, .0066, .00066, 1234500.66, 123456);
+foreach ($tests as $test)
+{
+	echo $test." becomes ".toCurrency($test)."<br/>";
+}
+ */
 
-*/
+/**
+ * from string number(4, 2) to float by replacing the ',' by a '.'
+ * @param string $amount_str String in format number(4, 2), e.g 1.234,56
+ * @return float
+ */
+function toNumber($amount_str)
+{
+	$amount_str = preg_replace("/\./", "", $amount_str);
+	return floatval(preg_replace("/,/", ".", $amount_str));
+}
 
-/* The function returns the no. of business days between two dates and it skips 
+/**
+ * The function returns the no. of business days between two dates and it skips 
  * the holidays taken from
  * http://stackoverflow.com/questions/336127/calculate-business-days
+ *
+ * @param data $startDate
+ * @param date $endDate
+ * @param array $holidays In fortma 'Y-m-d', e.g. 1982-06-24
+ * @return int Number of days
  */
 function getWorkingDays($startDate, $endDate, $holidays)
 {
