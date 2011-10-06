@@ -21,7 +21,10 @@ foreach ($tests as $test)
  */
 
 /**
- * from string number(4, 2) to float by replacing the ',' by a '.'
+ * from string number(4, 2) to float by replacing the ',' by a '.'. Warning,
+ * all '.' are first remove, therefore, toNumber(0.50) would return 50 instead 
+ * of 0.50.
+ *
  * @param string $amount_str String in format number(4, 2), e.g 1.234,56
  * @return float
  */
