@@ -53,25 +53,15 @@ class LoansController extends AppController
 	{
 		$input	= $this->data['Loan'];
 		$to_pay	= toNumber($input['to_pay']);
-		if (isset($input['pay']))
+		if (isset($input['full']))
 		{
-			$payment = $this->pay_fine($input['loan_id'], $to_pay);
-			$msg = "";
-			if ($payment)
-			{
-				$msg	= "The user has paid ".toCurrency($to_pay)." euro.";
-				$diff	= $input['fine'] - $to_pay;
-				if ($diff > 0)
-					$msg .= "<br/>He/she still needs to pay "
-							.toCurrency($diff)." euro";
-			}
-			else
-			{
-				$this->log("ERROR: saving the payment of ".$to_pay);
-				$this->log("error message is ".print_r($result, true));
-				$msg = 'There was a problem with the payment.';
-			}
-			$this->Session->setFlash($msg);
+			/* NOT IMPLEMENTED YET */
+			$solde = $this->pay_fine($input);
+		}
+		elseif (isset($input['pay']))
+		{
+			$result = $this->pay_fine($input);
+			$this->Session->setFlash($result['msg']);
 		}
 		elseif (isset($input['return']))
 		{
@@ -114,12 +104,34 @@ class LoansController extends AppController
 	 * @param number(4, 2) $money	amount to pay.
 	 * @return						result of the saving operation.
 	 */ 
-	private function pay_fine($loan_id, $money)
+	//private function pay_fine($loan_id, $money)
+	private function pay_fine($input)
 	{
-		$loan = $this->Loan->findById($loan_id);
-		$this->Loan->id = $loan_id;
-		$this->Loan->set(array('paid' => $loan['Loan']['paid'] + $money));
-		return $this->Loan->save();
+		/* This is the functionality */
+		$to_pay	= toNumber($input['to_pay']);
+		$loan	= $this->Loan->findById($input['loan_id']);
+		$this->Loan->id = $input['loan_id'];
+		$this->Loan->set(array('paid' => $loan['Loan']['paid'] + $to_pay));
+		$db_result = $this->Loan->save();
+
+		/* This is part of the feedback */
+		$msg	= "";
+		$diff	= $input['fine'];
+		if ($db_result)
+		{
+			$msg	= "The user has paid ".toCurrency($to_pay)." euro.";
+			$diff	= $input['fine'] - $to_pay;
+			if ($diff > 0)
+				$msg .= "<br/> He/she still needs to pay "
+						.toCurrency($diff)." euro";
+		}
+		else
+		{
+			$this->log("ERROR: saving the payment of ".$to_pay);
+			$this->log("error message is ".print_r($result, true));
+			$msg = 'There was a problem with the payment.';
+		}
+		return array('db' => $db_result, 'msg' => $msg, 'diff' => $diff);
 	}
 }
 

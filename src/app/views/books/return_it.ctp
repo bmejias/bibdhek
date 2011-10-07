@@ -9,8 +9,11 @@ $fine_str = toCurrency($fine);
 <h2><?php echo $book['title']; ?></h2>
 
 <?php
-echo $this->Form->create('Loan', array('type'=>'post', 'action'=>'../loans/return_book'));
+echo $this->Form->create('Loan',
+							array(  'type' => 'post', 
+									'action'=>'../loans/return_book'));
 ?>
+
 <table>
 	<tr>
 		<td>Author</td>
