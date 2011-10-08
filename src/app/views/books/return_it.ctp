@@ -67,7 +67,7 @@ echo $this->Form->create('Loan',
 			<td>
 				<?php
 					$deposit = toCurrency($loan['deposit']);
-					echo $this->Form->input('deposit',
+					echo $this->Form->input('deposit_back',
 											array('type'  => 'text',
 												  'label' => 'Deposit',
 												  'value' => $deposit,
@@ -75,6 +75,11 @@ echo $this->Form->create('Loan',
 				?>
 			</td>
 		</tr>
+	<?php else : ?>
+	<?php
+		echo $this->Form->hidden('cd', array('value' => 'true'));
+		echo $this->Form->hidden('deposit_back', array('value' => "0,00"));
+	?>
 	<?php endif; ?>
 	<tr>
 		<td>Fine</td>
@@ -94,6 +99,7 @@ echo $this->Form->create('Loan',
 	</tr>
 	<?php
 		echo $this->Form->hidden('fine', array('value' => $fine));
+		echo $this->Form->hidden('deposit', array('value' => $loan['deposit']));
 		echo $this->Form->hidden('book_id', array('value' => $book['id']));
 		echo $this->Form->hidden('copy_id', array('value' => $copy['id']));
 		echo $this->Form->hidden('loan_id', array('value' => $loan['id']));

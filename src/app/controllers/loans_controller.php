@@ -32,7 +32,7 @@ class LoansController extends AppController
 			if ($input['cd'])
 			{
 				$loan['Loan']['cd']	= true;
-				$loan['Loan']['deposit'] = $input['deposit'];
+				$loan['Loan']['deposit'] = toNumber($input['deposit']);
 			}
 
 			$this->Loan->create();
@@ -55,8 +55,14 @@ class LoansController extends AppController
 		$to_pay	= toNumber($input['to_pay']);
 		if (isset($input['full']))
 		{
-			/* NOT IMPLEMENTED YET */
-			$solde = $this->pay_fine($input);
+			$result = $this->pay_fine($input);
+			$msg	= $result['msg']; 
+			if ($result['db'])
+			{
+				$result	= $this->save_return($input);
+				$msg	= $msg."<br/>".$result['msg'];
+			}
+			$this->Session->setFlash($msg);
 		}
 		elseif (isset($input['pay']))
 		{
@@ -82,16 +88,25 @@ class LoansController extends AppController
 		Controller::loadModel('Material');
 		$this->Material->id = $input['copy_id'];
 		$this->Material->saveField('status', 'available');
+
+		$deposit = $input['deposit'] - toNumber($input['deposit_back']);
 		$this->Loan->id = $input['loan_id'];
 		$this->Loan->set(array('date_in'	=> $input['date_in'],
 							   'status'		=> 'returned',
+							   'deposit'	=> $deposit,
+							   'cd'			=> !$input['cd'],
 							   'fine'		=> $input['fine']));
 		$db_result = $this->Loan->save();
 
 		/* This is part of the feedback */
 		$msg = "";
 		if ($db_result)
+		{
 			$msg = "The book has been returned.";
+			if ($deposit > 0)
+				$msg .= "<br/> The bib still needs to return "
+						.toCurrency($deposit)." euro.";
+		}
 		else
 			$msg = 'There was a problem returning the book.';
 		return array('db' => $db_result, 'msg' => $msg);
