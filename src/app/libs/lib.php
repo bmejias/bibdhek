@@ -30,7 +30,10 @@ foreach ($tests as $test)
  */
 function toNumber($amount_str)
 {
-	$amount_str = preg_replace("/\./", "", $amount_str);
+	if (strpos($amount_str, '.') <= strpos($amount_str, ','))
+	{
+		$amount_str = preg_replace("/\./", "", $amount_str);
+	}
 	return floatval(preg_replace("/,/", ".", $amount_str));
 }
 
