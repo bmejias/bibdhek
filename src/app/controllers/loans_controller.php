@@ -65,12 +65,8 @@ class LoansController extends AppController
 		}
 		elseif (isset($input['return']))
 		{
-			Controller::loadModel('Material');
-			$this->Material->id = $input['copy_id'];
-			$this->Material->saveField('status', 'available');
-			$this->save_return($input['loan_id'],
-								$input['date_in'], 
-								$input['fine']);
+			$result = $this->save_return($input);
+			$this->Session->setFlash($result['msg']);
 		}
 		$this->redirect('../books/view?book_id='.$input['book_id']);
 	}
@@ -80,31 +76,28 @@ class LoansController extends AppController
 	 *-----------------------------------------------------------------------
 	 */
 
-	/**
-	 * Modifies the loan to return the book. status => returned
-	 *
-	 * @param id $loan_id			identifier of the loan.
-	 * @param date $date_in			date of effective return.
-	 * @param number(4, 2) $money	final fine
-	 * @return						result of the saving operation.
-	 */
-	private function save_return($loan_id, $date_in, $money)
+	private function save_return($input)
 	{
-		$this->Loan->id = $loan_id;
-		$this->Loan->set(array('date_in'	=> $date_in,
+		/* This is the functionality */
+		Controller::loadModel('Material');
+		$this->Material->id = $input['copy_id'];
+		$this->Material->saveField('status', 'available');
+		$this->Loan->id = $input['loan_id'];
+		$this->Loan->set(array('date_in'	=> $input['date_in'],
 							   'status'		=> 'returned',
-							   'fine'		=> $money));
-		return $this->Loan->save();
+							   'fine'		=> $input['fine']));
+		$db_result = $this->Loan->save();
+
+		/* This is part of the feedback */
+		$msg = "";
+		if ($db_result)
+			$msg = "The book has been returned.";
+		else
+			$msg = 'There was a problem returning the book.';
+		return array('db' => $db_result, 'msg' => $msg);
+
 	}
 
-	/**
-	 * Modifies the loan with the paid amount of money.
-	 *
-	 * @param id $loan_id			identifier of the loan.
-	 * @param number(4, 2) $money	amount to pay.
-	 * @return						result of the saving operation.
-	 */ 
-	//private function pay_fine($loan_id, $money)
 	private function pay_fine($input)
 	{
 		/* This is the functionality */
