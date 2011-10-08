@@ -8,6 +8,7 @@ class SearchController extends AppController
 
 	function index()
 	{
+		$this->redirect('../pages/search');
 	}
 
 	function do_search()
