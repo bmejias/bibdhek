@@ -44,7 +44,7 @@ class UsersController extends AppController
 			$data = $this->data['login'];
 			$user = $this->User->findByUsername($data['username']);
 			if ($user != null && $user['User']['password'] == $data['password'])
-				$this->redirect('../pages/admin');
+				$this->redirect('../pages/index');
 			else
 				$this->redirect('login?error='.
 								urlencode('Error: Please try again'));
