@@ -30,8 +30,10 @@
 			<?php else : ?>
 				<td>
 					<?php
-						echo $user['User']['first_name']." ".
-							 $user['User']['last_name'];
+						$user_name = $user['User']['first_name']
+							 			." ".$user['User']['last_name'];
+						echo $this->Html->link($user_name,
+											   'view?id='.$user['User']['id']);
 					?>
 				</td>
 			<?php endif; ?>
