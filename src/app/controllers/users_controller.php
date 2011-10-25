@@ -57,7 +57,6 @@ class UsersController extends AppController
 		if (isset($_GET['error']))
 			$msg = $_GET['error'];
 		$this->set('msg', $msg);
-		;
 	}
 
 	function status()
@@ -66,6 +65,22 @@ class UsersController extends AppController
 
 	function view()
 	{
+		$user_id = $_GET['id'];
+		$user = $this->User->findById($user_id);
+		$this->set('user', $user['User']);
+
+		Controller::loadModel('Loan');
+		Controller::loadModel('Material');
+		$this->debug("This is the user id: ".$user_id);
+		$user_loans = $this->Loan->get_from_user($user_id);
+		$this->debug("LOANS - found the following:\n".print_r($user_loans,true));
+		for ($i = 0; $i < count($user_loans); $i++)
+		{
+			$user_loans[$i]['book_title'] = 
+				$this->Material->get_book_title($user_loans[$i]['material_id']);
+		}
+		$this->debug("LOANS - adding book title:\n".print_r($user_loans,true));
+		$this->set('loans', $user_loans);
 	}
 }
 
