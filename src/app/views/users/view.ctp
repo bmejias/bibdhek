@@ -15,7 +15,17 @@ include_once('../libs/lib.php');
 	<tbody>
 		<?php foreach ($loans as $loan) : ?>
 		<tr>
-			<td><?php echo $loan['book_title']; ?></td>
+			<td>
+				<?php
+					// I need book_id, user_id, material_id, loan_id
+					$url = '../books/return_details';
+					$url.= '?book_id='.$loan['book_id'];
+					$url.= '&material_id='.$loan['material_id'];
+					$url.= '&user_id='.$loan['user_id'];
+					$url.= '&loan_id='.$loan['id'];
+					echo $this->Html->link($loan['book_title'], $url); 
+				?>
+			</td>
 			<td><?php echo $loan['date_return']; ?></td>
 			<td><?php echo $loan['status']; ?></td>
 			<td><?php echo toCurrency($loan['fine'] - $loan['paid']); ?></td>
