@@ -20,8 +20,8 @@ class LoansController extends AppController
 			/* perform the loan */
 			Controller::loadModel('Copy');
 
-			$copy_id	= $input['copy'];
-			$user_id	= $input['user'];
+			$copy_id	= $input['copy_id'];
+			$user_id	= $input['user_id'];
 
 			$loan = array('Loan'=>
 							array('copy_id'		=> $copy_id,
@@ -46,7 +46,7 @@ class LoansController extends AppController
 		/* if the action is to cancel the loan, do nothing */
 		/* elseif ($input['do'] == 'cancel') */
 		/* redirect to book's view in any case */
-		$this->redirect('../books/view?book_id='.$input['book']);
+		$this->redirect('../books/view?book_id='.$input['book_id']);
 	}
 
 	function return_book()

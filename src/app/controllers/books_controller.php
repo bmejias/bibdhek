@@ -136,8 +136,8 @@ class BooksController extends AppController
 	private function setBookAndCopy($data)
 	{
 		Controller::loadModel('Copy');
-		$book	= $this->Book->findById($data['book']);
-		$copy	= $this->Copy->findById($data['copy']);
+		$book	= $this->Book->findById($data['book_id']);
+		$copy	= $this->Copy->findById($data['copy_id']);
 		$this->set('book', $book['Book']);
 		$this->set('copy', $copy['Copy']);
 

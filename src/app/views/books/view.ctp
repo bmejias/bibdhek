@@ -1,4 +1,7 @@
 <!-- File: /app/views/books/view.ctp -->
+<?php
+$form = $this->Form;
+?>
 
 <h2><?php echo $book['title']; ?></h2>
 
@@ -42,16 +45,16 @@
 					$action = 'return_it';
 					$submit_label = 'return';
 				}
-				echo $this->Form->create('Book',
+				echo $form->create('Book',
 										 array('type' => 'post',
 											   'action' => $action));
-				echo $this->Form->hidden('book', array('value' => $book['id']));
-				echo $this->Form->hidden('copy', array('value' => $copy['id']));
-				echo $this->Form->hidden('user_id',
+				echo $form->hidden('book_id', array('value' => $book['id']));
+				echo $form->hidden('copy_id', array('value' => $copy['id']));
+				echo $form->hidden('user_id',
 										 array('value' => $copy['user_id']));
-				echo $this->Form->hidden('loan_id',
+				echo $form->hidden('loan_id',
 										 array('value' => $copy['loan_id']));
-				echo $this->Form->end($submit_label);
+				echo $form->end($submit_label);
 				?>
 			</td>
 		</tr>
