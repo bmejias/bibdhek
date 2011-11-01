@@ -6,7 +6,7 @@ class LoansController extends AppController
 	var $name = 'Loans';
 
 	/* pre: $this->data['Loan']['user'] should be a valid user */
-	/* pre: $this->data['Loan']['copy'] should be a valid material */
+	/* pre: $this->data['Loan']['copy'] should be a valid copy */
 	function lend()
 	{
 		$this->helpers[] = 'Time';
@@ -18,13 +18,13 @@ class LoansController extends AppController
 		if (isset($input['lend']))
 		{
 			/* perform the loan */
-			Controller::loadModel('Material');
+			Controller::loadModel('Copy');
 
 			$copy_id	= $input['copy'];
 			$user_id	= $input['user'];
 
 			$loan = array('Loan'=>
-							array('material_id'	=> $copy_id,
+							array('copy_id'		=> $copy_id,
 								  'user_id'		=> $user_id,
 								  'date_out'	=> $input['date_out'],
 								  'date_return'	=> $input['date_return'],
@@ -38,8 +38,8 @@ class LoansController extends AppController
 			$this->Loan->create();
 			if ($this->Loan->save($loan))
 			{
-				$this->Material->id = $copy_id;
-				$this->Material->saveField('status', 'lent');
+				$this->Copy->id = $copy_id;
+				$this->Copy->saveField('status', 'lent');
 				$this->Session->setFlash('The book has been lent.');
 			}
 		}
@@ -85,9 +85,9 @@ class LoansController extends AppController
 	private function save_return($input)
 	{
 		/* This is the functionality */
-		Controller::loadModel('Material');
-		$this->Material->id = $input['copy_id'];
-		$this->Material->saveField('status', 'available');
+		Controller::loadModel('Copy');
+		$this->Copy->id = $input['copy_id'];
+		$this->Copy->saveField('status', 'available');
 
 		$deposit = $input['deposit'] - toNumber($input['deposit_back']);
 		$this->Loan->id = $input['loan_id'];

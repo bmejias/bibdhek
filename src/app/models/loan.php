@@ -5,7 +5,7 @@ class Loan extends AppModel
 	var $name = 'Loan';
 
 	/**
-	 * Find for user_id all material being lent, or where there is still 
+	 * Find for user_id all copies being lent, or where there is still 
 	 * a fine to pay, or where there is a deposit to pay back
 	 *
 	 * @param serial $user_id

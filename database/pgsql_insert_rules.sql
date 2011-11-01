@@ -10,7 +10,7 @@ INSERT INTO rules (rule, amount, note)
 INSERT INTO rules (rule, amount, note)
 	VALUES ('fine_money', 10, 'cents');
 
-/* deposit in case of taken media material */
+/* deposit in case of taken media copies */
 INSERT INTO rules (rule, amount, note)
 	VALUES ('deposit', 100, 'cents');
 

@@ -21,16 +21,16 @@ class BooksController extends AppController
 			$copies = 1;
 			if ($this->data['Book']['copies'] > 1)
 				$copies = $this->data['Book']['copies'];
-			Controller::loadModel('Material');
+			Controller::loadModel('Copy');
 			for ($i = 1; $i <= $copies; $i++)
 			{
-				$new_material = array('Material' =>
+				$new_copy = array('Copy' =>
 									  array('book_id'	=> $book_id,
 											'status'	=> 'available',
 											'code'		=> $i));
-				$this->Material->create();
-				$result = $this->Material->save($new_material);
-				$this->debug("Saving material returned ".print_r($result, true));
+				$this->Copy->create();
+				$result = $this->Copy->save($new_copy);
+				$this->debug("Saving copy returned ".print_r($result, true));
 			}
 			$this->Session->setFlash('The book has been saved.');
 			$this->redirect(array('action' => 'index'));
@@ -88,19 +88,19 @@ class BooksController extends AppController
 		$book = $this->Book->findById($book_id); 
 		$this->debug("Searching book $book_id got ".print_r($book, true));
 		$this->set('book', $book['Book']);
-		Controller::loadModel('Material');
-		$copies = $this->Material->findAllByBook_id($book_id);
+		Controller::loadModel('Copy');
+		$copies = $this->Copy->findAllByBook_id($book_id);
 		$this->debug("Searching copies for book $book_id got ".print_r($copies, true));
 		$rich_copies = array();
 		$i = 0;
-		foreach ($copies as $material)
+		foreach ($copies as $copy)
 		{
-			$copy = $material['Material'];
+			$copy = $copy['Copy'];
 			if ($copy['status'] == 'lent')
 			{
 				Controller::loadModel('Loan');
 				Controller::loadModel('User');
-				$query = array('Loan.material_id' => $copy['id'],
+				$query = array('Loan.copy_id' => $copy['id'],
 							   'Loan.status' => 'lent');
 				$loan = $this->Loan->find('first',
 										  array('conditions' => $query));
@@ -135,11 +135,11 @@ class BooksController extends AppController
 	 */
 	private function setBookAndCopy($data)
 	{
-		Controller::loadModel('Material');
+		Controller::loadModel('Copy');
 		$book	= $this->Book->findById($data['book']);
-		$copy	= $this->Material->findById($data['copy']);
+		$copy	= $this->Copy->findById($data['copy']);
 		$this->set('book', $book['Book']);
-		$this->set('copy', $copy['Material']);
+		$this->set('copy', $copy['Copy']);
 
 	}
 

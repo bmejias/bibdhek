@@ -870,7 +870,7 @@
       <dia:attribute name="attributes">
         <dia:composite type="umlattribute">
           <dia:attribute name="name">
-            <dia:string>#  material_id#</dia:string>
+            <dia:string>#  copy_id#</dia:string>
           </dia:attribute>
           <dia:attribute name="type">
             <dia:string>#serial#</dia:string>
@@ -1053,7 +1053,7 @@
         <dia:real val="6.4000000000000004"/>
       </dia:attribute>
       <dia:attribute name="name">
-        <dia:string>#materials#</dia:string>
+        <dia:string>#copies#</dia:string>
       </dia:attribute>
       <dia:attribute name="stereotype">
         <dia:string>##</dia:string>
@@ -1850,7 +1850,7 @@
         <dia:color val="#000000"/>
       </dia:attribute>
       <dia:attribute name="name">
-        <dia:string>#material_id#</dia:string>
+        <dia:string>#copy_id#</dia:string>
       </dia:attribute>
       <dia:attribute name="stereotype">
         <dia:string>##</dia:string>

@@ -13,7 +13,7 @@ CREATE TABLE books
 	obs		text
 );
 
-CREATE TABLE materials
+CREATE TABLE copies
 (
 	id			serial		PRIMARY KEY,
 	book_id		serial		REFERENCES books(id),
@@ -49,7 +49,7 @@ CREATE TABLE group_users
 CREATE TABLE loans
 (
 	id			serial		PRIMARY KEY,
-	material_id	serial		REFERENCES materials(id),
+	copy_id		serial		REFERENCES copies(id),
 	user_id		serial		REFERENCES users(id),
 	status		varchar(16)	NOT NULL,
 	date_out	date		NOT NULL,

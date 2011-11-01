@@ -65,19 +65,18 @@ class UsersController extends AppController
 
 	function view()
 	{
-		$user_id = $_GET['id'];
+		$user_id = $_GET['user_id'];
 		$user = $this->User->findById($user_id);
 		$this->set('user', $user['User']);
 
 		Controller::loadModel('Loan');
-		Controller::loadModel('Material');
+		Controller::loadModel('Copy');
 		$this->debug("This is the user id: ".$user_id);
 		$user_loans = $this->Loan->get_from_user($user_id);
 		$this->debug("LOANS - found the following:\n".print_r($user_loans,true));
 		for ($i = 0; $i < count($user_loans); $i++)
 		{
-			$book_info =
-				$this->Material->get_book_info($user_loans[$i]['material_id']);
+			$book_info = $this->Copy->get_book_info($user_loans[$i]['copy_id']);
 			$user_loans[$i]['book_id']		= $book_info['id'];
 			$user_loans[$i]['book_title']	= $book_info['title'];
 		}

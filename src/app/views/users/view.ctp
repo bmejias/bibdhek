@@ -17,10 +17,10 @@ include_once('../libs/lib.php');
 		<tr>
 			<td>
 				<?php
-					// I need book_id, user_id, material_id, loan_id
+					// I need book_id, user_id, copy_id, loan_id
 					$url = '../books/return_details';
 					$url.= '?book_id='.$loan['book_id'];
-					$url.= '&material_id='.$loan['material_id'];
+					$url.= '&copy_id='.$loan['copy_id'];
 					$url.= '&user_id='.$loan['user_id'];
 					$url.= '&loan_id='.$loan['id'];
 					echo $this->Html->link($loan['book_title'], $url); 
