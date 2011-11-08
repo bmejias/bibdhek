@@ -32,8 +32,8 @@
 					<?php
 						$user_name = $user['User']['first_name']
 							 			." ".$user['User']['last_name'];
-						echo $this->Html->link($user_name,
-											   'view?id='.$user['User']['id']);
+						$url = 'view?user_id='.$user['User']['id'];
+						echo $this->Html->link($user_name, $url);
 					?>
 				</td>
 			<?php endif; ?>
