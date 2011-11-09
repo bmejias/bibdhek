@@ -65,21 +65,25 @@ class BooksController extends AppController
 		Controller::loadModel('Loan');
 		Controller::loadModel('Rule');
 
+		$this->debug("The POST: ".print_r($_POST, true));
+		$this->debug("The GET: ".print_r($_GET, true));
+		$data = (isset($_POST['data'])) ? $_POST['data']['Book'] : $_GET;
+		$this->debug("The new DATA: ".print_r($data, true));
 		$this->debug("The data is ".print_r($this->data, true));
-		$user = $this->User->findById($this->data['Book']['user_id']);
+		$user = $this->User->findById($data['user_id']);
 		$student = $user['User']['first_name']." ".$user['User']['last_name'];
 
 		$today	= date('Y-m-d', time());
-		$loan	= $this->Loan->findById($this->data['Book']['loan_id']);
+		$loan	= $this->Loan->findById($data['loan_id']);
 		$raw_fine = $this->Rule->get_fine($loan['Loan']['date_return'], $today);
 
 		$this->set('student', $student);
 		$this->set('fine', $raw_fine - $loan['Loan']['paid']);
 		$this->set('loan', $loan['Loan']);
 		$this->set('today', $today);
-		$this->set('user_id', $this->data['Book']['user_id']);
-		$this->set('loan_id', $this->data['Book']['loan_id']);
-		$this->setBookAndCopy($this->data['Book']);
+		$this->set('user_id', $data['user_id']);
+		$this->set('loan_id', $data['loan_id']);
+		$this->setBookAndCopy($data);
 	}
 
 	function view()
