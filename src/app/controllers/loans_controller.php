@@ -89,7 +89,10 @@ class LoansController extends AppController
 		$this->Copy->id = $input['copy_id'];
 		$this->Copy->saveField('status', 'available');
 
-		$deposit = $input['deposit'] - toNumber($input['deposit_back']);
+		$deposit = $input['deposit'];
+		/* if cd is returned, return the deposit as well */
+		if ($input['cd'])
+			$deposit = $input['deposit'] - toNumber($input['deposit_back']);
 		$this->Loan->id = $input['loan_id'];
 		$this->Loan->set(array('date_in'	=> $input['date_in'],
 							   'status'		=> 'returned',
