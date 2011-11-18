@@ -103,6 +103,7 @@ echo $this->Form->create('Loan',
 		echo $this->Form->hidden('book_id', array('value' => $book['id']));
 		echo $this->Form->hidden('copy_id', array('value' => $copy['id']));
 		echo $this->Form->hidden('loan_id', array('value' => $loan['id']));
+		echo $this->Form->hidden('back_to', array('value' => $back_to));
 	?>
 </table>
 

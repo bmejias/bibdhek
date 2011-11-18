@@ -10,6 +10,7 @@ include_once('../libs/lib.php');
 			<th>Date to return</th>
 			<th>Status</th>
 			<th>Fine</th>
+			<th></th>
 		</tr>
 	</thead>
 	<tbody>
@@ -23,12 +24,15 @@ include_once('../libs/lib.php');
 					$url.= '&copy_id='.$loan['copy_id'];
 					$url.= '&user_id='.$loan['user_id'];
 					$url.= '&loan_id='.$loan['id'];
+					$url.= '&back_to=user';
 					echo $this->Html->link($loan['book_title'], $url); 
 				?>
 			</td>
 			<td><?php echo $loan['date_return']; ?></td>
 			<td><?php echo $loan['status']; ?></td>
 			<td><?php echo toCurrency($loan['fine'] - $loan['paid']); ?></td>
+			<td><?php if ($loan['cd']) echo "cd"; ?></td>
+			
 		</tr>
 		<?php endforeach; ?>
 	</tbody>

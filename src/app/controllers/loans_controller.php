@@ -74,7 +74,7 @@ class LoansController extends AppController
 			$result = $this->save_return($input);
 			$this->Session->setFlash($result['msg']);
 		}
-		$this->redirect('../books/view?book_id='.$input['book_id']);
+		$this->redirect($input['back_to']);
 	}
 
 	/*-----------------------------------------------------------------------

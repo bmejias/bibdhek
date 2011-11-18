@@ -77,10 +77,15 @@ class BooksController extends AppController
 		$loan	= $this->Loan->findById($data['loan_id']);
 		$raw_fine = $this->Rule->get_fine($loan['Loan']['date_return'], $today);
 
+		$back_to = '../books/view?book_id='.$data['book_id'];
+		if (isset($data['back_to']) && $data['back_to'] == 'user')
+			$back_to = '../users/view?user_id='.$data['user_id'];
+
 		$this->set('student', $student);
 		$this->set('fine', $raw_fine - $loan['Loan']['paid']);
 		$this->set('loan', $loan['Loan']);
 		$this->set('today', $today);
+		$this->set('back_to', $back_to);
 		$this->set('user_id', $data['user_id']);
 		$this->set('loan_id', $data['loan_id']);
 		$this->setBookAndCopy($data);

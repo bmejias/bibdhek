@@ -73,7 +73,7 @@ class UsersController extends AppController
 		Controller::loadModel('Copy');
 		$this->debug("This is the user id: ".$user_id);
 		$user_loans = $this->Loan->get_from_user($user_id);
-		$this->debug("LOANS - found the following:\n".print_r($user_loans,true));
+		$this->debug("LOANS - found this:\n".print_r($user_loans,true));
 		for ($i = 0; $i < count($user_loans); $i++)
 		{
 			$book_info = $this->Copy->get_book_info($user_loans[$i]['copy_id']);
