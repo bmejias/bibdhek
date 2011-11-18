@@ -74,14 +74,20 @@ class UsersController extends AppController
 		$this->debug("This is the user id: ".$user_id);
 		$user_loans = $this->Loan->get_from_user($user_id);
 		$this->debug("LOANS - found this:\n".print_r($user_loans,true));
+		$total_fine		= 0;
+		$total_deposit	= 0;
 		for ($i = 0; $i < count($user_loans); $i++)
 		{
 			$book_info = $this->Copy->get_book_info($user_loans[$i]['copy_id']);
 			$user_loans[$i]['book_id']		= $book_info['id'];
 			$user_loans[$i]['book_title']	= $book_info['title'];
+			$total_fine += $user_loans[$i]['fine'];
+			$total_deposit += $user_loans[$i]['deposit'];
 		}
 		$this->debug("LOANS - adding book title:\n".print_r($user_loans,true));
 		$this->set('loans', $user_loans);
+		$this->set('total_fine', $total_fine);
+		$this->set('total_deposit', $total_deposit);
 	}
 }
 

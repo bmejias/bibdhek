@@ -35,5 +35,33 @@ include_once('../libs/lib.php');
 			
 		</tr>
 		<?php endforeach; ?>
+		<tr>
+			<td colspan="100%">
+				Total fine: <b><?php echo toCurrency($total_fine); ?></b>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="100%">
+				Total deposit: <b><?php echo toCurrency($total_deposit); ?></b>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="100%">
+		<?php
+			// TODO: Find the translation for saldo
+			$saldo = $total_deposit - $total_fine;
+			if ($saldo == 0):
+		?>
+				There is no money issues with this user
+		<?php elseif ($saldo < 0): ?>
+				The user needs to pay <?php echo toCurrency($saldo); ?> euro.
+		<?php else:	?>
+		The biblioteque needs to give <?php echo toCurrency($saldo); ?> euro back to the user
+		<?php endif; ?>
+			</td>
+		</tr>
+
+
+		</tr>
 	</tbody>
 </table>
