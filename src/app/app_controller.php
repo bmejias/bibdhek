@@ -34,8 +34,8 @@
  */
 class AppController extends Controller
 {
-	function debug($message)
-	{
-		$this->log($message, LOG_DEBUG);
-	}
+    function debug($message)
+    {
+        $this->log($message, LOG_DEBUG);
+    }
 }

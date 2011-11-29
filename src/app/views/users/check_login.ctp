@@ -4,13 +4,13 @@
 if ($result == 'error')
 {
 ?>
-	<h1>Wrong credentials!</h1>
+    <h1>Wrong credentials!</h1>
 <?php
 }
 else
 {
 ?>
-	<h1>Successful login!</h1>
+    <h1>Successful login!</h1>
 <?php
 }
 ?>
