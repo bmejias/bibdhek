@@ -9,9 +9,9 @@ class BooksController extends AppController
         $this->set('books', $this->Book->find('all'));
     }
 
-    function add()
-    {
-    }
+    function add() { }
+
+    function add_by_isbn() { }
 
     function do_add()
     {
