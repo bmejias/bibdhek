@@ -3,9 +3,14 @@ include_once('../libs/lib.php');
 ?>
 <h2><?php echo $user['first_name']." ".$user['last_name']; ?></h2>
 
+<?php
+echo $this->Form->create('User', array('type'   => 'post', 
+                                       'action' => 'bulk_return'));
+?>
 <table>
     <thead>
         <tr>
+            <th></th>
             <th>Title</th>
             <th>Date to return</th>
             <th>Status</th>
@@ -17,9 +22,19 @@ include_once('../libs/lib.php');
         <?php foreach ($loans as $loan) : ?>
         <tr>
             <td>
+                <input
+                    type="checkbox"
+                    value=""
                 <?php
-                    // I need book_id, user_id, copy_id, loan_id
-                    $url = '../books/return_it';
+                    echo $this->Form->input('cd', array('type' => 'checkbox', 'label' => ''));
+                ?>
+            </td>
+            <td>
+                <?php
+                    /* to return the book, we need: book_id, user_id, 
+                     * copy_id, loan_id 
+                     */
+                    $url = '../books/return_it';    
                     $url.= '?book_id='.$loan['book_id'];
                     $url.= '&copy_id='.$loan['copy_id'];
                     $url.= '&user_id='.$loan['user_id'];
@@ -35,6 +50,15 @@ include_once('../libs/lib.php');
             
         </tr>
         <?php endforeach; ?>
+
+    </tbody>
+</table>
+
+
+<h3>Money Summary</h3>
+
+<table>
+    <tbody>
         <tr>
             <td colspan="100%">
                 Total fine: <b><?php echo toCurrency($total_fine); ?></b>
@@ -59,9 +83,6 @@ include_once('../libs/lib.php');
         The biblioteque needs to give <?php echo toCurrency($saldo); ?> euro back to the user
         <?php endif; ?>
             </td>
-        </tr>
-
-
         </tr>
     </tbody>
 </table>

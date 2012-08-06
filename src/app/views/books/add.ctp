@@ -3,7 +3,7 @@
 <h2>Add Book</h2>
 
 <?php
-    echo $this->Form->create('Book', array('type'  =>  'post',
+    echo $this->Form->create('Book', array('type'   =>  'post',
                                            'action' => 'do_add'));
     echo $this->Form->input('title', array('type' => 'text', 'size' => '30'));
     echo $this->Form->input('author', array('type' => 'text', 'size' => '30'));

@@ -91,6 +91,15 @@ class BooksController extends AppController
         $this->setBookAndCopy($data);
     }
 
+    function use_isbn()
+    {
+        /* Connect to goggle books to retrieve book's information based on it's
+        isbn number, and then go to 'books/add' to confirm the addition (and
+        eventually edit the data). If it doesn't find it, it prompts a 'not
+        found' message.
+        */
+    }
+
     function view()
     {
         $book_id = $_GET['book_id'];
