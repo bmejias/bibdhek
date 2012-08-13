@@ -1,6 +1,6 @@
 <?php
 
-include_once('../libs/lib.php');
+include_once('../Lib/lib.php');
 
 class Rule extends AppModel
 {

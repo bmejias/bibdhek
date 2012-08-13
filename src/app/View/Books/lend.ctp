@@ -1,7 +1,7 @@
 <!-- File: /app/views/books/lend.ctp -->
 
 <?php
-include_once('../libs/lib.php');
+include_once('../Lib/lib.php');
 
 $form = $this->Form;
 ?>

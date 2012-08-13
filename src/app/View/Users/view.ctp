@@ -1,5 +1,5 @@
 <?php
-include_once('../libs/lib.php');
+include_once('../Lib/lib.php');
 ?>
 <h2><?php echo $user['first_name']." ".$user['last_name']; ?></h2>
 
