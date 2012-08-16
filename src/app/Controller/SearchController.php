@@ -40,7 +40,7 @@ class SearchController extends AppController
             $users  = $this->searchIn($this->User, $user_fields, $the_query);
         $this->set('books', $books);
         $this->set('users', $users);
-        $this->render('../search/results');
+        $this->render('results');
     }
 
     function results()
