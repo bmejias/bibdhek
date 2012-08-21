@@ -14,7 +14,7 @@ on Ubuntu 12.04
 - Postgresql (postgresql-9.1)
  
 You may used or another database, but then you need to change the configuration
-on src/app/Config/core.php
+on src/app/Config/database.php
 
 For the scripts to insert data into the database
 
