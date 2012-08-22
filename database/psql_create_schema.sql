@@ -1,16 +1,18 @@
 CREATE TABLE books
 (
-	id		serial		PRIMARY KEY,
-	title	text		NOT NULL,
-	author	text		NOT NULL,
-	cd		boolean		DEFAULT FALSE,
-	level	varchar(20),
-	lang	char(2),
-	date	date,
-	isbn	varchar(16),
-	cover	varchar(16),
-	publisher text,
-	obs		text
+	id			serial		PRIMARY KEY,
+	title		text		NOT NULL,
+	author		text		NOT NULL,
+	cd			boolean		DEFAULT FALSE,
+	collection	text,
+	level		varchar(20),
+	lang		char(2),
+	date		date,
+	isbn		varchar(16),
+	cover		varchar(16),
+	publisher 	text,
+	obs			text,
+	acquired	varchar(16)
 );
 
 CREATE TABLE copies
