@@ -22,14 +22,11 @@ $cakeDescription = __d('cake_dev', 'CakePHP: the rapid development php framework
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 	<?php echo $this->Html->charset(); ?>
-	<title>
-		<?php echo $cakeDescription ?>:
-		<?php echo $title_for_layout; ?>
-	</title>
+	<title>Bib D'Hek</title>
 	<?php
 		echo $this->Html->meta('icon');
 
-		echo $this->Html->css('cake.generic');
+		echo $this->Html->css('bibdhek');
 
 		echo $this->fetch('meta');
 		echo $this->fetch('css');
@@ -39,11 +36,21 @@ $cakeDescription = __d('cake_dev', 'CakePHP: the rapid development php framework
 <body>
 	<div id="container">
 		<div id="header">
-			<h1><?php echo $this->Html->link($cakeDescription, 'http://cakephp.org'); ?></h1>
+        <h1>Bib D'Hek: The bib of Campus D'Hek Landen</h1>
 		</div>
 		<div id="content">
 
 			<?php echo $this->Session->flash(); ?>
+
+            <?php
+                $cart = $this->Session->read('cart');
+                if ($cart != null)
+                {
+                    echo "<p class=\"notice\">";
+                    echo $this->Session->read('cart_msg');
+                    echo "</p>";
+                }
+            ?>
 
 			<?php echo $this->fetch('content'); ?>
 		</div>

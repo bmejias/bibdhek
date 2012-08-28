@@ -33,6 +33,19 @@ App::uses('Controller', 'Controller');
  */
 class AppController extends Controller
 {
+    function beforeFilter()
+    {
+        /* Checking for the Shopping Cart - Not really shopping by lending */
+        $cart_msg = "Empty Shopping cart";
+        $cart = $this->Session->read('cart');
+        if ($cart != null)
+        {
+            $cart_msg = $cart['user']." is taking ".sizeof($cart['copies'])
+                        ."books";
+        }
+        $this->Session->write('cart_msg', $cart_msg);
+    }
+
     function debug($message)
     {
         $this->log($message, LOG_DEBUG);
