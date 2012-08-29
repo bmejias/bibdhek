@@ -15,7 +15,7 @@
         </tr>
     </thead>
     <tbody>
-        <?php foreach ($books as $book) : ?>
+        <?php foreach ($books as $book): ?>
         <tr>
             <td><?php echo $book['Book']['id']; ?></td>
             <td><?php

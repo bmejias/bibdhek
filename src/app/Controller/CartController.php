@@ -56,6 +56,13 @@ class CartController extends AppController
         $this->set('mini_display', false);
     }
 
+    public function commit()
+    {
+        $input = $this->request->data['Cart'];
+        if (isset($input['destroy']))
+            $this->redirect('/');
+    }
+
     private function getCart()
     {
         $cart = $this->Session->read('cart');

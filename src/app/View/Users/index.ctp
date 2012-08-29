@@ -31,7 +31,8 @@
                                                        array('height'=>30,
                                                              'align'=>'right'));
                         $add_url = '/cart/start?user_id='.$user['User']['id'];
-                        echo $this->Html->link($add_icon, $add_url);
+                        echo $this->Html->link($add_icon, $add_url,
+                                               array('escape'=>false));
                     ?>
                     </a>
                 </td>
