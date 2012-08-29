@@ -26,8 +26,13 @@
         <tr>
             <?php if ($cart == null): ?>
                 <td>
-                    <a href="cart/start?user_id=<?php echo $user['User']['id']; ?>">
-                        <img src="img/mochila.png" height="30" align="right">
+                    <?php
+                        $add_icon = $this->Html->image('mochila.png',
+                                                       array('height'=>30,
+                                                             'align'=>'right'));
+                        $add_url = '/cart/start?user_id='.$user['User']['id'];
+                        echo $this->Html->link($add_icon, $add_url);
+                    ?>
                     </a>
                 </td>
             <?php endif; ?>

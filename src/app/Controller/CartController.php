@@ -51,6 +51,11 @@ class CartController extends AppController
         $this->redirect('/');
     }
 
+    public function view()
+    {
+        $this->set('mini_display', false);
+    }
+
     private function getCart()
     {
         $cart = $this->Session->read('cart');

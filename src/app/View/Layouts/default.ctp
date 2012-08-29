@@ -40,25 +40,26 @@ $cakeDescription = __d('cake_dev', 'CakePHP: the rapid development php framework
 		</div>
 		<div id="content">
 
-			<?php echo $this->Session->flash(); ?>
+            <?php echo $this->Session->flash(); ?>
 
             <?php
                 $cart = $this->Session->read('cart');
-                if ($cart != null)
-                {
-                ?>
-                    <p class="notice">
-                    <img src="img/mochila.png" height="30">
-                <?php
-                    echo $this->Session->read('cart_msg');
-                ?>
-                    <a href="users/cart">Show Details</a>
-                    </p>
-                <?php
-                }
+                if (($cart != null) && (!isset($mini_display) || $mini_display)) :
             ?>
+                    <p class="notice">
+                    <?php
+                        echo $this->Html->image('mochila.png',
+                                                array('height'=>30));
+                        echo "\n";
+                        echo $this->Session->read('cart_msg');
+                        echo "\n";
+                        echo $this->Html->link('Show Details', '/cart/view');
+                    ?>
+                    </p>
+            <?php endif; ?>
 
-			<?php echo $this->fetch('content'); ?>
+            <?php echo $this->fetch('content'); ?>
+
 		</div>
 		<div id="footer">
 			<?php echo $this->Html->link(
