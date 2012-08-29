@@ -34,28 +34,41 @@ $form = $this->Form;
             <td><?php echo $copy['status']; ?></td>
             <td><?php echo $copy['student']; ?></td>
             <td><?php echo $copy['date_return']; ?></td>
-            <td><?php
-                if ($copy['status'] == 'available')
+            <td>
+            <?php
+                $cart = $this->Session->read('cart');
+                if ($copy['status'] == 'available' and $cart != null)
                 {
-                    $action = 'lend';
-                    $submit_label = 'lend';
+                    ?>
+                    <a href="users/add_to_cart?copy_id=<?php echo $copy['id']; ?>">
+                        <img src="../img/add_to_bag.png" height="30" align="left">
+                    </a>
+                <?php
                 }
-                elseif ($copy['status'] == 'lent')
+                else
                 {
-                    $action = 'return_it';
-                    $submit_label = 'return';
+                    if ($copy['status'] == 'available')
+                    {
+                        $action = 'lend';
+                        $submit_label = 'lend';
+                    }
+                    elseif ($copy['status'] == 'lent')
+                    {
+                        $action = 'return_it';
+                        $submit_label = 'return';
+                    }
+                    echo $this->Form->create('Book',
+                                             array('type' => 'post',
+                                                   'action' => $action));
+                    echo $this->Form->hidden('book_id', array('value' => $book['id']));
+                    echo $this->Form->hidden('copy_id', array('value' => $copy['id']));
+                    echo $this->Form->hidden('user_id',
+                                             array('value' => $copy['user_id']));
+                    echo $this->Form->hidden('loan_id',
+                                             array('value' => $copy['loan_id']));
+                    echo $this->Form->end($submit_label);
                 }
-                echo $this->Form->create('Book',
-                                         array('type' => 'post',
-                                               'action' => $action));
-                echo $this->Form->hidden('book_id', array('value' => $book['id']));
-                echo $this->Form->hidden('copy_id', array('value' => $copy['id']));
-                echo $this->Form->hidden('user_id',
-                                         array('value' => $copy['user_id']));
-                echo $this->Form->hidden('loan_id',
-                                         array('value' => $copy['loan_id']));
-                echo $this->Form->end($submit_label);
-                ?>
+            ?>
             </td>
         </tr>
         <?php endforeach; ?>

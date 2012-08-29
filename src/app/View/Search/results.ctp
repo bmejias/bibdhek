@@ -41,6 +41,8 @@ endif;
 ?>
 
 <?php
+$cart = $this->Session->read('cart');
+
 /* --- BEGIN RESULTS FOR USERS ---*/
 if (count($users) > 0) :
 ?>
@@ -49,12 +51,22 @@ if (count($users) > 0) :
 <table>
     <thead>
         <tr>
+            <?php if ($cart == null): ?>
+                <th width="100px">Take books</th>
+            <?php endif; ?>
             <th>User</th>
         </tr>
     </thead>
     <tbody>
         <?php foreach ($users as $user) : ?>
         <tr>
+            <?php if ($cart == null): ?>
+                <td>
+                    <a href="../users/start_cart?uid=<?php echo $user['User']['id']; ?>">
+                        <img src="../img/mochila.png" height="30" align="right">
+                    </a>
+                </td>
+            <?php endif; ?>
             <td>
                 <?php
                 $url_user   = '../users/view?user_id='.$user['User']['id'];

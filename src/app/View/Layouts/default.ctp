@@ -46,9 +46,15 @@ $cakeDescription = __d('cake_dev', 'CakePHP: the rapid development php framework
                 $cart = $this->Session->read('cart');
                 if ($cart != null)
                 {
-                    echo "<p class=\"notice\">";
+                ?>
+                    <p class="notice">
+                    <img src="img/mochila.png" height="30">
+                <?php
                     echo $this->Session->read('cart_msg');
-                    echo "</p>";
+                ?>
+                    <a href="users/cart">Show Details</a>
+                    </p>
+                <?php
                 }
             ?>
 

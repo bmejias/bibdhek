@@ -2,9 +2,13 @@
 
 <h2> Users </h2>
 
+<?php $cart = $this->Session->read('cart'); ?>
 <table>
     <thead>
         <tr>
+            <?php if ($cart == null): ?>
+                <th width="100px">Take books</th>
+            <?php endif; ?>
             <?php if ($mode == 'detailed') : ?> 
                 <th>id</th>
                 <th>username</th>
@@ -20,6 +24,13 @@
     <tbody>
         <?php foreach ($users as $user) : ?>
         <tr>
+            <?php if ($cart == null): ?>
+                <td>
+                    <a href="users/start_cart?uid=<?php echo $user['User']['id']; ?>">
+                        <img src="img/mochila.png" height="30" align="right">
+                    </a>
+                </td>
+            <?php endif; ?>
             <?php if ($mode == 'detailed') : ?> 
                 <td><?php echo $user['User']['id']; ?></td>
                 <td><?php echo $user['User']['username']; ?></td>
