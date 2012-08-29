@@ -41,7 +41,7 @@ class AppController extends Controller
         if ($cart != null)
         {
             $cart_msg = $cart['user']." is taking ".sizeof($cart['copies'])
-                        ."books";
+                        ." books";
         }
         $this->Session->write('cart_msg', $cart_msg);
     }

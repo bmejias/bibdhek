@@ -62,7 +62,7 @@ if (count($users) > 0) :
         <tr>
             <?php if ($cart == null): ?>
                 <td>
-                    <a href="../users/start_cart?uid=<?php echo $user['User']['id']; ?>">
+                    <a href="../cart/start?user_id=<?php echo $user['User']['id']; ?>">
                         <img src="../img/mochila.png" height="30" align="right">
                     </a>
                 </td>
