@@ -40,7 +40,7 @@ $form = $this->Form;
                 if ($copy['status'] == 'available' and $cart != null)
                 {
                     ?>
-                    <a href="cart/add?copy_id=<?php echo $copy['id']; ?>">
+                    <a href="../cart/add?copy_id=<?php echo $copy['id']; ?>">
                         <img src="../img/add_to_bag.png" height="30" align="left">
                     </a>
                 <?php

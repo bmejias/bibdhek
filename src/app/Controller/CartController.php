@@ -31,6 +31,36 @@ class CartController extends AppController
         $this->Session->write('cart', null);
         $this->redirect('/');
     }
+
+    public function add()
+    {
+        $cart = $this->getCart();
+        $copy_id = $_GET['copy_id'];
+        Controller::loadModel('Copy');
+        Controller::loadModel('Book');
+        $copy = $this->Copy->findById($copy_id);
+        $book = $this->Book->findById($copy['Copy']['book_id']);
+        $author = $book['Book']['author'];
+        $title = $book['Book']['title'];
+        $new_copy = sizeof($cart['copies']);
+        $cart['copies'][$new_copy] = array('copy_id' => $copy_id,
+                                           'book_id' => $book_id,
+                                           'author' => $author,
+                                           'title' => $title);
+        $this->Session->write('cart', $cart);
+        $this->redirect('/');
+    }
+
+    private function getCart()
+    {
+        $cart = $this->Session->read('cart');
+        if ($cart == null)
+        {
+            $this->Session->setFlash("ERROR: There is no shopping cart");
+            $this->redirect('/');
+        }
+        return $cart;
+    }
 }
 
 ?>
