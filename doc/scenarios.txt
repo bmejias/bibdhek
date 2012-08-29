@@ -1,0 +1,25 @@
+CASE SCENARIOS
+
+- Bib admin provides an xls file with a list of books, and the books get
+  imported on the system. I need to write a script for this.
+
+- Bib admin wants to add a book to the system
+
+- Bib admin provides an xls file with users (pupils). Users get imported on the
+  system
+
+- Bib admin adds a new user to the system
+
+- . User comes with a set of books to take away.
+  . Bib admin search for the user to create a user-bibcar
+  . Bib admin search the first book and it to the user-bibcar
+  . Bib admin search all the other books adding them to the user-bibcar
+  . Once all books are added to the user-bibcar, the bibcar is commited.
+
+- . User comes with a set of books back to the bib
+  . Bib searches for the user and get a list of lent books
+  . It selects all the books that will be returned and proceeds
+  . Books are returned, and the system presents a total amount to pay
+  . The paid amount is removed from the database
+
+
