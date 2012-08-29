@@ -14,6 +14,10 @@
 
     <p>There are no books selected</p>
 
+    <p>
+    <?php echo $this->Html->link('Cancel Shopping Cart', '/cart/destroy'); ?>
+    </p>
+
 <? else: ?>
 
     <table>
