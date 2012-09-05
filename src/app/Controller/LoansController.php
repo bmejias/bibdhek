@@ -84,7 +84,7 @@ class LoansController extends AppController
         /* This is the functionality */
         Controller::loadModel('Copy');
         $this->Copy->id = $input['copy_id'];
-        $this->Copy->saveField('status', 'available');
+        $this->Copy->saveField('status', Copy::$AVAILABLE);
 
         $deposit = $input['deposit'];
         /* if cd is returned, return the deposit as well */

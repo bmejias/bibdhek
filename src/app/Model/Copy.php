@@ -8,6 +8,7 @@ class Copy extends AppModel
 {
     var $name = 'Copy';
 
+    static $AVAILABLE = 'available';
     static $LENT = 'lent';
 
     /**

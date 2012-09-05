@@ -37,7 +37,7 @@ $form = $this->Form;
             <td>
             <?php
                 $cart = $this->Session->read('cart');
-                if ($copy['status'] == 'available' and $cart != null)
+                if ($copy['status'] == Copy::$AVAILABLE and $cart != null)
                 {
                     ?>
                     <a href="../cart/add?copy_id=<?php echo $copy['id']; ?>">
@@ -47,7 +47,7 @@ $form = $this->Form;
                 }
                 else
                 {
-                    if ($copy['status'] == 'available')
+                    if ($copy['status'] == Copy::$AVAILABLE)
                     {
                         $action = 'lend';
                         $submit_label = 'lend';

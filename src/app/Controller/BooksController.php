@@ -26,7 +26,7 @@ class BooksController extends AppController
             {
                 $new_copy = array('Copy' =>
                                       array('book_id'   => $book_id,
-                                            'status'    => 'available',
+                                            'status'    => Copy::$AVAILABLE,
                                             'code'      => $i));
                 $this->Copy->create();
                 $result = $this->Copy->save($new_copy);
