@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * Author: Boriss Mejias <tchorix@gmail.com>
+ */
+
 class CartController extends AppController
 {
     public $name        = "Cart";
@@ -58,9 +62,13 @@ class CartController extends AppController
 
     public function commit()
     {
-        $input = $this->request->data['Cart'];
-        if (isset($input['destroy']))
-            $this->redirect('/');
+        $cart = $this->getCart();
+        Controller::loadModel('Rules');
+        $now = time();
+        $date_return = $this->Rules->get_date_return($now);
+        $deposit = $this->Rules->get_deposit(); // TODO: Add CDs to the Cart
+        // ...TODO
+        
     }
 
     private function getCart()

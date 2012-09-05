@@ -1,4 +1,7 @@
 <?php
+/**
+ * Author: Boriss Mejias <tchorix@gmail.com>
+ */
 
 class Loan extends AppModel
 {
@@ -19,6 +22,19 @@ class Loan extends AppModel
         for ($i = 0; $i < count($result); $i++)
             $result[$i] = $result[$i][0];
         return $result;
+    }
+
+    function add_loan($copy_id, $user_id, $date_out, $date_return, $cd, $deposit)
+    {
+        $loan = array('Loan'=>array('copy_id'       => $copy_id,
+                                    'user_id'       => $user_id,
+                                    'date_out'      => $date_out,
+                                    'date_return'   => $date_return,
+                                    'cd'            => $cd,
+                                    'deposit'       => $deposit,
+                                    'status'        => 'lent'));
+        $this->create();
+        return $this->save($loan);
     }
 }
 

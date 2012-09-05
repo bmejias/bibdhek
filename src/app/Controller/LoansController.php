@@ -1,12 +1,17 @@
 <?php
+
+/**
+ * Author: Boriss Mejias <tchorix@gmail.com>
+ */
+
 include_once('../Lib/lib.php');
 
 class LoansController extends AppController
 {
     var $name = 'Loans';
 
-    /* pre: $this->request->data['Loan']['user'] should be a valid user */
-    /* pre: $this->request->data['Loan']['copy'] should be a valid copy */
+    /* pre: data['Loan']['user_id'] should exist on the database */
+    /* pre: data['Loan']['copy_id'] should exist on the database */
     function lend()
     {
         $this->helpers[] = 'Time';
@@ -23,20 +28,12 @@ class LoansController extends AppController
             $copy_id    = $input['copy_id'];
             $user_id    = $input['user_id'];
 
-            $loan = array('Loan'=>
-                            array('copy_id'     => $copy_id,
-                                  'user_id'     => $user_id,
-                                  'date_out'    => $input['date_out'],
-                                  'date_return' => $input['date_return'],
-                                  'status'      => 'lent'));
-            if ($input['cd'])
-            {
-                $loan['Loan']['cd'] = true;
-                $loan['Loan']['deposit'] = toNumber($input['deposit']);
-            }
-
-            $this->Loan->create();
-            if ($this->Loan->save($loan))
+            $add_loan = $this->Loan->add_loan($copy_id, $user_id,
+                                              $input['date_out'],
+                                              $input['date_return'],
+                                              $input['cd'],
+                                              toNumber($input['deposit']));
+            if ($add_loan)
             {
                 $this->Copy->id = $copy_id;
                 $this->Copy->saveField('status', 'lent');

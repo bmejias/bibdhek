@@ -1,11 +1,16 @@
 <?php
 
+/**
+ * Author Boriss Mejias <tchorix@gmail.com>
+ */
+
 include_once('../Lib/lib.php');
 
 class Rule extends AppModel
 {
     var $name = 'Rule';
 
+    /* Returns the maximum date to return a book taken at $out_time */
     function get_date_return($out_time)
     {
         $rule = $this->findByRule('lend');
@@ -13,6 +18,7 @@ class Rule extends AppModel
         return $out_time + $rule['Rule']['amount'] * 24 * 60 * 60;
     }
 
+    /* Returns the amount of deposit to lend a CD */
     function get_deposit()
     {
         $rule = $this->findByRule('deposit');
