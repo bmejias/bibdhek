@@ -37,8 +37,6 @@ class LoansController extends AppController
             if ($add_loan)
             {
                 $this->Copy->setToLent($copy_id);
-//                $this->Copy->id = $copy_id;
-//                $this->Copy->saveField('status', 'lent');
                 $this->Session->setFlash('The book has been lent.');
             }
         }

@@ -33,7 +33,7 @@ class Loan extends AppModel
                                     'date_return'   => $date_return,
                                     'cd'            => $cd,
                                     'deposit'       => $deposit,
-                                    'status'        => 'lent'));
+                                    'status'        => Copy::$LENT));
         $this->create();
         return $this->save($loan);
     }

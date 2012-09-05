@@ -114,12 +114,12 @@ class BooksController extends AppController
         foreach ($copies as $copy)
         {
             $copy = $copy['Copy'];
-            if ($copy['status'] == 'lent')
+            if ($copy['status'] == Copy::$LENT)
             {
                 Controller::loadModel('Loan');
                 Controller::loadModel('User');
                 $query = array('Loan.copy_id' => $copy['id'],
-                               'Loan.status' => 'lent');
+                               'Loan.status' => Copy::$LENT);
                 $loan = $this->Loan->find('first',
                                           array('conditions' => $query));
                 $user = $this->User->findById($loan['Loan']['user_id']);

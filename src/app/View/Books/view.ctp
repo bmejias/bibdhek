@@ -52,7 +52,7 @@ $form = $this->Form;
                         $action = 'lend';
                         $submit_label = 'lend';
                     }
-                    elseif ($copy['status'] == 'lent')
+                    elseif ($copy['status'] == Copy::$LENT)
                     {
                         $action = 'return_it';
                         $submit_label = 'return';
