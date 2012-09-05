@@ -1,8 +1,14 @@
 <?php
 
+/**
+ * Author Boriss Mejias <tchorix@gmail.com>
+ */
+
 class Copy extends AppModel
 {
     var $name = 'Copy';
+
+    static $LENT = 'lent';
 
     /**
      * Find the title and id of the book associated with the copy_id
@@ -23,6 +29,12 @@ class Copy extends AppModel
             $to_return['title'] = $result[0][0]['title'];
         }
         return $to_return;
+    }
+
+    function setToLent($copy_id)
+    {
+        $this->id = $copy_id;
+        $this->saveField('status', Copy::$LENT);
     }
 }
 

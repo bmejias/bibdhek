@@ -14,6 +14,8 @@
  * @package       Cake.View.Layouts
  * @since         CakePHP(tm) v 0.10.0.1076
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
+ *
+ * Contributor for Bib D'HEK: Boriss Mejias <tchorix@gmail.com>
  */
 
 $cakeDescription = __d('cake_dev', 'CakePHP: the rapid development php framework');
@@ -36,7 +38,10 @@ $cakeDescription = __d('cake_dev', 'CakePHP: the rapid development php framework
 <body>
 	<div id="container">
 		<div id="header">
-        <h1>Bib D'Hek: The bib of Campus D'Hek Landen</h1>
+        <?php
+            $title = "<h1>Bib D'Hek: The bib of Campus D'Hek Landen</h1>";
+            echo $this->Html->link($title, '/', array('escape'=>false));
+        ?>
 		</div>
 		<div id="content">
 

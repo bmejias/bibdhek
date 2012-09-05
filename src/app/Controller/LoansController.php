@@ -33,10 +33,12 @@ class LoansController extends AppController
                                               $input['date_return'],
                                               $input['cd'],
                                               toNumber($input['deposit']));
+            /* TODO: Modifying Loan and Copy should done in a transaction */
             if ($add_loan)
             {
-                $this->Copy->id = $copy_id;
-                $this->Copy->saveField('status', 'lent');
+                $this->Copy->setToLent($copy_id);
+//                $this->Copy->id = $copy_id;
+//                $this->Copy->saveField('status', 'lent');
                 $this->Session->setFlash('The book has been lent.');
             }
         }

@@ -17,7 +17,8 @@ class Loan extends AppModel
     function get_from_user($user_id)
     {
         $query = "select * from loans where user_id=".$user_id;
-        $query.= " and (status = 'lent' or fine > paid or deposit > 0)";
+        $query.= " and ";
+        $query.= " (status = '".Copy::$LENT."' or fine > paid or deposit > 0)";
         $result = $this->query($query);
         for ($i = 0; $i < count($result); $i++)
             $result[$i] = $result[$i][0];
