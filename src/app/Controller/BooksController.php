@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * Author: Boriss Mejias <tchorix@gmail.com>
+ */
+
 class BooksController extends AppController
 {
     var $name = 'Books';

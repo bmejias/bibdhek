@@ -1,5 +1,9 @@
-<!-- File: /app/views/books/view.ctp -->
 <?php
+
+/**
+ * Author: Boriss Mejias <tchorix@gmail.com>
+ */
+
 $form = $this->Form;
 ?>
 

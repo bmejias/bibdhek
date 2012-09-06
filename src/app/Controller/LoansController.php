@@ -28,7 +28,8 @@ class LoansController extends AppController
             $copy_id    = $input['copy_id'];
             $user_id    = $input['user_id'];
 
-            $add_loan = $this->Loan->add_loan($copy_id, $user_id,
+            $add_loan = $this->Loan->add_loan($copy_id,
+                                              $user_id,
                                               $input['date_out'],
                                               $input['date_return'],
                                               $input['cd'],

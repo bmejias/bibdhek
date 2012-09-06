@@ -63,12 +63,28 @@ class CartController extends AppController
     public function commit()
     {
         $cart = $this->getCart();
-        Controller::loadModel('Rules');
+        Controller::loadModel('Rule');
+        Controller::loadModel('Loan');
+        Controller::loadModel('Copy');
         $now = time();
-        $date_return = $this->Rules->get_date_return($now);
-        $deposit = $this->Rules->get_deposit(); // TODO: Add CDs to the Cart
-        // ...TODO
-        
+        $date_return = $this->Rule->get_date_return($now);
+        $now = date('Y-m-d', $now);
+        $date_return = date('Y-m-d', $date_return);
+        $deposit = $this->Rule->get_deposit(); // TODO: Add CDs to the Cart
+        $user_id = $cart['user_id'];
+        foreach ($cart['copies'] as $copy)
+        {
+            $copy_id = $copy['copy_id'];
+            $add_loan = $this->Loan->add_loan($copy_id, $user_id, $now,
+                                              $date_return, false, $deposit);
+            /* TODO: Modifying Loan and Copy should done in a transaction */
+            if ($add_loan)
+            {
+                $this->Copy->setToLent($copy_id);
+            }
+        }
+        $this->Session->setFlash('Date to return:'.$date_return);
+        $this->redirect('/');
     }
 
     private function getCart()
