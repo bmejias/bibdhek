@@ -22,9 +22,6 @@ echo $this->Form->create('User', array('type'   => 'post',
         <?php foreach ($loans as $loan) : ?>
         <tr>
             <td>
-                <input
-                    type="checkbox"
-                    value=""
                 <?php
                     echo $this->Form->input('cd', array('type' => 'checkbox', 'label' => ''));
                 ?>
