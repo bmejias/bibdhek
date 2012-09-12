@@ -25,7 +25,7 @@ class Loan extends AppModel
         return $result;
     }
 
-    function add_loan($copy_id, $user_id, $date_out, $date_return, $cd, $deposit)
+    function add($copy_id, $user_id, $date_out, $date_return, $cd, $deposit)
     {
         $loan = array('Loan'=>array('copy_id'       => $copy_id,
                                     'user_id'       => $user_id,
@@ -37,6 +37,8 @@ class Loan extends AppModel
         $this->create();
         return $this->save($loan);
     }
+
+
 }
 
 ?>

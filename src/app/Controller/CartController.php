@@ -75,8 +75,8 @@ class CartController extends AppController
         foreach ($cart['copies'] as $copy)
         {
             $copy_id = $copy['copy_id'];
-            $add_loan = $this->Loan->add_loan($copy_id, $user_id, $now,
-                                              $date_return, false, $deposit);
+            $add_loan = $this->Loan->add($copy_id, $user_id, $now,
+                                         $date_return, false, $deposit);
             /* TODO: Modifying Loan and Copy should done in a transaction */
             if ($add_loan)
             {

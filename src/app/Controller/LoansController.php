@@ -28,12 +28,12 @@ class LoansController extends AppController
             $copy_id    = $input['copy_id'];
             $user_id    = $input['user_id'];
 
-            $add_loan = $this->Loan->add_loan($copy_id,
-                                              $user_id,
-                                              $input['date_out'],
-                                              $input['date_return'],
-                                              $input['cd'],
-                                              toNumber($input['deposit']));
+            $add_loan = $this->Loan->add($copy_id,
+                                         $user_id,
+                                         $input['date_out'],
+                                         $input['date_return'],
+                                         $input['cd'],
+                                         toNumber($input['deposit']));
             /* TODO: Modifying Loan and Copy should done in a transaction */
             if ($add_loan)
             {
@@ -76,7 +76,7 @@ class LoansController extends AppController
     }
 
     /*-----------------------------------------------------------------------
-     * Functions to help the controllers
+     * Functions to help the controllers - Move them to the Model?
      *-----------------------------------------------------------------------
      */
 

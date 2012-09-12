@@ -23,7 +23,9 @@ echo $this->Form->create('User', array('type'   => 'post',
         <tr>
             <td>
                 <?php
-                    echo $this->Form->input('cd', array('type' => 'checkbox', 'label' => ''));
+                    echo $this->Form->input($loan['id'],
+                                            array('type' => 'checkbox',
+                                                  'label' => ''));
                 ?>
             </td>
             <td>
@@ -50,6 +52,10 @@ echo $this->Form->create('User', array('type'   => 'post',
 
     </tbody>
 </table>
+
+<p>
+<?php echo $this->Form->end('Return'); ?>
+</p>
 
 
 <h3>Money Summary</h3>

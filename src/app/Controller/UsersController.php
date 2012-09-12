@@ -23,7 +23,8 @@ class UsersController extends AppController
                 $this->request->data['User']['password'] = "nopassword";
                 $this->request->data['User']['confirm'] = "nopassword";
             }
-            if ($this->request->data['User']['password'] == $this->request->data['User']['confirm'])
+            if ($this->request->data['User']['password']
+                == $this->request->data['User']['confirm'])
             {
                 if ($this->User->save($this->request->data))
                 {
@@ -88,6 +89,14 @@ class UsersController extends AppController
         $this->set('loans', $user_loans);
         $this->set('total_fine', $total_fine);
         $this->set('total_deposit', $total_deposit);
+    }
+
+    function bulk_return()
+    {
+        $data = isset($_POST['data']) ? $_POST['data']['User'] : array();
+        $this->debug("This is the data:\n".print_r($data, true));
+        // foreach ($data['']
+        $this->redirect('/'); 
     }
 }
 
