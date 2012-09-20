@@ -4,8 +4,12 @@ include_once('../Lib/lib.php');
 <h2><?php echo $user['first_name']." ".$user['last_name']; ?></h2>
 
 <?php
-echo $this->Form->create('User', array('type'   => 'post', 
-                                       'action' => 'bulk_return'));
+
+if (sizeof($loans) > 0)
+{
+    echo $this->Form->create('User', array('type'   => 'post', 
+                                           'action' => 'bulk_return'));
+}
 ?>
 <table>
     <thead>
@@ -23,9 +27,13 @@ echo $this->Form->create('User', array('type'   => 'post',
         <tr>
             <td>
                 <?php
-                    echo $this->Form->input($loan['id'],
+                    echo $this->Form->input($loan['id'].'.to_return',
                                             array('type' => 'checkbox',
                                                   'label' => ''));
+                    echo $this->Form->hidden($loan['id'].'.status',
+                                             array('value'=>$loan['status']));
+                    echo $this->Form->hidden($loan['id'].'.copy_id',
+                                             array('value'=>$loan['copy_id']));
                 ?>
             </td>
             <td>
@@ -54,7 +62,12 @@ echo $this->Form->create('User', array('type'   => 'post',
 </table>
 
 <p>
-<?php echo $this->Form->end('Return'); ?>
+<?php
+    if (sizeof($loans) > 0)
+    {
+        echo $this->Form->end('Return');
+    }
+?>
 </p>
 
 

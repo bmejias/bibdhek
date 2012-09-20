@@ -8,8 +8,8 @@ class Copy extends AppModel
 {
     var $name = 'Copy';
 
-    static $AVAILABLE = 'available';
-    static $LENT = 'lent';
+    static $AVAILABLE   = 'available';
+    static $LENT        = 'lent';
 
     /**
      * Find the title and id of the book associated with the copy_id
@@ -36,6 +36,12 @@ class Copy extends AppModel
     {
         $this->id = $copy_id;
         $this->saveField('status', Copy::$LENT);
+    }
+
+    function setToAvailable($copy_id)
+    {
+        $this->id = $copy_id;
+        $this->saveField('status', Copy::$AVAILABLE);
     }
 }
 

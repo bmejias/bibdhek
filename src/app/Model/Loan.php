@@ -7,6 +7,8 @@ class Loan extends AppModel
 {
     var $name = 'Loan';
 
+    static $RETURNED    = 'returned';
+
     /**
      * Find for user_id all copies being lent, or where there is still 
      * a fine to pay, or where there is a deposit to pay back
@@ -38,7 +40,20 @@ class Loan extends AppModel
         return $this->save($loan);
     }
 
+    function update($loan_id, $update_data)
+    {
+        $this->id = $loan_id;
+        $this->set($update_data);
+        return $this->save();
+    }
 
+    /* TODO: This function is not working */
+    function get_status($loan_id)
+    {
+        $loan = $this->findById($loan_id);
+        $this->debug("This is the STATUS we've found: ".print_r($loan, true));
+        return $loan['Loan']['status'];
+    }
 }
 
 ?>

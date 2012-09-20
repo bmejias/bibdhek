@@ -95,9 +95,37 @@ class UsersController extends AppController
     {
         $data = isset($_POST['data']) ? $_POST['data']['User'] : array();
         $this->debug("This is the data:\n".print_r($data, true));
-        // foreach ($data['']
+        Controller::loadModel('Loan');
+        foreach ($data as $loan_id=>$loan_data)
+        {
+            if ($loan_data['to_return'])
+            {
+                /* TODO: This should be done in a transaction */
+
+                /* First update the loan*/
+                $update_data = array('deposit'  => 0,
+                                     'cd'       => false,
+                                     'fine'     => 0);
+                if ($loan_data['status'] != Loan::$RETURNED)
+                {
+                    $update_data['date_in'] = date('Y-m-d', time());
+                    $update_data['status'] = Loan::$RETURNED;
+                }
+                $this->debug("For ".$loan_id.", I set the status to
+                             ".print_r($update_data, true));
+                $update_loan = $this->Loan->update($loan_id, $update_data);
+
+                /* then update the copy */
+                if ($update_loan)
+                {
+                    Controller::loadModel('Copy');
+                    $this->Copy->setToAvailable($loan_data['copy_id']);
+                }
+            }
+        }
         $this->redirect('/'); 
     }
+
 }
 
 ?>

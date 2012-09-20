@@ -82,26 +82,23 @@ class LoansController extends AppController
 
     private function save_return($input)
     {
-        /* This is the functionality */
         Controller::loadModel('Copy');
-        $this->Copy->id = $input['copy_id'];
-        $this->Copy->saveField('status', Copy::$AVAILABLE);
+        $this->Copy->setToAvailable($input['copy_id']);
 
         $deposit = $input['deposit'];
         /* if cd is returned, return the deposit as well */
         if ($input['cd'])
             $deposit = $input['deposit'] - toNumber($input['deposit_back']);
-        $this->Loan->id = $input['loan_id'];
-        $this->Loan->set(array('date_in'    => $input['date_in'],
-                               'status'     => 'returned',
-                               'deposit'    => $deposit,
-                               'cd'         => !$input['cd'],
-                               'fine'       => $input['fine']));
-        $db_result = $this->Loan->save();
+        $update_data = array('date_in'    => $input['date_in'],
+                             'status'     => Loan::$RETURNED,
+                             'deposit'    => $deposit,
+                             'cd'         => !$input['cd'],
+                             'fine'       => $input['fine']);
+        $update_loan = $this->Loan->update($input['loan_id'], $update_data);
 
         /* This is part of the feedback */
         $msg = "";
-        if ($db_result)
+        if ($update_loan)
         {
             $msg = "The book has been returned.";
             if ($deposit > 0)
@@ -110,8 +107,7 @@ class LoansController extends AppController
         }
         else
             $msg = 'There was a problem returning the book.';
-        return array('db' => $db_result, 'msg' => $msg);
-
+        return array('db' => $update_loan, 'msg' => $msg);
     }
 
     private function pay_fine($input)
