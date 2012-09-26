@@ -35,33 +35,71 @@ def make_username(first_name, last_name, users, attemps=0):
     else:
         return username
 
+def add_user(first_name, last_name, users):
+    username = None
+    if first_name == '' and last_name == '':
+        return None
+
+    full_name = first_name.lower() + last_name.lower()
+    if users.has_key(full_name):
+        return users[full_name]['username']
+
+    username = make_username(first_name, last_name, users)
+    if username == None:
+        print "ERROR: user %s %s has too many name conflicts" % (first_name, last_name)
+    else:
+        users[full_name] = {'username':username,
+                            'last_name':last_name,
+                            'first_name':first_name}
+    return username
+
+def add_user_to_group(username, group, groups):
+    if group != '' and username != None:
+        if groups.has_key(group):
+            groups[group] += [username]
+        else:
+            groups[group] = [username]
+
 def csv_to_dictionary(users_csv):
     # Note: there is no attempt to verify the username with the database, only
     # with the usernames coming from this large initial import CSV file.
-    """Read users csv file and return dictionary with data to insert."""
-    users = {}
+    """Read users csv file and return a dictionary and a set with data to insert."""
+    users   = {}
+    groups  = {}
     next(users_csv) # skipping first line (I still need to learn these tricks)
     for line in users_csv:
         user        = line.split(';')
         last_name   = read_value(user[LAST_NAME])
         first_name  = read_value(user[FIRST_NAME])
         group       = read_value(user[GROUP])
-        if first_name != '' or last_name != '': 
-            username    = make_username(first_name, last_name, users)
-            if username == None:
-               print "ERROR: user %s %s has too many name conflicts" % (first_name, last_name) 
-            else:
-                users[username] = {LAST_NAME:last_name,
-                                   FIRST_NAME:first_name,
-                                   GROUP:group}
-    return users 
+        username    = add_user(first_name, last_name, users)
+        add_user_to_group(username, group, groups)
+    return (users, groups)
 
 users_csv = open(sys.argv[1])
 print "Parsing csv file"
-users = csv_to_dictionary(users_csv)
+(users, groups) = csv_to_dictionary(users_csv)
 
-for user in users:
-    print user, users[user]
+for key in users:
+    user = users[key]
+    insert_user = """
+    INSERT INTO users (username, first_name, last_name)
+    VALUES (%(username)s, %(first_name)s, %(last_name)s)"""
+    print (insert_user, user)
+
+for group in groups:
+    insert_group = "INSERT INTO groups (name) VALUES (%(name)s)"
+    print (insert_group, {'name':group})
+
+    for username in groups[group]:
+        match_group_username = """
+        INSERT INTO group_users
+        (user_id, group_id)
+        VALUES (
+        (SELECT id FROM users WHERE username = %(username)s),
+        (SELECT id FROM groups WHERE name = %(group)s))"""
+
+        print (match_group_username, {'username':username, 'group':group})
 
 # 
 # try:

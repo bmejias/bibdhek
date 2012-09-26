@@ -32,7 +32,6 @@ CREATE TABLE users
 	first_name	text		NOT NULL,
 	last_name	text		NOT NULL,
 	email		text,
-	group 		text,
 	password 	varchar(64)
 );
 
