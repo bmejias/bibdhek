@@ -89,11 +89,16 @@ class LoansController extends AppController
         /* if cd is returned, return the deposit as well */
         if ($input['cd'])
             $deposit = $input['deposit'] - toNumber($input['deposit_back']);
-        $update_data = array('date_in'    => $input['date_in'],
-                             'status'     => Loan::$RETURNED,
+        $update_data = array('status'     => Loan::$RETURNED,
                              'deposit'    => $deposit,
                              'cd'         => !$input['cd'],
                              'fine'       => $input['fine']);
+
+        /* Update date_in only if the book hasn't been returned */
+        $loan = $this->Loan->findById($input['loan_id']);
+        if ($loan['Loan']['status'] != Loan::$RETURNED)
+            $update_data['date_in'] = $input['date_in'];
+
         $update_loan = $this->Loan->update($input['loan_id'], $update_data);
 
         /* This is part of the feedback */
