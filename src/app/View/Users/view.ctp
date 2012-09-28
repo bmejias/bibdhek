@@ -3,73 +3,82 @@ include_once('../Lib/lib.php');
 ?>
 <h2><?php echo $user['first_name']." ".$user['last_name']; ?></h2>
 
+<h3>Books lent</h3>
 <?php
 
+/* --- BEGIN List of lent books --- */
 if (sizeof($loans) > 0)
 {
     echo $this->Form->create('User', array('type'   => 'post', 
                                            'action' => 'bulk_return'));
-}
 ?>
-<table>
-    <thead>
-        <tr>
-            <th></th>
-            <th>Title</th>
-            <th>Date to return</th>
-            <th>Status</th>
-            <th>Fine</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        <?php foreach ($loans as $loan) : ?>
-        <tr>
-            <td>
-                <?php
-                    echo $this->Form->input($loan['id'].'.to_return',
-                                            array('type' => 'checkbox',
-                                                  'label' => ''));
-                    echo $this->Form->hidden($loan['id'].'.status',
-                                             array('value'=>$loan['status']));
-                    echo $this->Form->hidden($loan['id'].'.copy_id',
-                                             array('value'=>$loan['copy_id']));
-                ?>
-            </td>
-            <td>
-                <?php
-                    /* to return the book, we need: book_id, user_id, 
-                     * copy_id, loan_id 
-                     */
-                    $url = '../books/return_it';    
-                    $url.= '?book_id='.$loan['book_id'];
-                    $url.= '&copy_id='.$loan['copy_id'];
-                    $url.= '&user_id='.$loan['user_id'];
-                    $url.= '&loan_id='.$loan['id'];
-                    $url.= '&back_to=user';
-                    echo $this->Html->link($loan['book_title'], $url); 
-                ?>
-            </td>
-            <td><?php echo $loan['date_return']; ?></td>
-            <td><?php echo $loan['status']; ?></td>
-            <td><?php echo toCurrency($loan['fine'] - $loan['paid']); ?></td>
-            <td><?php if ($loan['cd']) echo "cd"; ?></td>
-            
-        </tr>
-        <?php endforeach; ?>
+    <table>
+        <thead>
+            <tr>
+                <th></th>
+                <th>Title</th>
+                <th>Date to return</th>
+                <th>Status</th>
+                <th>Fine</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($loans as $loan) : ?>
+            <tr>
+                <td>
+                    <?php
+                        echo $this->Form->input($loan['id'].'.to_return',
+                                                array('type' => 'checkbox',
+                                                      'label' => ''));
+                        echo $this->Form->hidden($loan['id'].'.status',
+                                                 array('value'=>$loan['status']));
+                        echo $this->Form->hidden($loan['id'].'.copy_id',
+                                                 array('value'=>$loan['copy_id']));
+                    ?>
+                </td>
+                <td>
+                    <?php
+                        /* to return the book, we need: book_id, user_id, 
+                         * copy_id, loan_id 
+                         */
+                        $url = '../books/return_it';    
+                        $url.= '?book_id='.$loan['book_id'];
+                        $url.= '&copy_id='.$loan['copy_id'];
+                        $url.= '&user_id='.$loan['user_id'];
+                        $url.= '&loan_id='.$loan['id'];
+                        $url.= '&back_to=user';
+                        echo $this->Html->link($loan['book_title'], $url); 
+                    ?>
+                </td>
+                <td><?php echo $loan['date_return']; ?></td>
+                <td><?php echo $loan['status']; ?></td>
+                <td><?php echo toCurrency($loan['fine'] - $loan['paid']); ?></td>
+                <td><?php if ($loan['cd']) echo "cd"; ?></td>
+                
+            </tr>
+            <?php endforeach; ?>
 
-    </tbody>
-</table>
+        </tbody>
+    </table>
 
-<p>
+    <p>
 <?php
-    if (sizeof($loans) > 0)
-    {
         echo $this->Form->end('Return');
+?>
+    </p>
+<?php
+    }
+    /* ---- END List of lent books ---- */
+    else
+    /* The user has not lent any book */
+    {
+?>
+    <p> <strong>The user has no current book loans.</strong> </p>
+
+<?
     }
 ?>
-</p>
-
 
 <h3>Money Summary</h3>
 
