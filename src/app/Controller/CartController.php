@@ -84,7 +84,7 @@ class CartController extends AppController
             }
         }
         $this->Session->setFlash('Date to return:'.$date_return);
-        $this->redirect('/');
+        $this->destroy();
     }
 
     private function getCart()
