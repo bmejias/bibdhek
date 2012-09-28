@@ -19,25 +19,26 @@ class SearchController extends AppController
         $this->debug("Getting the form ".print_r($this->request->data, true));
         $the_query      = $this->request->data['search']['query'];
         $option         = $this->request->data['search']['options'];
-        /* define search fields for books depending on optinos. Using record 
-         * instead of if statements.
-         */
-        $book_option_fields = array('title' => array('Book.title'),
-                                    'author'=> array('Book.author'),
-                                    'all'   => array('Book.title',
-                                                     'Book.author',
-                                                     'Book.level'));
-        $book_fields    = $book_option_fields[$option];
-        $user_fields    = array('User.username',
-                                'User.first_name',
-                                'User.last_name');
         /* perform search depending on options */
         $books = array();
         $users = array();
         if ($option == 'all' || $option == 'title' || $option == 'author')
+        {
+            $book_option_fields = array('title' => array('Book.title'),
+                                        'author'=> array('Book.author'),
+                                        'all'   => array('Book.title',
+                                                         'Book.author',
+                                                         'Book.level'));
+            $book_fields    = $book_option_fields[$option];
             $books  = $this->searchIn($this->Book, $book_fields, $the_query);
+        }
         if ($option == 'all' || $option == 'user')
+        {
+            $user_fields    = array('User.username',
+                                    'User.first_name',
+                                    'User.last_name');
             $users  = $this->searchIn($this->User, $user_fields, $the_query);
+        }
         $this->set('books', $books);
         $this->set('users', $users);
         $this->render('results');
