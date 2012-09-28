@@ -14,7 +14,7 @@ GROUP       = 3
 def read_value(str):
     return unicode(str.strip(), "utf-8")
 
-def make_username(first_name, last_name, users, attemps=0):
+def make_username(first_name, last_name, usernames, attemps=0):
     first_part = first_name[:attemps+1]
     last_name_words = last_name.split(' ')
     last_words = len(last_name_words)
@@ -27,15 +27,15 @@ def make_username(first_name, last_name, users, attemps=0):
     username = first_part + last_part
     username = username.lower()
     username = username[:32]
-    if users.has_key(username):
+    if usernames.has_key(username):
         if first_part == first_name:
             return None # impossible to create a valid username
         else:
-            return make_username(first_name, last_name, users, attemps + 1)
+            return make_username(first_name, last_name, usernames, attemps + 1)
     else:
         return username
 
-def add_user(first_name, last_name, users):
+def add_user(first_name, last_name, users, usernames):
     username = None
     if first_name == '' and last_name == '':
         return None
@@ -44,10 +44,11 @@ def add_user(first_name, last_name, users):
     if users.has_key(full_name):
         return users[full_name]['username']
 
-    username = make_username(first_name, last_name, users)
+    username = make_username(first_name, last_name, usernames)
     if username == None:
         print "ERROR: user %s %s has too many name conflicts" % (first_name, last_name)
     else:
+        usernames[username] = None
         users[full_name] = {'username':username,
                             'last_name':last_name,
                             'first_name':first_name}
@@ -66,13 +67,14 @@ def csv_to_dictionary(users_csv):
     """Read users csv file and return a dictionary and a set with data to insert."""
     users   = {}
     groups  = {}
+    usernames = {}
     next(users_csv) # skipping first line (I still need to learn these tricks)
     for line in users_csv:
         user        = line.split(';')
         last_name   = read_value(user[LAST_NAME])
         first_name  = read_value(user[FIRST_NAME])
         group       = read_value(user[GROUP])
-        username    = add_user(first_name, last_name, users)
+        username    = add_user(first_name, last_name, users, usernames)
         add_user_to_group(username, group, groups)
     return (users, groups)
 
@@ -80,61 +82,49 @@ users_csv = open(sys.argv[1])
 print "Parsing csv file"
 (users, groups) = csv_to_dictionary(users_csv)
 
-for key in users:
-    user = users[key]
-    insert_user = """
-    INSERT INTO users (username, first_name, last_name)
-    VALUES (%(username)s, %(first_name)s, %(last_name)s)"""
-    print (insert_user, user)
+try:
+    print "Establishing connection to the database"
+    conn = psycopg2.connect(dbname="bibdhek",
+                            host="localhost", port="5433",
+                            user="bd_admin", password="bd_admin")
+except Exception, e:
+    print "ERROR: I am unable to connect to the database"
+    sys.exit(1)
 
-for group in groups:
-    insert_group = "INSERT INTO groups (name) VALUES (%(name)s)"
-    print (insert_group, {'name':group})
+cursor = conn.cursor()
 
-    for username in groups[group]:
-        match_group_username = """
-        INSERT INTO group_users
-        (user_id, group_id)
-        VALUES (
-        (SELECT id FROM users WHERE username = %(username)s),
-        (SELECT id FROM groups WHERE name = %(group)s))"""
+try:
+    print "Inserting users"
+    for key in users:
+        user = users[key]
+        insert_user = """
+        INSERT INTO users (username, first_name, last_name)
+        VALUES (%(username)s, %(first_name)s, %(last_name)s)"""
+        cursor.execute(insert_user, user)
+        conn.commit()
 
-        print (match_group_username, {'username':username, 'group':group})
+    print "Inserting groups and their users"
+    for group in groups:
+        insert_group = "INSERT INTO groups (name) VALUES (%(name)s)"
+        cursor.execute(insert_group, {'name':group})
+        conn.commit()
 
-# 
-# try:
-#     print "Establishing connection to the database"
-#     conn = psycopg2.connect(dbname="bibdhek",
-#                             host="localhost", port="5433",
-#                             user="bd_admin", password="bd_admin")
-# except Exception, e:
-#     print "ERROR: I am unable to connect to the database"
-#     sys.exit(1)
-# 
-# cursor = conn.cursor()
-# 
-# print "Inserting values"
-# try:
-#     for key in books:
-#         book = books[key]
-#         insert_book = """
-#             INSERT INTO books
-#             (title, author, cd, collection, level, lang, acquired)
-#             VALUES (%(title)s, %(author)s, %(cd)s, %(collection)s,
-#                     %(level)s, %(lang)s, %(acquired)s)
-#             RETURNING id"""
-#         cursor.execute(insert_book, book)
-#         new_book = cursor.fetchone()[0]
-#         for i in range(1, book['copies'] + 1):
-#             insert_copy = """INSERT INTO copies (book_id, status)
-#                             VALUES (%s, 'available')""" % new_book
-#             cursor.execute(insert_copy)
-#         conn.commit()
-# except Exception, e:
-#     conn.rollback()
-#     raise e
-# finally:
-#     print "Done... closing connection"
-#     cursor.close()
-#     conn.close()
+        for username in groups[group]:
+            match_group_username = """
+            INSERT INTO group_users
+            (user_id, group_id)
+            VALUES (
+            (SELECT id FROM users WHERE username = %(username)s),
+            (SELECT id FROM groups WHERE name = %(group)s))"""
+            cursor.execute(match_group_username, {'username':username,
+                                                  'group':group})
+            conn.commit()
+
+except Exception, e:
+    conn.rollback()
+    raise e
+finally:
+    print "Done... closing connection"
+    cursor.close()
+    conn.close()
 
