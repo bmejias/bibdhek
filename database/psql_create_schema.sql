@@ -7,7 +7,7 @@ CREATE TABLE books
 	collection	text,
 	level		varchar(20),
 	lang		char(2),
-	date		date,
+	date		varchar(32),
 	isbn		varchar(16),
 	cover		varchar(16),
 	publisher 	text,
