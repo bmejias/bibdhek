@@ -55,6 +55,12 @@ class CartController extends AppController
         $this->redirect('/');
     }
 
+    public function remove()
+    {
+        $cart = $this->getCart();
+        $copy_id = $_GET['copy_id'];
+    }
+
     public function view()
     {
         $this->set('mini_display', false);

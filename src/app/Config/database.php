@@ -66,7 +66,7 @@ class DATABASE_CONFIG {
 		'login' => 'bd_admin',
 		'password' => 'bd_admin',
 		'database' => 'bibdhek',
-        'port' => 5433,
+        'port' => 5432,
 		'prefix' => '',
 		'encoding' => 'utf8',
 	);
