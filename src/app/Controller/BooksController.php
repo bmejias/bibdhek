@@ -10,7 +10,9 @@ class BooksController extends AppController
 
     function index()
     {
-        $this->set('books', $this->Book->find('all'));
+        $books = $this->Book->find('all');
+
+        $this->set('books', $books);
     }
 
     function add() { }
@@ -163,6 +165,11 @@ class BooksController extends AppController
         $this->set('book', $book['Book']);
         $this->set('copy', $copy['Copy']);
 
+    }
+
+    public function setAvailableCopies($books)
+    {
+        return $books;
     }
 
 }
