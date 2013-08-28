@@ -22,21 +22,23 @@ import sys
 #
 # Second line contains formatting instructions, so it needs to be skipped too
 
-NUMBER      = 0
-N_COPIES    = 1
-LANG        = 2
-LEVEL       = 3
-COLLECTION  = 4
-AUTHOR      = 5
-TITLE       = 6
-WITH_CD     = 7
-PUBLISHER   = 8
-ACQUIRED    = 9
-BOOK_DATE   = 10
+NUMBER = 0
+N_COPIES = 1
+LANG = 2
+LEVEL = 3
+COLLECTION = 4
+AUTHOR = 5
+TITLE = 6
+WITH_CD = 7
+PUBLISHER = 8
+ACQUIRED = 9
+BOOK_DATE = 10
 Opmerkingen = 11
+
 
 def read_value(str):
     return unicode(str.strip(), "utf-8")
+
 
 def cd_and_title(book_title):
     """Searches for '+ CD' and returns the clean title and a boolean for CD."""
@@ -53,17 +55,21 @@ def cd_and_title(book_title):
     # print "title " + clean_title
     return with_cd, clean_title
 
+
 def with_cd(cd_text):
     cd_text = cd_text.strip()
     cd_text = cd_text.lower()
     return cd_text == 'ja'
 
+
 def get_lang(lang):
     return lang
+
 
 def make_book_key(author, title):
     key = "%s %s" % (author, title)
     return key.lower()
+
 
 # @param copies text defining the amount of copies
 # @return integer with the copies with 1 as default
@@ -73,38 +79,40 @@ def process_copies(copies):
     else:
         return int(copies)
 
+
 def csv_to_dictionary(books_csv):
     """Read books csv file and return dictionary with data to insert."""
     books = {}
-    next(books_csv) # Skip header
-    next(books_csv) # Skip formatting information
+    next(books_csv)  # Skip header
+    next(books_csv)  # Skip formatting information
     for line in books_csv:
         book = line.split(';')
         (cd, title) = cd_and_title(read_value(book[TITLE]))
         key = make_book_key(read_value(book[AUTHOR]), title)
         copies = process_copies(read_value(book[N_COPIES]))
 
-        if books.has_key(key):
+        if key in books:
             books[key]['copies'] += copies
         else:
-            books[key] = {'author'  : read_value(book[AUTHOR]),
-                          'title'   : title,
-                          'cd'      : with_cd(read_value(book[WITH_CD])),
+            books[key] = {'author': read_value(book[AUTHOR]),
+                          'title': title,
+                          'cd': with_cd(read_value(book[WITH_CD])),
                           'collection': read_value(book[COLLECTION]),
-                          'level'   : read_value(book[LEVEL]),
+                          'level': read_value(book[LEVEL]),
                           'acquired': read_value(book[ACQUIRED]),
-                          'lang'    : get_lang(book[LANG]),
-                          'copies'  : copies,
+                          'lang': get_lang(book[LANG]),
+                          'copies': copies,
                           'publisher': read_value(book[PUBLISHER]),
-                          'date'    : read_value(book[BOOK_DATE]),
-                          'obs'     : read_value(book[Opmerkingen])
-                         }
+                          'date': read_value(book[BOOK_DATE]),
+                          'obs': read_value(book[Opmerkingen])
+                          }
     return books
 
+
 def load_books(cursor):
-    ID      = 0
-    TITLE   = 1
-    AUTHOR  = 2
+    ID = 0
+    TITLE = 1
+    AUTHOR = 2
     query = "SELECT * from books"
     cursor.execute(query)
     db_books = cursor.fetchall()
@@ -129,7 +137,7 @@ books = csv_to_dictionary(books_csv)
 try:
     print "Establishing connection to the database"
     conn = psycopg2.connect(dbname="bibdhek",
-                            host="localhost", port="5433",
+                            host="localhost", port="5432",
                             user="bd_admin", password="bd_admin")
 except Exception, e:
     print "ERROR: I am unable to connect to the database"
@@ -177,4 +185,3 @@ finally:
     print "Done... closing connection"
     cursor.close()
     conn.close()
-
