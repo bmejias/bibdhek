@@ -137,7 +137,7 @@ books = csv_to_dictionary(books_csv)
 try:
     print "Establishing connection to the database"
     conn = psycopg2.connect(dbname="bibdhek",
-                            host="localhost", port="5432",
+                            host="localhost", port="5433",
                             user="bd_admin", password="bd_admin")
 except Exception, e:
     print "ERROR: I am unable to connect to the database"
