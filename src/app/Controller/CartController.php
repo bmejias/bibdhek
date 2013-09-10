@@ -59,6 +59,16 @@ class CartController extends AppController
     {
         $cart = $this->getCart();
         $copy_id = $_GET['copy_id'];
+        for ($i = 0; $i < sizeof($cart['copies']); $i++)
+        {
+            if ($cart['copies'][$i]['copy_id'] == $copy_id)
+            {
+                unset($cart['copies'][$i]);
+                break;
+            }
+        }
+        $this->Session->write('cart', $cart);
+        $this->redirect('/');
     }
 
     public function view()
@@ -91,6 +101,16 @@ class CartController extends AppController
         }
         $this->Session->setFlash('Date to return:'.$date_return);
         $this->destroy();
+    }
+
+    public function load_mini_display()
+    {
+
+    }
+
+    public function set_message($cart_msg)
+    {
+        $this->Session->write('cart_msg', "test: ".$cart_msg);
     }
 
     private function getCart()
