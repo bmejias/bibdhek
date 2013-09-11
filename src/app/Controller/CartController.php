@@ -46,11 +46,11 @@ class CartController extends AppController
         $book = $this->Book->findById($copy['Copy']['book_id']);
         $author = $book['Book']['author'];
         $title = $book['Book']['title'];
-        $new_copy = sizeof($cart['copies']);
-        $cart['copies'][$new_copy] = array('copy_id' => $copy_id,
-                                           'book_id' => $book_id,
-                                           'author' => $author,
-                                           'title' => $title);
+        // $new_copy = sizeof($cart['copies']);
+        $cart['copies'][$copy_id] = array('copy_id' => $copy_id,
+                                          'book_id' => $book_id,
+                                          'author' => $author,
+                                          'title' => $title);
         $this->Session->write('cart', $cart);
         $this->redirect('/');
     }
@@ -59,14 +59,7 @@ class CartController extends AppController
     {
         $cart = $this->getCart();
         $copy_id = $_GET['copy_id'];
-        for ($i = 0; $i < sizeof($cart['copies']); $i++)
-        {
-            if ($cart['copies'][$i]['copy_id'] == $copy_id)
-            {
-                unset($cart['copies'][$i]);
-                break;
-            }
-        }
+        unset($cart['copies'][$copy_id]);
         $this->Session->write('cart', $cart);
         $this->redirect('/');
     }

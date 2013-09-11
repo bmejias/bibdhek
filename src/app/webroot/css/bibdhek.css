@@ -161,9 +161,10 @@ table td.actions a {
 	padding:2px 5px;
 }
 
-.cart td th {
+table.cart td th {
 	width: 90px;
 	text-align: right;
+	border-bottom: none;
 }
 
 /* SQL log */

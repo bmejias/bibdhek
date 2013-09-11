@@ -13,7 +13,7 @@ $commit_url = '/cart/commit';
 $destroy_url = '/cart/destroy';
 ?>
 
-<table>
+<table class="cart">
     <tr>
     <?php
     // @pre: cart isn't empty
