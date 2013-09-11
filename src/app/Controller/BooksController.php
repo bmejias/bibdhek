@@ -19,10 +19,15 @@ class BooksController extends AppController
 
     function add_by_isbn() { }
 
+    /*
+     * @pre: request->data comes ready to be save as a book in the database
+     */
     function do_add()
     {
+        // Just save the book as the data comes
         if ($this->Book->save($this->request->data))
         {
+            // If saving the book works, add the copies
             $book_id = $this->Book->id;
             $copies = 1;
             if ($this->request->data['Book']['copies'] > 1)
