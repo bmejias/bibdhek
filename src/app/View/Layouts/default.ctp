@@ -49,19 +49,11 @@ $cakeDescription = __d('cake_dev', 'CakePHP: the rapid development php framework
 
             <?php
                 $cart = $this->Session->read('cart');
-                if (($cart != null) && (!isset($mini_display) || $mini_display)) :
+                if (($cart != null) && (!isset($mini_display) || $mini_display))
+                {
+                    echo $this->element('mini_cart');
+                }
             ?>
-                    <p class="notice">
-                    <?php
-                        echo $this->Html->image('mochila.png',
-                                                array('height'=>30));
-                        echo "\n";
-                        echo $this->Session->read('cart_msg');
-                        echo "\n";
-                        echo $this->Html->link('Show Details', '/cart/view');
-                    ?>
-                    </p>
-            <?php endif; ?>
 
             <?php echo $this->fetch('content'); ?>
 

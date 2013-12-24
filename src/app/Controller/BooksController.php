@@ -10,17 +10,24 @@ class BooksController extends AppController
 
     function index()
     {
-        $this->set('books', $this->Book->find('all'));
+        $books = $this->Book->find('all');
+
+        $this->set('books', $books);
     }
 
     function add() { }
 
     function add_by_isbn() { }
 
+    /*
+     * @pre: request->data comes ready to be save as a book in the database
+     */
     function do_add()
     {
+        // Just save the book as the data comes
         if ($this->Book->save($this->request->data))
         {
+            // If saving the book works, add the copies
             $book_id = $this->Book->id;
             $copies = 1;
             if ($this->request->data['Book']['copies'] > 1)
@@ -163,6 +170,11 @@ class BooksController extends AppController
         $this->set('book', $book['Book']);
         $this->set('copy', $copy['Copy']);
 
+    }
+
+    public function setAvailableCopies($books)
+    {
+        return $books;
     }
 
 }

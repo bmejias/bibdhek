@@ -1,0 +1,11 @@
+#!/bin/sh
+
+BACKUP_DIR=/path/to/your/backup/dir
+DB_USER=admin
+DB_PWD=admin
+DATE=`date +'%Y-%m-%d-%H%M'`
+
+cd ${BACKUP_DIR}
+export PGUSER=${DB_USER}
+export PGPASSWORD=${DB_PWD}
+pg_dump bibdhek > bibdhek-${DATE}.sql

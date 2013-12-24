@@ -21,6 +21,7 @@
  */
 
 App::uses('Controller', 'Controller');
+App::uses('CartController', 'Controller');
 
 /**
  * Application Controller
@@ -43,7 +44,8 @@ class AppController extends Controller
             $cart_msg = $cart['user']." is taking ".sizeof($cart['copies'])
                         ." books";
         }
-        $this->Session->write('cart_msg', $cart_msg);
+        CartController::set_message($cart_msg);
+        // $this->Session->write('cart_msg', $cart_msg);
     }
 
     function debug($message)

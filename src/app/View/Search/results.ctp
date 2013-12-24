@@ -7,35 +7,8 @@ include_once('../View/Pages/search.ctp');
 if (count($books) > 0) :
 ?>
 <h2> Books </h2>
-
-<table>
-    <thead>
-        <tr>
-            <th>Title</th>
-            <th>Author</th>
-            <th>Level</th>
-            <th>Lang</th>
-            <th>CD</th>
-        </tr>
-    </thead>
-    <tbody>
-        <?php foreach ($books as $book) : ?>
-        <tr>
-            <td>
-                <?php
-                $url_book = '../books/view?book_id='.$book['Book']['id'];
-                echo $this->Html->link($book['Book']['title'], $url_book);
-                ?>
-            </td>
-            <td><?php echo $book['Book']['author']; ?></td>
-            <td><?php echo $book['Book']['level']; ?></td>
-            <td><?php echo $book['Book']['lang']; ?></td>
-            <td><?php echo $book['Book']['cd']; ?></td>
-        </tr>
-        <?php endforeach; ?>
-    </tbody>
-</table>
 <?php
+    include('../View/Books/table.ctp');
 endif;
 /* --- END RESULTS FOR BOOKS ---*/
 ?>

@@ -46,11 +46,11 @@ class CartController extends AppController
         $book = $this->Book->findById($copy['Copy']['book_id']);
         $author = $book['Book']['author'];
         $title = $book['Book']['title'];
-        $new_copy = sizeof($cart['copies']);
-        $cart['copies'][$new_copy] = array('copy_id' => $copy_id,
-                                           'book_id' => $book_id,
-                                           'author' => $author,
-                                           'title' => $title);
+        // $new_copy = sizeof($cart['copies']);
+        $cart['copies'][$copy_id] = array('copy_id' => $copy_id,
+                                          'book_id' => $book_id,
+                                          'author' => $author,
+                                          'title' => $title);
         $this->Session->write('cart', $cart);
         $this->redirect('/');
     }
@@ -59,6 +59,9 @@ class CartController extends AppController
     {
         $cart = $this->getCart();
         $copy_id = $_GET['copy_id'];
+        unset($cart['copies'][$copy_id]);
+        $this->Session->write('cart', $cart);
+        $this->redirect('/');
     }
 
     public function view()
@@ -91,6 +94,16 @@ class CartController extends AppController
         }
         $this->Session->setFlash('Date to return:'.$date_return);
         $this->destroy();
+    }
+
+    public function load_mini_display()
+    {
+
+    }
+
+    public function set_message($cart_msg)
+    {
+        $this->Session->write('cart_msg', "test: ".$cart_msg);
     }
 
     private function getCart()
