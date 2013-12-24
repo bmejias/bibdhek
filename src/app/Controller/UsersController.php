@@ -52,6 +52,11 @@ class UsersController extends AppController
         }
     }
 
+    function edit()
+    {
+        $this->set('mode', isset($_GET['mode']) ? $_GET['mode'] : 'simple');
+    }
+
     function login()
     {
         $msg = "Gelieve in te loggen";

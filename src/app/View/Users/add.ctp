@@ -1,5 +1,3 @@
-<!-- File: /app/views/users/add.ctp -->
-
 <h2>Add User</h2>
 
 <?php
@@ -13,7 +11,7 @@ if ($mode == 'detailed')
     echo $this->Form->input('password', array('type'=>'password', 'size'=>'30'));
     echo $this->Form->input('confirm', array('type'=>'password', 'size'=>'30'));
 }
-else
+else  // simple view (default)
 {
     echo $this->Form->input('first_name', array('type'=>'text', 'size'=>'30'));
     echo $this->Form->input('last_name', array('type'=>'text', 'size'=>'30'));
