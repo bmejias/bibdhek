@@ -1,0 +1,30 @@
+- Mejorar el sistema de búsqueda (no sensible a acentos)
+
+- Fine no se muestra correcto en la página del usuario
+
+- Deposit está malo.... siempre aparece como 1 euro
+
+- Programar la regla de la cantidad de libros (max 3)
+
+- En "return it", agregar opción para alargar préstamo (como si fuera un nuevo
+  préstamo)
+
+- "Agregar libro" debe tener todos los campos de información 
+
+- Confirmar información antes de agregar la info de un libro
+
+- Editar libro existente 
+
+- Agregar ayuda al sitio
+
+- Mostar más información de los libros
+
+- Find a way to pay the deposit back to a user on /books/return_it
+
+
+
+"Wish list" (you wish)
+
+- Programar calendario de vacaciones
+
+- Agregar "did you mean"? 
