@@ -49,6 +49,14 @@ class BooksController extends AppController
         $this->redirect(array('action' => 'index'));
     }
 
+    function edit()
+    {
+        $book_id = $_GET['book_id'];
+        $book = $this->Book->findById($book_id);
+        $this->set('book', $book['Book']);
+        $this->set('copies', $this->getRichCopies($book_id));
+    }
+
     function lend()
     {
         Controller::loadModel('User');
@@ -117,9 +125,20 @@ class BooksController extends AppController
         $book = $this->Book->findById($book_id); 
         $this->debug("Searching book $book_id got ".print_r($book, true));
         $this->set('book', $book['Book']);
+        $this->set('copies', $this->getRichCopies($book_id));
+    }
+
+    /*-----------------------------------------------------------------------
+     * Functions to help the controllers
+     *-----------------------------------------------------------------------
+     */
+
+    private function getRichCopies($book_id)
+    {
         Controller::loadModel('Copy');
         $copies = $this->Copy->findAllByBook_id($book_id);
         $this->debug("Searching copies for book $book_id got ".print_r($copies, true));
+        // rich_copies are a set of copies with a detailled information
         $rich_copies = array();
         $i = 0;
         foreach ($copies as $copy)
@@ -155,13 +174,9 @@ class BooksController extends AppController
             $i++;
         }
         $this->debug("These are the rich copies ".print_r($rich_copies, true));
-        $this->set('copies', $rich_copies);
+        return $rich_copies;
     }
 
-    /*-----------------------------------------------------------------------
-     * Functions to help the controllers
-     *-----------------------------------------------------------------------
-     */
     private function setBookAndCopy($data)
     {
         Controller::loadModel('Copy');
