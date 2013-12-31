@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Author: Boriss Mejias <tchorix@gmail.com>
  */
@@ -16,7 +15,7 @@ $form = $this->Form;
     </tr>
     <tr>
         <td>Taal</td>
-        <td><?php echo $book['lang']; ?></td>
+        <td><?php echo $langs[$book['lang']]; ?></td>
     </tr>
 </table>
 

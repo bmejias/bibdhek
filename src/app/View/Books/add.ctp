@@ -1,14 +1,12 @@
-<!-- File: /app/views/books/add.ctp -->
+<?php
+/**
+ * Author: Boriss Mejias <tchorix@gmail.com>
+ */
+?>
 
 <h2>Add Book</h2>
 
 <?php
-
-$langs =  array('nl' => 'Nederlands',
-                'en' => 'English',
-                'fr' => 'Français',
-                'es' => 'Español',
-                'de' => 'Deutsch');
 
 echo $this->Form->create('Book', array('type' => 'post', 'action' => 'do_add'));
 echo $this->Form->input('title', array('type' => 'text', 'size' => '30'));

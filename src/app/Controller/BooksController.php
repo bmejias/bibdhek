@@ -8,14 +8,22 @@ class BooksController extends AppController
 {
     var $name = 'Books';
 
+    private $langs =  array('nl' => 'Nederlands',
+                            'en' => 'English',
+                            'fr' => 'Français',
+                            'es' => 'Español',
+                            'de' => 'Deutsch');
+
     function index()
     {
         $books = $this->Book->find('all');
-
         $this->set('books', $books);
     }
 
-    function add() { }
+    function add()
+    {
+        $this->set('langs', $this->langs);
+    }
 
     function add_by_isbn() { }
 
@@ -55,6 +63,7 @@ class BooksController extends AppController
         $book = $this->Book->findById($book_id);
         $this->set('book', $book['Book']);
         $this->set('copies', $this->getRichCopies($book_id));
+        $this->set('langs', $this->langs);
     }
 
     function lend()
@@ -126,6 +135,7 @@ class BooksController extends AppController
         $this->debug("Searching book $book_id got ".print_r($book, true));
         $this->set('book', $book['Book']);
         $this->set('copies', $this->getRichCopies($book_id));
+        $this->set('langs', $this->langs);
     }
 
     /*-----------------------------------------------------------------------
@@ -184,7 +194,6 @@ class BooksController extends AppController
         $copy   = $this->Copy->findById($data['copy_id']);
         $this->set('book', $book['Book']);
         $this->set('copy', $copy['Copy']);
-
     }
 
     public function setAvailableCopies($books)
