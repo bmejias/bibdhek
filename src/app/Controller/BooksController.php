@@ -8,12 +8,6 @@ class BooksController extends AppController
 {
     var $name = 'Books';
 
-    private $langs =  array('nl' => 'Nederlands',
-                            'en' => 'English',
-                            'fr' => 'Français',
-                            'es' => 'Español',
-                            'de' => 'Deutsch');
-
     function index()
     {
         $books = $this->Book->find('all');
@@ -22,7 +16,6 @@ class BooksController extends AppController
 
     function add()
     {
-        $this->set('langs', $this->langs);
     }
 
     function add_by_isbn() { }
@@ -63,7 +56,14 @@ class BooksController extends AppController
         $book = $this->Book->findById($book_id);
         $this->set('book', $book['Book']);
         $this->set('copies', $this->getRichCopies($book_id));
-        $this->set('langs', $this->langs);
+    }
+
+    /*
+     * @pre: request->data comes ready to be save as a book in the database
+     */
+    function do_edit()
+    {
+
     }
 
     function lend()
@@ -131,11 +131,10 @@ class BooksController extends AppController
     function view()
     {
         $book_id = $_GET['book_id'];
-        $book = $this->Book->findById($book_id); 
+        $book = $this->Book->findById($book_id);
         $this->debug("Searching book $book_id got ".print_r($book, true));
         $this->set('book', $book['Book']);
         $this->set('copies', $this->getRichCopies($book_id));
-        $this->set('langs', $this->langs);
     }
 
     /*-----------------------------------------------------------------------

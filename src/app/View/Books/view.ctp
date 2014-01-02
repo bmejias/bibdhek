@@ -15,7 +15,7 @@ $form = $this->Form;
     </tr>
     <tr>
         <td>Taal</td>
-        <td><?php echo $langs[$book['lang']]; ?></td>
+        <td><?php echo BOOK::$LANGS[$book['lang']]; ?></td>
     </tr>
 </table>
 
