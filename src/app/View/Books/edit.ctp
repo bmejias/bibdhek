@@ -8,7 +8,7 @@
 
 <?php
 
-echo $this->Form->create('Book', array('type' => 'post', 'action' => 'do_add'));
+echo $this->Form->create('Book', array('type' => 'post', 'action' => 'do_edit'));
 echo $this->Form->input('title', array('type' => 'text',
                                        'size' => '30',
                                        'value' => $book['title']));
@@ -21,7 +21,7 @@ echo $this->Form->input('cd', array('type' => 'checkbox',
                                     'value' => $book['cd']));
 echo $this->Form->input('lang', array('label' => 'Language',
                                       'options' => $langs,
-                                      'default' => $langs[$book['lang']]));
+                                      'default' => $book['lang']));
 echo $this->Form->input('level', array('type' => 'text',
                                        'size' => '7',
                                        'value' => $book['level']));
