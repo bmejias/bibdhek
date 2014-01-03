@@ -9,6 +9,14 @@ class Book extends AppModel
                             'fr' => 'Français',
                             'es' => 'Español',
                             'de' => 'Deutsch');
+
+    function update($book_id, $update_data)
+    {
+        $this->id = $book_id;
+        $this->set($update_data);
+        return $this->save();
+    }
+
 }
 
 ?>

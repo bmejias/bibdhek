@@ -54,6 +54,7 @@ echo $this->Form->input('obs', array('type' => 'text',
                                      'size' => '30',
                                      'label' => 'Observation',
                                      'value' => $book['obs']));
+echo $this->Form->hidden('id', array('value' => $book['id']));
 echo $this->Form->end('Edit Book');
 
 ?>

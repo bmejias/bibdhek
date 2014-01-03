@@ -63,7 +63,23 @@ class BooksController extends AppController
      */
     function do_edit()
     {
+        // TODO: add a verification to $update_data
+        $this->debug("This is the request data: ".print_r($this->request->data, true));
+        $update_data = $this->request->data['Book'];
+        $book_id = $update_data['id'];
+        $this->debug("Going to update book with id ".$book_id);
+        $this->debug("And data ".print_r($update_data, true));
+        $update_book = $this->Book->update($book_id, $update_data);
+        $this->debug("update_book is ".print_r($update_book, true));
 
+        // Feedback of the action
+        $msg = "";
+        if ($update_book)
+            $msg = "The book has been correctly updated.";
+        else
+            $msg = "There was a problem updating the book.";
+        $this->Session->setFlash($msg);
+        $this->redirect(array('action' => 'index'));
     }
 
     function lend()
