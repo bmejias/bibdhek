@@ -7,8 +7,9 @@
 <h2>Edit Book</h2>
 
 <?php
-
-echo $this->Form->create('Book', array('type' => 'post', 'action' => 'do_edit'));
+echo $this->Form->create('Book', array('type' => 'file',
+                                       'action' => 'do_edit',
+                                       'onsubmit' => 'return confirm("are you sure?");'));
 echo $this->Form->input('title', array('type' => 'text',
                                        'size' => '30',
                                        'value' => $book['title']));
