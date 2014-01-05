@@ -13,10 +13,6 @@
 
 - Confirmar información antes de agregar la info de un libro
 
-- Editar libro existente 
-
-- Agregar ayuda al sitio
-
 - Mostar más información de los libros
 
 - Find a way to pay the deposit back to a user on /books/return_it
