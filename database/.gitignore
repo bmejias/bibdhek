@@ -1,4 +1,5 @@
 .ropeproject
+backup/
 backup*dump
 backup*sql
 bibdhek*sql
