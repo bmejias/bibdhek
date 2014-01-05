@@ -8,6 +8,8 @@ $form = $this->Form;
 
 <h2><?php echo $book['title']; ?></h2>
 
+<?php echo $this->Html->link('Edit book', 'edit?book_id='.$book['id']); ?> 
+
 <table>
     <tr>
         <td>Author</td>

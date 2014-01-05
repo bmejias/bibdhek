@@ -8,8 +8,9 @@
 
 <?php
 echo $this->Form->create('Book', array('type' => 'file',
-                                       'action' => 'do_edit',
-                                       'onsubmit' => 'return confirm("are you sure?");'));
+                                       'action' => 'do_edit'));
+                                       // 'action' => 'do_edit',
+                                       // 'onsubmit' => 'return confirm("are you sure?");'));
 echo $this->Form->input('title', array('type' => 'text',
                                        'size' => '30',
                                        'value' => $book['title']));
