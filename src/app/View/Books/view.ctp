@@ -4,6 +4,8 @@
  */
 
 $form = $this->Form;
+$cart = $this->Session->read('cart');
+$cart_mode = $cart != null;
 ?>
 
 <h2><?php echo $book['title']; ?></h2>
@@ -41,11 +43,11 @@ $form = $this->Form;
             <td><?php echo $copy['date_return']; ?></td>
             <td>
             <?php
-                $cart = $this->Session->read('cart');
-                $cart_mode = $cart != null;
+                $copy_available = $copy['status'] == Copy::$AVAILABLE;
+                $copy_lent = $copy['status'] == Copy::$LENT;
                 if ($cart_mode)
                 {
-                    if ($copy['status'] == Copy::$AVAILABLE)
+                    if ($copy_available)
                     {
                     ?>
                     <a href="../cart/add?copy_id=<?php echo $copy['id']; ?>">
@@ -56,12 +58,13 @@ $form = $this->Form;
                 }
                 else
                 {
-                    if ($copy['status'] == Copy::$AVAILABLE)
+                    // Default action
+                    if ($copy_available)
                     {
                         $action = 'lend';
                         $submit_label = 'lend';
                     }
-                    elseif ($copy['status'] == Copy::$LENT)
+                    elseif ($copy_lent)
                     {
                         $action = 'return_it';
                         $submit_label = 'return';
@@ -76,6 +79,12 @@ $form = $this->Form;
                     echo $this->Form->hidden('loan_id',
                                              array('value' => $copy['loan_id']));
                     echo $this->Form->end($submit_label);
+
+                    // If lent, add "more options"
+                    if ($copy_lent)
+                    {
+                        echo "other options";
+                    }
                 }
             ?>
             </td>
