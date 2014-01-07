@@ -42,13 +42,17 @@ $form = $this->Form;
             <td>
             <?php
                 $cart = $this->Session->read('cart');
-                if ($copy['status'] == Copy::$AVAILABLE and $cart != null)
+                $cart_mode = $cart != null;
+                if ($cart_mode)
                 {
+                    if ($copy['status'] == Copy::$AVAILABLE)
+                    {
                     ?>
                     <a href="../cart/add?copy_id=<?php echo $copy['id']; ?>">
                         <img src="../img/add_to_bag.png" height="30" align="left">
                     </a>
                 <?php
+                    }
                 }
                 else
                 {
