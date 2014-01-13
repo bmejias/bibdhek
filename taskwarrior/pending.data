@@ -4,3 +4,7 @@
 [description:"add help information" entry:"1388769276" status:"pending" uuid:"2e8a59d9-a266-4531-a76f-e4e71a89538a"]
 [description:"Check the fine and payments functionality" entry:"1388703600" status:"pending" uuid:"0afb0c7c-93d9-4d6b-aafe-e67f83bb2198"]
 [description:"Extend loan" entry:"1389039221" priority:"H" status:"pending" uuid:"4aea60fc-091a-41aa-9532-30bb38c209e5"]
+[description:"search books by language" entry:"1389632338" status:"pending" uuid:"b8ed2e7b-6c62-4436-9d6e-e04845177c21"]
+[description:"search books by level" entry:"1389632349" status:"pending" uuid:"637a0c3a-a378-4ae9-91e8-acbc3f06a112"]
+[description:"pretty print search results" entry:"1389632369" status:"pending" uuid:"82f24d87-02b9-4cdb-b137-642d4d4542fa"]
+[description:"export seach results" entry:"1389632388" status:"pending" uuid:"5bc8cc50-2520-4483-8eed-02815c74a376"]
