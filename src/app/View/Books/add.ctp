@@ -13,7 +13,7 @@ echo $this->Form->input('title', array('type' => 'text', 'size' => '30'));
 echo $this->Form->input('author', array('type' => 'text', 'size' => '30'));
 echo $this->Form->input('cd', array('type' => 'checkbox', 'label' => 'CD'));
 echo $this->Form->input('lang', array('label' => 'Language',
-                                      'options' => BOOK::$LANGS));
+                                      'options' => Book::$LANGS));
 echo $this->Form->input('level', array('type' => 'text', 'size' => '7'));
 echo $this->Form->input('collection', array('type' => 'text', 'size' => '30'));
 echo $this->Form->input('isbn', array('type' => 'text', 'size' => '13'));

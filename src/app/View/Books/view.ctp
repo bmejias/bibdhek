@@ -19,7 +19,7 @@ $cart_mode = $cart != null;
     </tr>
     <tr>
         <td>Taal</td>
-        <td><?php echo BOOK::$LANGS[$book['lang']]; ?></td>
+        <td><?php echo Book::$LANGS[$book['lang']]; ?></td>
     </tr>
 </table>
 
@@ -78,13 +78,18 @@ $cart_mode = $cart != null;
                                              array('value' => $copy['user_id']));
                     echo $this->Form->hidden('loan_id',
                                              array('value' => $copy['loan_id']));
-                    echo $this->Form->end($submit_label);
-
+                    echo $this->Form->submit($submit_label,
+                                             array('name' => $submit_label,
+                                                   'id' => $submit_label));
                     // If lent, add "more options"
                     if ($copy_lent)
                     {
-                        echo "other options";
+                        echo $this->Form->submit('extend',
+                                                 array('name' => 'extend',
+                                                       'id' => 'extend'));
                     }
+                    echo $this->Form->end();
+
                 }
             ?>
             </td>

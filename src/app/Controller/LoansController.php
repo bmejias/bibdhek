@@ -47,6 +47,10 @@ class LoansController extends AppController
         $this->redirect('../books/view?book_id='.$input['book_id']);
     }
 
+    function extend_loan()
+    {
+    }
+
     function return_book()
     {
         $input  = $this->request->data['Loan'];

@@ -58,6 +58,43 @@ class BooksController extends AppController
         $this->set('copies', $this->getRichCopies($book_id));
     }
 
+    function extend_it()
+    {
+        /*
+        Controller::loadModel('User');
+        Controller::loadModel('Loan');
+        Controller::loadModel('Rule');
+
+        $this->debug("The POST: ".print_r($_POST, true));
+        $this->debug("The GET: ".print_r($_GET, true));
+        */
+        $data = (isset($_POST['data'])) ? $_POST['data']['Book'] : $_GET;
+        /*
+        $this->debug("The new DATA: ".print_r($data, true));
+        $this->debug("The data is ".print_r($this->request->data, true));
+        $user = $this->User->findById($data['user_id']);
+        $student = $user['User']['first_name']." ".$user['User']['last_name'];
+
+        $today  = date('Y-m-d', time());
+        $loan   = $this->Loan->findById($data['loan_id']);
+        $raw_fine = $this->Rule->get_fine($loan['Loan']['date_return'], $today);
+
+        $back_to = '../books/view?book_id='.$data['book_id'];
+        if (isset($data['back_to']) && $data['back_to'] == 'user')
+            $back_to = '../users/view?user_id='.$data['user_id'];
+
+        $this->set('student', $student);
+        $this->set('fine', $raw_fine - $loan['Loan']['paid']);
+        $this->set('loan', $loan['Loan']);
+        $this->set('today', $today);
+        $this->set('back_to', $back_to);
+        $this->set('user_id', $data['user_id']);
+        $this->set('loan_id', $data['loan_id']);
+        */
+        $this->setBookAndCopy($data);
+    }
+
+
     /*
      * @pre: request->data comes ready to be save as a book in the database
      */
