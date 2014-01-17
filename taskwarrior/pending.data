@@ -8,3 +8,5 @@
 [description:"search books by level" entry:"1389632349" status:"pending" uuid:"637a0c3a-a378-4ae9-91e8-acbc3f06a112"]
 [description:"pretty print search results" entry:"1389632369" status:"pending" uuid:"82f24d87-02b9-4cdb-b137-642d4d4542fa"]
 [description:"export seach results" entry:"1389632388" status:"pending" uuid:"5bc8cc50-2520-4483-8eed-02815c74a376"]
+[description:"update documentation of database schema" entry:"1389633417" status:"pending" uuid:"6c98f03c-0ce9-4636-bdc1-39e2c7eee16a"]
+[description:"remove add_to_chart_icon from already added copies" entry:"1389806450" status:"pending" uuid:"218665a0-fab9-4f91-9b32-18784ba30eff"]
