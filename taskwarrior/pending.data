@@ -1,0 +1,6 @@
+[description:"Add confirmation to the action 'add book'" entry:"1388744697" priority:"H" status:"pending" tags:"0.2" uuid:"b4afce95-f409-4790-bc70-c9f7355dc559"]
+[description:"Add confirmation to the action 'edit book'" entry:"1388744730" priority:"H" status:"pending" tags:"0.2" uuid:"96cae496-89ec-41b5-aca9-e975b6ff3fa3"]
+[description:"Be able to delete book" entry:"1388744784" priority:"M" status:"pending" tags:"0.2" uuid:"6e67397f-3479-42e4-8bd5-601d4501aa32"]
+[description:"add help information" entry:"1388769276" status:"pending" uuid:"2e8a59d9-a266-4531-a76f-e4e71a89538a"]
+[description:"Check the fine and payments functionality" entry:"1388703600" status:"pending" uuid:"0afb0c7c-93d9-4d6b-aafe-e67f83bb2198"]
+[description:"Extend loan" entry:"1389039221" status:"pending" uuid:"4aea60fc-091a-41aa-9532-30bb38c209e5"]

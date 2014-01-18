@@ -11,11 +11,12 @@ class BooksController extends AppController
     function index()
     {
         $books = $this->Book->find('all');
-
         $this->set('books', $books);
     }
 
-    function add() { }
+    function add()
+    {
+    }
 
     function add_by_isbn() { }
 
@@ -46,6 +47,38 @@ class BooksController extends AppController
             $this->Session->setFlash('The book has been saved.');
             $this->redirect(array('action' => 'index'));
         }
+        $this->redirect(array('action' => 'index'));
+    }
+
+    function edit()
+    {
+        $book_id = $_GET['book_id'];
+        $book = $this->Book->findById($book_id);
+        $this->set('book', $book['Book']);
+        $this->set('copies', $this->getRichCopies($book_id));
+    }
+
+    /*
+     * @pre: request->data comes ready to be save as a book in the database
+     */
+    function do_edit()
+    {
+        // TODO: add a verification to $update_data
+        $this->debug("This is the request data: ".print_r($this->request->data, true));
+        $update_data = $this->request->data['Book'];
+        $book_id = $update_data['id'];
+        $this->debug("Going to update book with id ".$book_id);
+        $this->debug("And data ".print_r($update_data, true));
+        $update_book = $this->Book->update($book_id, $update_data);
+        $this->debug("update_book is ".print_r($update_book, true));
+
+        // Feedback of the action
+        $msg = "";
+        if ($update_book)
+            $msg = "The book has been correctly updated.";
+        else
+            $msg = "There was a problem updating the book.";
+        $this->Session->setFlash($msg);
         $this->redirect(array('action' => 'index'));
     }
 
@@ -114,12 +147,23 @@ class BooksController extends AppController
     function view()
     {
         $book_id = $_GET['book_id'];
-        $book = $this->Book->findById($book_id); 
+        $book = $this->Book->findById($book_id);
         $this->debug("Searching book $book_id got ".print_r($book, true));
         $this->set('book', $book['Book']);
+        $this->set('copies', $this->getRichCopies($book_id));
+    }
+
+    /*-----------------------------------------------------------------------
+     * Functions to help the controllers
+     *-----------------------------------------------------------------------
+     */
+
+    private function getRichCopies($book_id)
+    {
         Controller::loadModel('Copy');
         $copies = $this->Copy->findAllByBook_id($book_id);
         $this->debug("Searching copies for book $book_id got ".print_r($copies, true));
+        // rich_copies are a set of copies with a detailled information
         $rich_copies = array();
         $i = 0;
         foreach ($copies as $copy)
@@ -155,13 +199,9 @@ class BooksController extends AppController
             $i++;
         }
         $this->debug("These are the rich copies ".print_r($rich_copies, true));
-        $this->set('copies', $rich_copies);
+        return $rich_copies;
     }
 
-    /*-----------------------------------------------------------------------
-     * Functions to help the controllers
-     *-----------------------------------------------------------------------
-     */
     private function setBookAndCopy($data)
     {
         Controller::loadModel('Copy');
@@ -169,7 +209,6 @@ class BooksController extends AppController
         $copy   = $this->Copy->findById($data['copy_id']);
         $this->set('book', $book['Book']);
         $this->set('copy', $copy['Copy']);
-
     }
 
     public function setAvailableCopies($books)

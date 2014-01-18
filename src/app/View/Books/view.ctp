@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Author: Boriss Mejias <tchorix@gmail.com>
  */
@@ -9,6 +8,8 @@ $form = $this->Form;
 
 <h2><?php echo $book['title']; ?></h2>
 
+<?php echo $this->Html->link('Edit book', 'edit?book_id='.$book['id']); ?> 
+
 <table>
     <tr>
         <td>Author</td>
@@ -16,7 +17,7 @@ $form = $this->Form;
     </tr>
     <tr>
         <td>Taal</td>
-        <td><?php echo $book['lang']; ?></td>
+        <td><?php echo BOOK::$LANGS[$book['lang']]; ?></td>
     </tr>
 </table>
 
