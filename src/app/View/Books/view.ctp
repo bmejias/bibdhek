@@ -66,7 +66,7 @@ $cart_mode = $cart != null;
                     }
                     elseif ($copy_lent)
                     {
-                        $action = 'return_it';
+                        $action = 'edit_book_copy';
                         $submit_label = 'return';
                     }
                     echo $this->Form->create('Book',
@@ -79,13 +79,13 @@ $cart_mode = $cart != null;
                     echo $this->Form->hidden('loan_id',
                                              array('value' => $copy['loan_id']));
                     echo $this->Form->submit($submit_label,
-                                             array('name' => $submit_label,
+                                             array('name' => 'data[Book]['.$submit_label.']',
                                                    'id' => $submit_label));
                     // If lent, add "more options"
                     if ($copy_lent)
                     {
                         echo $this->Form->submit('extend',
-                                                 array('name' => 'extend',
+                                                 array('name' => 'data[Book][extend]',
                                                        'id' => 'extend'));
                     }
                     echo $this->Form->end();

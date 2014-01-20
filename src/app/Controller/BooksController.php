@@ -140,15 +140,35 @@ class BooksController extends AppController
         $this->setBookAndCopy($this->request->data['Book']);
     }
 
-    function return_it()
+    function edit_book_copy()
+    {
+        $this->debug("The full post ".print_r($_POST['data'], true));
+        $data = (isset($_POST['data'])) ? $_POST['data']['Book'] : $_GET;
+        $this->debug(print_r($data, true));
+        if (isset($data['return']))
+        {
+            $this->return_it($data);
+            return $this->render('return_it');
+        }
+        else
+        {
+            $this->extend_it($data);
+            return $this->render('extend_it');
+        }
+    }
+
+    function return_it($data)
     {
         Controller::loadModel('User');
         Controller::loadModel('Loan');
         Controller::loadModel('Rule');
 
+        $this->debug("Getting the following data from arguments: ");
+        $this->debug(print_r($data, true));
         $this->debug("The POST: ".print_r($_POST, true));
         $this->debug("The GET: ".print_r($_GET, true));
-        $data = (isset($_POST['data'])) ? $_POST['data']['Book'] : $_GET;
+        if (!isset($data))
+            $data = (isset($_POST['data'])) ? $_POST['data']['Book'] : $_GET;
         $this->debug("The new DATA: ".print_r($data, true));
         $this->debug("The data is ".print_r($this->request->data, true));
         $user = $this->User->findById($data['user_id']);
