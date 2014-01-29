@@ -10,19 +10,28 @@ class Rule extends AppModel
 {
     var $name = 'Rule';
 
-    /* Returns the maximum date to return a book taken at $out_time */
+    // Rules
+    static $LEND_PERIOD = 'lend_period'; 
+
+    // Returns the maximum date to return a book taken at $out_time
     function get_date_return($out_time)
     {
         $rule = $this->findByRule('lend');
-        /* assuming the amount of the rule corresponds to days */
+        // assuming the amount of the rule corresponds to days
         return $out_time + $rule['Rule']['amount'] * 24 * 60 * 60;
     }
 
-    /* Returns the amount of deposit to lend a CD */
+    // Returns the extension date starting from $the_date
+    function get_date_extension($the_date)
+    {
+        $rule = $this->findByRule('lend');
+    }
+
+    // Returns the amount of deposit to lend a CD
     function get_deposit()
     {
         $rule = $this->findByRule('deposit');
-        /* assuming the amount of the rule corresponds to cents */
+        // assuming the amount of the rule corresponds to cents
         return $rule['Rule']['amount'] / 100;
     }
 
@@ -35,11 +44,11 @@ class Rule extends AppModel
      */
     function get_fine($date_return, $now)
     {
-        /* TODO: array() should contain the list of holidays and vacation */
+        // TODO: array() should contain the list of holidays and vacation
         $days = getWorkingDays($date_return, $now, array());
         $fine_days  = $this->findByRule('fine_days');
         $fine_money = $this->findByRule('fine_money');
-        /* assuming that amount is expressed in cents in the rule */
+        // assuming that amount is expressed in cents in the rule
         $single_fine = $fine_money['Rule']['amount'] / 100;
         if ($days <= 0)
             return 0;
