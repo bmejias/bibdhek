@@ -58,18 +58,16 @@ class BooksController extends AppController
         $this->set('copies', $this->getRichCopies($book_id));
     }
 
-    function extend_it()
+    function extend_it($data)
     {
-        /*
         Controller::loadModel('User');
         Controller::loadModel('Loan');
         Controller::loadModel('Rule');
 
         $this->debug("The POST: ".print_r($_POST, true));
         $this->debug("The GET: ".print_r($_GET, true));
-        */
-        $data = (isset($_POST['data'])) ? $_POST['data']['Book'] : $_GET;
-        /*
+        if (!isset($data))
+            $data = (isset($_POST['data'])) ? $_POST['data']['Book'] : $_GET;
         $this->debug("The new DATA: ".print_r($data, true));
         $this->debug("The data is ".print_r($this->request->data, true));
         $user = $this->User->findById($data['user_id']);
@@ -90,7 +88,6 @@ class BooksController extends AppController
         $this->set('back_to', $back_to);
         $this->set('user_id', $data['user_id']);
         $this->set('loan_id', $data['loan_id']);
-        */
         $this->setBookAndCopy($data);
     }
 

@@ -101,9 +101,10 @@ class CartController extends AppController
 
     }
 
-    public function set_message($cart_msg)
+    public static function set_message($session, $cart_msg)
     {
-        $this->Session->write('cart_msg', "test: ".$cart_msg);
+        // $this->Session->write('cart_msg', "test: ".$cart_msg);
+        $session->write('cart_msg', "test: ".$cart_msg);
     }
 
     private function getCart()
