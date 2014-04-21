@@ -51,6 +51,31 @@ class LoansController extends AppController
     {
     }
 
+    function list_all()
+    {
+        Controller::loadModel('Copy');
+        Controller::loadModel('User');
+        Controller::loadModel('Book');
+        $active_loans = $this->Loan->findAllByStatus(Copy::$LENT);
+        $the_loans = array();
+        $i = 0;
+        foreach ($active_loans as $loan) {
+            $the_loans[$i]['due'] = $loan['Loan']['date_return'];
+
+            $user = $this->User->findById($loan['Loan']['user_id']);
+            $name = $user['User']['first_name']." ".$user['User']['last_name'];
+            $the_loans[$i]['user'] = $name;
+
+            $copy = $this->Copy->findById($loan['Loan']['copy_id']);
+            $book = $this->Book->findById($copy['Copy']['book_id']);
+            $the_loans[$i]['book'] = $book['Book']['title'];
+            $the_loans[$i]['author'] = $book['Book']['author'];
+            $i += 1;
+        }
+        $this->set('active_loans', $active_loans);
+        $this->set('the_loans', $the_loans);
+    }
+
     function return_book()
     {
         $input  = $this->request->data['Loan'];
