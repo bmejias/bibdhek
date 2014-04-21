@@ -10,4 +10,4 @@
 [description:"export seach results" entry:"1389632388" status:"pending" uuid:"5bc8cc50-2520-4483-8eed-02815c74a376"]
 [description:"update documentation of database schema" entry:"1389633417" status:"pending" uuid:"6c98f03c-0ce9-4636-bdc1-39e2c7eee16a"]
 [description:"remove add_to_chart_icon from already added copies" entry:"1389806450" status:"pending" uuid:"218665a0-fab9-4f91-9b32-18784ba30eff"]
-[description:"generate list of users with books lent" entry:"1392068962" status:"pending" uuid:"2204f5fb-f3d1-49fd-9b4c-a459bf765eb3"]
+[description:"generate list of users with books lent" due:"1399759200" entry:"1392068962" modified:"1396815457" priority:"H" status:"pending" uuid:"2204f5fb-f3d1-49fd-9b4c-a459bf765eb3"]
