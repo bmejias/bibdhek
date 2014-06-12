@@ -19,8 +19,8 @@ class Copy extends AppModel
      */
     function get_book_info($copy_id)
     {
-        $query = "select books.id, books.title from books where books.id = ";
-        $query.= "(select book_id from copies where id = ".$copy_id.")";
+        $query = "SELECT books.id, books.title FROM books WHERE books.id = ";
+        $query.= "(SELECT book_id FROM copies WHERE id = ".$copy_id.")";
         $result = $this->query($query);
         //echo "This is what I got from the query\n".print_r($result, true);
         $to_return = array('id' => 0, 'title' => "ERROR - book not found");
