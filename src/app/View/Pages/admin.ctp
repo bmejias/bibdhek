@@ -12,3 +12,5 @@
 <hr />
 <br />
 <?php echo $this->Html->link('List all loans', '../loans/list_all'); ?>
+<br /><br />
+<?php echo $this->Html->link('Statistics', '../loans/stats'); ?>

@@ -104,6 +104,10 @@ class LoansController extends AppController
         $this->redirect($input['back_to']);
     }
 
+    function stats()
+    {
+    }
+
     /*-----------------------------------------------------------------------
      * Functions to help the controllers - Move them to the Model?
      *-----------------------------------------------------------------------
