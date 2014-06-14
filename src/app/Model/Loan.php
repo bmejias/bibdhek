@@ -54,6 +54,39 @@ class Loan extends AppModel
         $this->debug("This is the STATUS we've found: ".print_r($loan, true));
         return $loan['Loan']['status'];
     }
+
+    /* The following functions are not assuming any range of date */
+    function get_total_loans()
+    {
+        $query = "SELECT COUNT(id) FROM loans";
+        $result = $this->query($query);
+        return $result[0][0]['count'];
+    }
+
+    function get_top_books()
+    {
+        $query_loans = "SELECT l.id AS loan_id, b.id AS book_id ";
+        $query_loans.= "FROM loans l, books b, copies c ";
+        $query_loans.= "WHERE l.copy_id=c.id AND c.book_id=b.id";
+
+        $count_by_book = "SELECT COUNT(lc.loan_id) AS counts, lc.book_id ";
+        $count_by_book.= "FROM (".$query_loans.") lc ";
+        $count_by_book.= "GROUP BY lc.book_id";
+
+        $query = "SELECT st.counts AS counts, bo.title AS title, ";
+        $query.= "bo.author AS author ";
+        $query.= "FROM books bo, (".$count_by_book.") st ";
+        $query.= "WHERE st.book_id=bo.id ";
+        $query.= "ORDER BY counts DESC";
+
+        $result = $this->query($query);
+        return $result[0];
+    }
+
+    function get_top_users()
+    {
+        return array();
+    }
 }
 
 ?>

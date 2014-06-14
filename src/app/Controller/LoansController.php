@@ -106,6 +106,12 @@ class LoansController extends AppController
 
     function stats()
     {
+        $total_loans = $this->Loan->get_total_loans();
+        $top_books = $this->Loan->get_top_books();
+        $top_users = $this->Loan->get_top_users();
+        $this->set('total_loans', $total_loans);
+        $this->set('top_books', $top_books);
+        $this->set('top_users', $top_users);
     }
 
     /*-----------------------------------------------------------------------
