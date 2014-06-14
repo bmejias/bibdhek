@@ -80,12 +80,22 @@ class Loan extends AppModel
         $query.= "ORDER BY counts DESC";
 
         $result = $this->query($query);
-        return $result[0];
+        return $result;
     }
 
     function get_top_users()
     {
-        return array();
+        $count_by_user = "SELECT COUNT(l.id) AS counts, l.user_id AS user_id ";
+        $count_by_user.= "FROM loans l ";
+        $count_by_user.= "GROUP BY l.user_id";
+
+        $query = "SELECT l.counts, u.username, u.first_name, u.last_name ";
+        $query.= "FROM users u, (".$count_by_user.") l ";
+        $query.= "WHERE u.id=l.user_id ";
+        $query.= "ORDER BY l.counts DESC";
+
+        $result = $this->query($query);
+        return $result;
     }
 }
 
